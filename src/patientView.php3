@@ -4,26 +4,26 @@
 <% 
 if (isset($mrn)) { 
 	$sql = "SELECT * FROM patients WHERE mrn=$mrn";
+	
 	$db = mysql_connect("localhost", "root");
 	
 	if (!$db) {
-		$error = "Unable to connect to database";
+		$error = "Unable to connect to database server";
 	}
 	else {
 		$dbname = "test2";
-		mysql_select_db($dbname,$db);
-
-		$result = mysql_query($sql);
-
-		if (!$result) {
+		if (!mysql_select_db($dbname,$db)) {
 			$error = "Unable to connect to database<BR>dbname=$dbname";
 		}
+		
 		else {
-			$row = mysql_fetch_array($result);
-			if ($row)
-				$error = 0;
-			else
+			$result = mysql_query($sql);
+			if (!$result) {
+				$error = "Unable to execute SQL query:<BR>$sql";
+			}
+			else if (mysql_num_rows($result) == 0) {
 				$error = "Query produced no results:<BR>$sql";
+			}
 		}
 	}
 }
@@ -34,20 +34,15 @@ else {
 if ($error) {
 	echo "<B>$error</B>";
 } else {
+	
+$row = mysql_fetch_array($result);
 
 $title = "Patient #$mrn";
 
 $td = "width='50' align='center'";
 
-$drugs = array('gm','ts','e','cax','aug','cp','clin','tim','pitz','ak');
-$abbr2MD = array(
-	'rb' => 'R Barrows', 
-	'jc' => 'J Cimino',
-	'gh' => 'G Hripcsak',
-	'rj' => 'R Jenders',
-	'js' => 'J Starren',
-	'all' => 'all'
-);
+include("externs.inc");
+
 %>
 
 <HTML>
@@ -59,15 +54,16 @@ $abbr2MD = array(
 <TABLE CELLPADDING='0' CELLSPACING='0' BORDER='1'  WIDTH='450'>
 	<TR><TD WIDTH='50'>MRN</TD><TD><B><%=$row['mrn'];%></B></TR>
 	<TR><TD WIDTH='50'>MD</TD><TD><B><%=$abbr2MD[$row['md']];%></B>
-	<% echo " (<A HREF='mdview.php3?md=" . $row['md'] . "&month=" . $row['month'] . "&floor=" . $row['floor']. "'>MD's view</A>)</TD></TR>\n";%>
+	<% echo " (<A HREF='mdView.php3?md=" . $row['md'] . "&month=" . $row['month'] . "&floor=" . $row['floor']. "'>MD's view</A>)</TD></TR>\n";%>
 	<TR><TD WIDTH='50'>Where</TD><TD><B>Floor <%=$row['floor'];%>, Room <%=$row['room'];%>, Bed <%=$row['bed'];%></B>
-	<% echo " (<A HREF='floorview.php3?md=" . $row['md'] . "&month=" . $row['month'] . "'>Floor-plan view</A>)</TD></TR>\n";%>
+	<% echo " (<A HREF='floorView.php3?md=" . $row['md'] . "&month=" . $row['month'] . "'>Floor-plan view</A>)</TD></TR>\n";%>
 	<TR><TD WIDTH='50'>Month</TD><TD><B><%=$row['month'];%></B></TD></TR>
 </TABLE>
 
 <TABLE CELLPADDING='0' CELLSPACING='0' BORDER='1'  WIDTH='450'>
 <TR>
 <% 
+	mysql_free_result($result);
 	echo "<TD $td>Bug\Drug</TD>\n";
 	while (list($key, $val) = each($drugs)) {
 		echo "<TD $td>$val</TD>";
@@ -78,7 +74,7 @@ $abbr2MD = array(
 <%
 	$result = mysql_query("SELECT * FROM bugs WHERE mrn=$mrn");
 	while ($row = mysql_fetch_array($result)) {
-		echo "<TR><TD $td><B>" . $row['bug'] . "</B></TD>\n";
+		echo "<TR><TD $td><B>" . strtoupper($row['bug']) . "</B></TD>\n";
 		reset($drugs);	// to allow each to work again
 		while (list($key, $val) = each($drugs)) {
 			echo "<TD $td";
@@ -94,6 +90,7 @@ $abbr2MD = array(
 		}
 		echo "</TR>\n";
 	}
+	mysql_free_result($result);
 %>
 
 <TR>
@@ -104,6 +101,7 @@ $abbr2MD = array(
 </TR></TABLE>
 
 <% } // END else 
+if (isset($db)) { mysql_close($db); }
 %>
 
 </BODY>

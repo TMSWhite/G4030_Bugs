@@ -1,23 +1,13 @@
 <% 
-/* General include variables */
 $td = "align='center' valign='top'";
-
-$drugs = array('gm','ts','e','cax','aug','cp','clin','tim','pitz','ak');
-$abbr2MD = array(
-	'rb' => 'R Barrows', 
-	'jc' => 'J Cimino',
-	'gh' => 'G Hripcsak',
-	'rj' => 'R Jenders',
-	'js' => 'J Starren',
-	'all' => 'all'
-);
-/***/
+include("externs.inc");
 
 $where = '';
 
 if (isset($md) && $md != 'all') { $where .= (($where) ? ' AND ' : '') . "md='$md'"; }
 if (isset($month) && $month != 'all') { $where .= (($where) ? ' AND ' : '') . "month=$month"; }
 if (isset($floor) && $floor != 'all') { $where .= (($where) ? ' AND ' : '') . "floor=$floor"; }
+
 
 if (!isset($md)) { $md = '(all)'; }
 if (!isset($month)) { $month = '(all)'; }
@@ -88,14 +78,42 @@ else {
 	
 <%
 	while($row = mysql_fetch_array($result)) {
+		$sql = "SELECT * FROM bugs WHERE mrn=" . $row['mrn'] . " ORDER BY bug";
+		$r_profile = mysql_query($sql);
+		$profile = '';
+		$numer = 10;
+		if (!$r_profile) {
+			$profile = "Unable to execute query:<BR>$sql";
+		}
+		elseif (mysql_num_rows($r_profile) == 0) {
+			$profile = '&nbsp;';
+		}
+		else {
+			while ($prof = mysql_fetch_array($r_profile)) {
+				$profile .= ($profile ? '<BR>' : '') . "<FONT COLOR='black'><B>" . strtoupper($prof['bug']) . "<B>:&nbsp;";
+				reset($drugs);
+				while (list($key, $val) = each($drugs)) {
+					if ($prof[$val] == '1') { 
+						$profile .= "&nbsp;<FONT COLOR='#00dd00'>$val</FONT>";
+					}
+					elseif ($prof[$val] == '0') {
+						$profile .= "&nbsp;<FONT COLOR='#aa0000'>$val</FONT>";
+					}
+					else {
+						$profile .= "&nbsp;<FONT COLOR='white'>$val</FONT>";
+					}		
+				}
+				if ($prof['numer'] < $numer)
+					$numer = $prof['numer'];
+			}
+		}
 		echo "<TR>\n";
 		echo "<TD $td>" . $row['month'] . "</TD>\n";
-		echo "<TD $td><A HREF='patientView.php3?mrn=" . $row['mrn'] . "'>" . $row['mrn'] . "</A></TD>\n";
+		echo "<TD $td BGCOLOR='" . $SENS[$numer] . "'><A HREF='patientView.php3?mrn=" . $row['mrn'] . "'>" . $row['mrn'] . "</A></TD>\n";
 		echo "<TD $td><A HREF='floorView.php3?floor=" . $row['floor'] . "&month=" . $row['month'] . "'>" . $row['floor'] . "</A></TD>\n";
 		echo "<TD $td>" . $row['room'] . "</TD>\n";
 		echo "<TD $td>" . $row['bed'] . "</TD>\n";
-		echo "<TD>&nbsp;</TD>";
-		echo "</TR>";
+		echo "<TD>$profile</TD></TR>";
 	}
 %>
 
