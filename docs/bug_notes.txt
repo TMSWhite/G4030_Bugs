@@ -1,0 +1,67 @@
+Views of the Bugs data
+
+Types of views:
+
+over Time (line chart)
+	(1) count of bugs
+	(2) sens to drugs by bug [can't do this]
+	bugs.count
+	bugs.virulence (what is this?)
+	drugs.sensitivity
+		total (so know if stock has expired, or general trend)
+		by bug (so know which is best empicic therapy)
+	md.floor - so know where he's been
+	
+geographically (contour plot)
+	(1) num incidents (sum unique pts?)
+	(2) avg sensitivity
+	(e.g. floor vs room)
+	md
+	bug
+	drug
+	month
+	mrn?	[what is an MD's case-load?]
+	
+Bug vs Sensitivity (Bar chart)
+	month
+	md
+	floor
+
+	[best empiric med for a given md/time/location]	
+
+
+Housekeeping
+	location of resistant rooms at a given time
+	
+Nursing
+	room occupancy
+	MRSA & non-MRSA sharing a room
+		? geographic?
+	isolate resistant organisms (resistance x loc)
+	acuity level (also resistance x loc)
+	
+MD
+	locate patients (mrn x loc)
+	acuity of pts (resistance x loc filtered by md)
+	best empiric drug (bug vs sens)
+	
+
+/*** GEOGRAPHICS ****/
+Show sensitivitity and count by room?
+test1.pl is template for presenting geographical view
+by MD, bug, drug, month
+may need to implement a color scale for 
+
+Values by room in geographic
+	mrn
+	count(bug)
+	avg(ratio)
+		
+N.B. - for patients with 2 bugs, need to know how many drugs will kill BOTH - that is level of sensitivity!
+	- Also, not just number of effective drugs, but percent per bug in a given patient?
+	- How do I calc number of drugs needed, and filter this based on bug type?
+	
+Sensitivity
+	-Minimum number of drugs to which sensitive - warning of 0, 1, or 2
+	-by drug - don't need geography, unless means not washed
+		-could add summary rows to Floor/Room? - for total number, ...?
