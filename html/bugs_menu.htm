@@ -24,13 +24,13 @@ function loadTarget() {
 		targetFile = "mdView.php3?md=" + md + "&month=" + month + "&floor=" + floor;
 	}
 	else if (view == "loc") {
-		targetFile = "loc_" + md + "_" + bug + "_" + month + ".htm";
+		targetFile = "floorView.php3?md=" + md + "&month=" + month + "&bug=" + bug;
 	}
 	else if (view == "time") {
 		targetFile = "time_" + md + "_" + floor + "_all.gif";
 	}
 	else if (view == "sens") {
-		targetFile = "sens_" + md + "_" + floor + "_" + month + ".htm";
+		targetFile = "sensView.php3?md=" + md + "&month=" + month + "&floor=" + floor;
 	}
 	else {
 		alert("unknown values:" + " view=" + view + " pt=" + mrn + " md=" + md + " floor=" + floor + " bug=" + bug + " month=" + month);
@@ -111,7 +111,6 @@ function setView() {
 
 </SCRIPT>
 
-	<META NAME="GENERATOR" Content="Visual Page 2.0 for Windows">
 	<TITLE>Bugs Project - Tom White</TITLE>
 </HEAD>
 
@@ -173,27 +172,33 @@ ONRESET="setDefaults()">
 	</TR>
 	<TR>
 		<TD WIDTH="32%" VALIGN="TOP">List Patients for Doctor</TD>
-		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="md" ONCLICK="setView()"><A HREF="javascript:document.myForm.md.focus()">MD</A>,
-			<A HREF="javascript:document.myForm.month.focus()">month</A></TD>
+		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="md" ONCLICK="setView()">
+			<A HREF="javascript:document.myForm.md.focus()">MD</A>,
+			<A HREF="javascript:document.myForm.month.focus()">month</A>,
+			<A HREF="javascript:document.myForm.floor.focus()">floor</A></TD>
 		<TD WIDTH="51%" VALIGN="TOP"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>
 			MRN, month, location, bugs, sensitivities</TD>
 	</TR>
 	<TR>
 		<TD WIDTH="32%" VALIGN="TOP">Floor-Plan</TD>
-		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="loc"  CHECKED ONCLICK="setView()"><A HREF="javascript:document.myForm.md.focus()">MD</A>,
-			<A HREF="javascript:document.myForm.month.focus()">month</A>, <A HREF="javascript:document.myForm.bug.focus()">bug</A></TD>
+		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="loc"  CHECKED ONCLICK="setView()">
+			<A HREF="javascript:document.myForm.md.focus()">MD</A>,
+			<A HREF="javascript:document.myForm.month.focus()">month</A>, 
+			<A HREF="javascript:document.myForm.bug.focus()">bug</A></TD>
 		<TD WIDTH="51%" VALIGN="TOP"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>
 			Floor vs. Room: (#patients or MRN), (#bugs or bug-list), isolation status</TD>
 	</TR>
 	<TR>
 		<TD WIDTH="32%" VALIGN="TOP">Temporal Trends</TD>
-		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="time" ONCLICK="setView()"><A HREF="javascript:document.myForm.md.focus()">MD</A>,
-			<A HREF="javascript:document.myForm.floor.focus()">floor</A></TD>
+		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="time" ONCLICK="setView()">
+			<A HREF="javascript:document.myForm.md.focus()">MD</A>,
+			<A HREF="javascript:document.myForm.floor.focus()">floor</A>
+		</TD>
 		<TD WIDTH="51%" VALIGN="TOP"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>
 			# and severity of bugs over time</TD>
 	</TR>
 	<TR>
-		<TD WIDTH="32%" VALIGN="TOP">Sensitivity Profile Averages</TD>
+		<TD WIDTH="32%" VALIGN="TOP">Antibiogram</TD>
 		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="sens" ONCLICK="setView()"><A HREF="javascript:document.myForm.md.focus()">MD</A>,
 			<A HREF="javascript:document.myForm.md.focus()">month</A>, <A HREF="javascript:document.myForm.floor.focus()">floor</A></TD>
 		<TD WIDTH="51%" VALIGN="TOP"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>
@@ -214,11 +219,11 @@ ONRESET="setDefaults()">
 		<TD WIDTH="81%">
 			<SELECT NAME="md" ONCHANGE="setMD()">
 			<OPTION value="all" SELECTED>(All)</OPTION>
-			<OPTION value="1">R Barrows</OPTION>
-			<OPTION value="2">J Cimino</OPTION>
-			<OPTION value="3">G Hripcsak</OPTION>
-			<OPTION value="4">R Jenders</OPTION>
-			<OPTION value="5">J Starren</OPTION>
+			<OPTION value="rb">R Barrows</OPTION>
+			<OPTION value="jc">J Cimino</OPTION>
+			<OPTION value="gh">G Hripcsak</OPTION>
+			<OPTION value="rj">R Jenders</OPTION>
+			<OPTION value="js">J Starren</OPTION>
 			</SELECT>
 		</TD>
 	</TR>
@@ -240,10 +245,10 @@ ONRESET="setDefaults()">
 		<TD WIDTH="81%">
 			<SELECT NAME="bug" ONCHANGE="setBug()">
 			<OPTION value="all" SELECTED>(All)</OPTION>
-			<OPTION value="1">Acinetobacter B. (ab)</OPTION>
-			<OPTION value="2">Pseudomonas A. (pa)</OPTION>
-			<OPTION value="3">Staph Aureus (sa)</OPTION>
-			<OPTION value="4">Serratia Marc. (sm)</OPTION>
+			<OPTION value="ab">Acinetobacter B. (ab)</OPTION>
+			<OPTION value="pa">Pseudomonas A. (pa)</OPTION>
+			<OPTION value="sa">Staph Aureus (sa)</OPTION>
+			<OPTION value="sm">Serratia Marc. (sm)</OPTION>
 			</SELECT>
 		</TD>
 	</TR>

@@ -1,6 +1,6 @@
 <%
 
-$SENS = array('red','orange','yellow','white','white','white','white','white','white','white','white');
+$SENS = array('#FF66FF','#FF9900','yellow','white','white','white','white','white','white','white','white');
 
 $MD2abbr = array(
 	'R Barrows' => 'rb',
@@ -37,7 +37,7 @@ $abbr2BUG = array(
 );
 
 $abbr2DRUG = array(
-	'gm',	'Gentamicin&nbsp;(gm)',
+	'gm' => 'Gentamicin&nbsp;(gm)',
 	'ts' => 'Bactrim&nbsp;(ts)',
 	'tim' => 'Timentin&nbsp;(tim)',
 	'pitz' => 'Zosyn&nbsp;(pitz)',
@@ -72,5 +72,11 @@ function title ($arg, $bold='1') {
 		return "<FONT SIZE='4'>$arg</FONT>";
 	else
 		return "<FONT SIZE=4><B>$arg</B></FONT>";
+}
+
+function rgb ($r,$g,$b) {
+	# expects rgb as percents
+	
+	return sprintf('#%02x%02x%02x', (($r * 255) % 256), (($g * 255) % 256), (($b * 255) % 256));
 }
 %>

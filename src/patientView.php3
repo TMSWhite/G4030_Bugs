@@ -47,13 +47,17 @@ include("externs.inc");
 $leftfile = $leftstr = $rightfile = $rightstr = '';
 if ($mrn > 0) { 
 	$leftfile = "patientView.php3?mrn=" . ($mrn - 1);
-	$leftstr = "MRN=" .  ($mrn - 1);
+	$leftstr = "Patient#" .  ($mrn - 1);
 }
 if ($mrn < 1000) {
 	$rightfile = "patientView.php3?mrn=" . ($mrn + 1);
-	$rightstr = "MRN=" .  ($mrn + 1);
+	$rightstr = "Patient#" .  ($mrn + 1);
 }
-$arrowsMRN = makeArrows($tWidth,$leftfile,$leftstr,"MRN",$mrn,$rightfile,$rightstr);
+$arrowsMRN = makeArrows($tWidth,$leftfile,$leftstr,"Patient#",$mrn,$rightfile,$rightstr);
+
+$md = $row['md'];
+$month = $row['month'];
+$floor = $row['floor'];
 
 %>
 
@@ -66,12 +70,14 @@ $arrowsMRN = makeArrows($tWidth,$leftfile,$leftstr,"MRN",$mrn,$rightfile,$rights
 <%=$arrowsMRN;%>
 
 <TABLE CELLPADDING='0' CELLSPACING='0' BORDER='1'  WIDTH='450'>
-	<TR><TD WIDTH='50'>Patient Name</TD><TD><B>XXXXX YYYYY</B></TR>
-	<TR><TD WIDTH='50'>MD</TD><TD><B><%=$abbr2MD[$row['md']];%></B>
-	<% echo " (<A HREF='mdView.php3?md=" . $row['md'] . "&month=" . $row['month'] . "&floor=" . $row['floor']. "'>MD's view</A>)</TD></TR>\n";%>
-	<TR><TD WIDTH='50'>Where</TD><TD><B>Floor <%=$row['floor'];%>, Room <%=$row['room'];%>, Bed <%=$row['bed'];%></B>
-	<% echo " (<A HREF='floorView.php3?md=" . $row['md'] . "&month=" . $row['month'] . "'>Floor-plan view</A>)</TD></TR>\n";%>
-	<TR><TD WIDTH='50'>Month</TD><TD><B><%=$row['month'];%></B></TD></TR>
+	<TR><TD WIDTH='50'>MD</TD><TD><B><%=$abbr2MD[$md];%></B>
+	<% echo " (<A HREF='mdView.php3?md=" . $md . "&month=" . $month . "&floor=" . $floor. "'>MD's Patient List</A>)";%>
+	<% echo " (<A HREF='sensView.php3?md=$md&floor=$floor&month=$month'>Antibiogram</A>)";%>
+	</TD></TR>
+	<TR><TD WIDTH='50'>Where</TD><TD><B>Floor <%=$floor;%>, Room <%=$row['room'];%>, Bed <%=$row['bed'];%></B>
+	<% echo " (<A HREF='floorView.php3?md=" . $md . "&month=" . $month . "'>Floor-plan view</A>)";%>
+	</TD></TR>
+	<TR><TD WIDTH='50'>Month</TD><TD><B><%=$month;%></B></TD></TR>
 </TABLE>
 
 <TABLE CELLPADDING='0' CELLSPACING='0' BORDER='1'  WIDTH='450'>
@@ -79,6 +85,7 @@ $arrowsMRN = makeArrows($tWidth,$leftfile,$leftstr,"MRN",$mrn,$rightfile,$rights
 <% 
 	mysql_free_result($result);
 	echo "<TD $td>Bug\Drug</TD>\n";
+	reset($DRUG);
 	while (list($key, $val) = each($DRUG)) {
 		if ($val == 'all')
 			continue;
@@ -116,7 +123,8 @@ $arrowsMRN = makeArrows($tWidth,$leftfile,$leftstr,"MRN",$mrn,$rightfile,$rights
 	<TD BGCOLOR='lightblue' COLSPAN='3' ALIGN='center'><B>low</B></TD>
 	<TD BGCOLOR='lightblue' COLSPAN='4' ALIGN='center'><B>mid</B></TD>
 	<TD BGCOLOR='lightblue' COLSPAN='3' ALIGN='center'><B>high</B></TD>
-</TR></TABLE>
+</TR>
+</TABLE>
 
 <% } // END else 
 if (isset($db)) { mysql_close($db); }

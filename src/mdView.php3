@@ -21,7 +21,7 @@ if ($where) {
 	$where = "WHERE $where";
 }
 #else {
-	$sql = "SELECT * FROM patients $where ORDER BY month ASC, md ASC, floor ASC";
+	$sql = "SELECT * FROM patients $where ORDER BY month ASC, floor ASC, room ASC, bed ASC";
 	
 	$db = mysql_connect("localhost", "root");
 	
@@ -96,7 +96,7 @@ else {
 	$arrowsFloor = makeArrows($tWidth,$leftfile,$leftstr,"floor",$floor,$rightfile,$rightstr);		
 %>
 	
-<TABLE CELLPADDING='0' CELLSPACING='0' BORDER='0'  WIDTH='400'><TR><TD align='center'><FONT SIZE=4><B>Doctor's List of Patients</B><BR></TD></TR></TABLE>
+<TABLE CELLPADDING='0' CELLSPACING='0' BORDER='0'  WIDTH='400'><TR><TD align='center'><FONT SIZE=5><B>Doctor's List of Patients</B><BR></TD></TR></TABLE>
 <%=$arrowsMD;%>
 <%=$arrowsMonth;%>
 <%=$arrowsFloor;%>
@@ -157,14 +157,11 @@ else {
 %>
 
 </TABLE>
-<%=$arrowsMD;%>
-<%=$arrowsMonth;%>
-<%=$arrowsFloor;%>
 
 <P><TABLE CELLPADDING='0' CELLSPACING='0' BORDER='1'  WIDTH='400'>
 <TR><TD align='center' COLSPAN='5'><B>Legend</B></TD></TR>
 <TR><TD ROWSPAN='2'>Severity</TD><TD  COLSPAN='4'>The cell's color shows how many antibiotics (AB)s can treat the worst bug</TD></TR>
-<TR><TD BGCOLOR='red'>Resistant to all ABs</TD><TD BGCOLOR='orange'>Sensitive to 1 AB</TD><TD BGCOLOR='yellow'>Sensitive to 2 ABs</TD><TD BGCOLOR='white'>Sensitive to >2 ABs</TD></TR>
+<TR><TD BGCOLOR='<%=$SENS[0];%>'>Resistant to all ABs</TD><TD BGCOLOR='<%=$SENS[1];%>'>Sensitive to 1 AB</TD><TD BGCOLOR='<%=$SENS[2];%>'>Sensitive to 2 ABs</TD><TD BGCOLOR='white'>Sensitive to >2 ABs</TD></TR>
 </TABLE>
 
 
