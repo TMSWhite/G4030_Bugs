@@ -23,21 +23,42 @@ my %abbr2MD = (
 	
 );
 
-my ($TD,$TITLE,$floor,$room,$bed,$bgcolor,$color,$mrn,$bug,$drug,$filename,$single);
-my (@MD,@DRUG,@BUG,@MONTH,@FLOOR,@ROOM,@BED);
-my (%Bugs,%tBug,%Mrn,%Drug,%minSens,%MIN_SENS);
-my ($gMd,$gBug,$gMonth);
+my %abbr2BUG = (
+	'ab', 'Acinetobacter&nbsp;B.<BR>(ab)',
+	'pa', 'Pseudomonas&nbsp;A.<BR>(pa)',
+	'sa', 'Staph&nbsp;Aureus<BR>(sa)',
+	'sm', 'Serratia&nbsp;Marc.<BR>(sm)',
+	'all', 'Average',
+);
+
+my %abbr2DRUG = (
+	'gm',	'Gentamicin&nbsp;(gm)',
+	'ts', 'Bactrim&nbsp;(ts)',
+	'tim', 'Timentin&nbsp;(tim)',
+	'pitz', 'Zosyn&nbsp;(pitz)',
+	'cax', 'Ceftriaxone&nbsp;(cax)',
+	'ak', 'Amikacin&nbsp;(ak)',
+	'cp', 'Ciprofloxacin&nbsp;(cip)',
+	'aug', 'Augmentin&nbsp;(aug)',
+	'e', 'Erythromycin&nbsp;(e)',
+	'clin', 'Clindamycin&nbsp;(clin)',
+	'all', 'Average',
+);
+
+my ($TD,$TITLE,$floor,$room,$bed,$bgcolor,$color,$mrn,$bug,$drug,$filename);
+my (@MD,@DRUG,@BUG,@MONTH,@FLOOR,@ROOM);
+my (%Bugs,%tBug,%Mrn,%minSens,%MIN_SENS,%tSens,%denomSens,%tPt);
+my ($gMd,$gBug,$gMonth,$gFloor);
 
 my $TABLE = "TABLE CELLPADDING='0' CELLSPACING='0'";
 
 
 @MD = ('all','rb','jc','gh','rj','js');
-@DRUG = ('all','gm','ts','e','cax','aug','cp','clin','tim','pitz','ak');	# drugs in ascending order from cheapest to most expensive
-@BUG = ('all','pa','sa','sm','ab');
+@DRUG = ('gm','ts','e','cax','aug','cp','clin','tim','pitz','ak','all');	# drugs in ascending order from cheapest to most expensive
+@BUG = ('ab','pa','sa','sm','all');
 @MONTH = ('all','1','2','3','4','5');
 @FLOOR = ('all','1','2','3','4','5','6','7','8','9','10');
 @ROOM = ('all','1','2','3','4','5','6','7','8','9','10');
-@BED = ('all','1','2');
 
 my ($numer,$denom,$ratio);
 my ($mrn,$month,$floor,$room,$bed,$md,@rest);
@@ -58,10 +79,11 @@ for (my $floor=1;$floor<=10;++$floor) {
 my @SENSITIVITY_COLS = ('red','orange','yellow','white','white','white','white','white','white','white','white');
 
 &parseSource;
-&test;
+#&test;
 &printByLoc;
 &printByPt;
 &printByMD;
+&printByBug;
 
 
 sub parseSource {
@@ -161,7 +183,7 @@ sub parsePatient {
 }
 
 sub printByLoc {
-	my $tWidth = "WIDTH='750'";
+	my $tWidth = "WIDTH='700'";
 	my $msg;
 	
 	for (my $cMd=0;$cMd<=$#MD;++$cMd) {
@@ -177,28 +199,10 @@ sub printByLoc {
 				&preamble;
 				
 				if ($gMonth eq 'all') {
-					$msg = "<B>Number and Severity of Infections by Location</B><BR>";
+					$msg = "<B>Number and Severity of Infections by Location</B>";
 				}
 				else {
-					$msg = "<B>Patient MRN, Bugs, and Severity by Location</B><BR>";
-				}
-				if ($gMd eq 'all') {
-					$msg .= "All MDs, "
-				}
-				else {
-					$msg .= "MD=<B>$abbr2MD{$gMd}</B>, ";
-				}
-				if ($gMonth eq 'all') {
-					$msg .= "All Months, ";
-				}
-				else {
-					$msg .= "Month=<B>$gMonth</B>, ";
-				}
-				if ($gBug eq 'all') {
-					$msg .= "All Bugs";
-				}
-				else {
-					$msg .= "Bug=<B>$gBug</B>";
+					$msg = "<B>Patient MRN, Bugs, and Severity by Location</B>";
 				}
 				
 				print OUT qq|<$TABLE BORDER='0' $tWidth><TR><TD align='center'>$msg</TD></TR></TABLE>\n|;
@@ -211,62 +215,50 @@ sub printByLoc {
 				$leftstr = "MD=$abbr2MD{$MD[$cMd-1]}"	if ($cMd > 0);
 				$rightfile = "loc_$MD[$cMd+1]_$gBug\_$gMonth.htm"	if ($cMd < $#MD);
 				$rightstr = "MD=$abbr2MD{$MD[$cMd+1]}"	if ($cMd < $#MD);				
-				print OUT &makeArrows($tWidth,$leftfile,$leftstr,$rightfile,$rightstr);
+				print OUT &makeArrows($tWidth,$leftfile,$leftstr,"MD",$abbr2MD{$gMd},$rightfile,$rightstr);
 				
 				$leftfile = $leftstr = $rightfile = $rightstr = '';
 				$leftfile = "loc_$gMd\_$gBug\_$MONTH[$cMonth-1].htm"	if ($cMonth > 0);
 				$leftstr = "month=$MONTH[$cMonth-1]"	if ($cMonth > 0);
 				$rightfile = "loc_$gMd\_$gBug\_$MONTH[$cMonth+1].htm"	if ($cMonth < $#MONTH);
 				$rightstr = "month=$MONTH[$cMonth+1]"	if ($cMonth < $#MONTH);				
-				print OUT &makeArrows($tWidth,$leftfile,$leftstr,$rightfile,$rightstr);
+				print OUT &makeArrows($tWidth,$leftfile,$leftstr,"month",$gMonth,$rightfile,$rightstr);
 				
 				$leftfile = $leftstr = $rightfile = $rightstr = '';
 				$leftfile = "loc_$gMd\_$BUG[$cBug-1]_$gMonth.htm"	if ($cBug > 0);
 				$leftstr = "bug=$BUG[$cBug-1]"	if ($cBug > 0);
 				$rightfile = "loc_$gMd\_$BUG[$cBug+1]_$gMonth.htm"	if ($cBug < $#BUG);
 				$rightstr = "bug=$BUG[$cBug+1]"	if ($cBug < $#BUG);				
-				print OUT &makeArrows($tWidth,$leftfile,$leftstr,$rightfile,$rightstr);						
+				print OUT &makeArrows($tWidth,$leftfile,$leftstr,"bug",$gBug,$rightfile,$rightstr);						
 				
 				
 				print OUT qq|<$TABLE BORDER='1'>\n|;
 				
-				$single = !($gMonth eq 'all');
-				%Mrn = ();
-				%Drug = ();
-				%tBug = ();
-				%Bugs = ();
-				%minSens = %MIN_SENS;	# reset to maximal value
-				&calcSingle	if $single;
-				&calcMultiple;
-				&locTableBody;
-				&locTableEnd;
+				&calcByLoc;
+				
+				&printByLocTableBody;
+				&printByLocTableEnd;
 				
 				
 				# print legend
 				
+				print OUT qq|<P><$TABLE BORDER='1' $tWidth>\n|;
+				print OUT qq|<TR><TD align='center' COLSPAN='5'><B>Legend</B></TD></TR>\n|;
+				
 				if ($gMonth eq 'all') {
-					print OUT qq|<P><$TABLE BORDER='1' $tWidth>\n|;
-					print OUT qq|<TR><TD align='center' COLSPAN='5'><B>Legend</B></TD></TR>\n|;
-					print OUT qq|<TR><TD>Number of infections</TD><TD COLSPAN='4'>The number and background color of each cell:  The lighter the grey, the more infections in that room</TD></TR>\n|;
-					print OUT qq|<TR><TD ROWSPAN='2'>Severity</TD><TD  COLSPAN='4'>The color of the number in each cell shows how many antibiotics (AB)s can treat the infection:</TD></TR>\n|;
-					print OUT qq|<TR><TD BGCOLOR='black'><FONT size='4' color='red'><B>Resistant to all ABs</B></FONT></TD>\n|;
-					print OUT qq|<TD BGCOLOR='black'><FONT size='4' color='orange'><B>Sensitive to 1 AB</B></FONT></TD>\n|;
-					print OUT qq|<TD BGCOLOR='black'><FONT size='4' color='yellow'><B>Sensitive to 2 ABs</B></FONT></TD>\n|;
-					print OUT qq|<TD BGCOLOR='black'><FONT size='4' color='white'><B>Sensitive to >2 ABs</B></FONT></TD></TR>\n|;
-					print OUT qq|</TABLE>\n|;
+					print OUT qq|<TR><TD># Patients</TD><TD COLSPAN='4'>The top number of each cell</TD></TR>\n|;
+					print OUT qq|<TR><TD># Bugs</TD><TD COLSPAN='4'>The bottom number of each cell</TD></TR>\n|;
 				}
 				else {
-					print OUT qq|<P><$TABLE BORDER='1' $tWidth>\n|;
-					print OUT qq|<TR><TD align='center' COLSPAN='5'><B>Legend</B></TD></TR>\n|;
 					print OUT qq|<TR><TD>MRN</TD><TD COLSPAN='4'>The hyperlinked number at the top of each cell</TD></TR>\n|;
 					print OUT qq|<TR><TD>Bugs</TD><TD  COLSPAN='4'>The comma separated list of abbreviations at the bottom of each cell</TD></TR>\n|;
-					print OUT qq|<TR><TD ROWSPAN='2'>Severity</TD><TD  COLSPAN='4'>The cell's color shows how many antibiotics (AB)s can treat the infection</TD></TR>\n|;
-					print OUT qq|<TR><TD BGCOLOR='red'>Resistant to all ABs</TD><TD BGCOLOR='orange'>Sensitive to 1 AB</TD><TD BGCOLOR='yellow'>Sensitive to 2 ABs</TD><TD BGCOLOR='white'>Sensitive to >2 ABs</TD></TR>\n|;
-					print OUT qq|</TABLE>\n|;					
 				}
 				
+				print OUT qq|<TR><TD ROWSPAN='2'>Severity</TD><TD  COLSPAN='4'>The cell's color shows how many antibiotics (AB)s can treat the worst bug</TD></TR>\n|;
+				print OUT qq|<TR><TD BGCOLOR='red'>Resistant to all ABs</TD><TD BGCOLOR='orange'>Sensitive to 1 AB</TD><TD BGCOLOR='yellow'>Sensitive to 2 ABs</TD><TD BGCOLOR='white'>Sensitive to >2 ABs</TD></TR>\n|;
+				print OUT qq|<TR><TD BGCOLOR='lightblue'>Totals</TD><TD COLSPAN='4'>Total #Patients is the top number; Total #Bugs is the bottom number</TD>\n|;
+				print OUT qq|</TABLE>\n|;					
 				
-
 				
 				&epilogue;				
 				
@@ -295,14 +287,12 @@ sub printByPt {
 		$rightstr = $count+1	if ($count < $#patients);
 		$rightfile = "pt$rightstr.htm"	if ($count < $#patients);
 				
-		my $arrows = &makeArrows($tWidth,$leftfile,$leftstr,$rightfile,$rightstr);
+		my $arrows = &makeArrows($tWidth,$leftfile,$leftstr,"Patient MRN",$p{'mrn'},$rightfile,$rightstr);
 
-		print OUT qq|<$TABLE BORDER='0' $tWidth><TR><TD align='center'>Patient <B>$p{'mrn'}</B></TD></TR></TABLE>\n|;
-		
 		print OUT $arrows;
 		
 		print OUT qq|<$TABLE BORDER='1' $tWidth>\n|;
-		print OUT qq|	<TR><TD WIDTH='50'>MD</TD><TD><B><A HREF='md_$p{'md'}.htm'>$abbr2MD{$p{'md'}}</A></B></TD></TR>\n|;
+		print OUT qq|	<TR><TD WIDTH='50'>MD</TD><TD><B><A HREF='md_$p{'md'}_$p{'month'}.htm'>$abbr2MD{$p{'md'}}</A></B></TD></TR>\n|;
 		print OUT qq|	<TR><TD WIDTH='50'>Where</TD><TD><B>Floor $p{'floor'}, Room $p{'room'}, Bed $p{'bed'}</B></TD></TR>\n|;
 		print OUT qq|	<TR><TD WIDTH='50'>Month</TD><TD><B><A HREF='loc_$p{'md'}_all_$p{'month'}.htm'>$p{'month'}</A></B></TD></TR>\n|;
 		print OUT qq|</TABLE>\n|;
@@ -310,9 +300,9 @@ sub printByPt {
 		print OUT qq|<$TABLE BORDER='1' $tWidth>\n|;
 		print OUT qq|<TR><TD $TD>Bug</TD>|;
 		
-		foreach (@DRUG) {
-			next	if ($_ eq 'all');
-			print OUT qq|<TD $TD>$_</TD>|;
+		foreach my $drug (@DRUG) {
+			next	if ($drug eq 'all');
+			print OUT qq|<TD $TD>$drug</TD>|;
 		}
 		print OUT qq|</TR>\n|;
 		
@@ -323,9 +313,9 @@ sub printByPt {
 			
 			print OUT "<TR><TD $TD><B>" . uc($b{'bug'}) . "</B></TD>";
 			
-			foreach (@DRUG) {
-				next if ($_ eq 'all');
-				$sens = $b{$_};
+			foreach my $drug (@DRUG) {
+				next if ($drug eq 'all');
+				$sens = $b{$drug};
 				if ($sens eq '0') {
 					$label = 'R';
 					$BG = '';
@@ -353,10 +343,14 @@ sub printByPt {
 }
 
 sub makeArrows {
-	my ($width,$prefile,$prestr,$postfile,$poststr,$msg);
-	($width,$prefile,$prestr,$postfile,$poststr) = @_;
+	my ($width,$prefile,$prestr,$midtopic,$midstr,$postfile,$poststr,$msg);
+	($width,$prefile,$prestr,$midtopic,$midstr,$postfile,$poststr) = @_;
 	
-	$msg = qq|<$TABLE BORDER='0' $width><TR><TD align='left'><A HREF='$prefile'>$prestr</A></TD><TD align='right'><A HREF='$postfile'>$poststr</A></TD></TR></TABLE>\n|;
+	$msg = qq|<$TABLE BORDER='0' $width><TR>|	.
+			qq|<TD width='25%' align='left'><A HREF='$prefile'>$prestr</A></TD>| .
+			qq|<TD width='25%' align='right'>$midtopic = </TD>| .
+			qq|<TD width='25%' align='left'><B>$midstr</B></TD>| .
+			qq|<TD width='25%' align='right'><A HREF='$postfile'>$poststr</A></TD></TR></TABLE>\n|;
 	return $msg;
 }
 
@@ -365,98 +359,188 @@ sub printByMD {
 	my $TD = "TD align='center' valign='top'";
 	my $msg;
 	my $tWidth = " WIDTH='400'";
+	my ($leftfile,$leftstr,$rightfile,$rightstr);
+	my ($arrowsMD,$arrowsMonth);
 	
-	for (my $count=0;$count<=$#MD;++$count) {
+	for (my $md=0;$md<=$#MD;++$md) {
+		$gMd = $MD[$md];
+		for (my $month=0;$month<=$#MONTH;++$month) {
+			$gMonth = $MONTH[$month];	
 		
-		next if ($MD[$count] eq 'all');
-		$gMd = $MD[$count];
-		
-		$filename = "../bugs/md_$gMd.htm";
-		open (OUT, ">$filename") or die "unable to open $filename";
-		
-		&preamble;
-		
-		my ($leftfile,$leftstr,$rightfile,$rightstr);
-		$leftfile = "md_$MD[$count-1].htm"	if ($count > 1);
-		$leftstr = $abbr2MD{$MD[$count-1]}	if ($count > 1);
-		$rightfile = "md_$MD[$count+1].htm"	if ($count < $#MD);
-		$rightstr = $abbr2MD{$MD[$count+1]}	if ($count < $#MD);
-		
-	
-		print OUT qq|<$TABLE BORDER='0' $tWidth><TR><TD align='center'>All Patients for <B>$abbr2MD{$gMd}</B></TD></TR></TABLE>\n|;
-		
-		my $arrows = &makeArrows($tWidth,$leftfile,$leftstr,$rightfile,$rightstr);
-		
-		print OUT $arrows;
-		print OUT qq|<$TABLE BORDER='1' $tWidth>\n|;
-		print OUT qq|	<TR><$TD>Month</TD><$TD>MRN</TD><$TD>Floor</TD><$TD>Room</TD><$TD>Bed</TD><$TD><B>Bug:</B> Sensitivity Profile<BR><FONT color='#00dd00'><B>Green</B></FONT>=Sensitive, <FONT color='#aa0000'><B>Red</B></FONT>=Resistant</TD></TR>|;
-		
-		foreach (@patients) {
-			my %p = %{ $_ };
+			$filename = "../bugs/md_$gMd\_$gMonth.htm";
+			open (OUT, ">$filename") or die "unable to open $filename";
 			
-			next unless ($p{'md'} eq $gMd);
+			&preamble;
 			
-			print OUT qq|	<TR><$TD><A HREF='loc_$gMd\_all_$p{'month'}.htm'>$p{'month'}</A></TD><$TD><A HREF='pt$p{'mrn'}.htm'>$p{'mrn'}</A></TD><$TD>$p{'floor'}</TD><$TD>$p{'room'}</TD><$TD>$p{'bed'}</TD>|;
+			print OUT qq|<$TABLE BORDER='0' $tWidth><TR><TD align='center'><B>Patient List</B></TD></TR></TABLE>\n|;
 
-			my %profs = %{ $p{'profiles'} };
+			$leftfile = $leftstr = $rightfile = $rightstr = '';
+			$leftfile = "md_$MD[$md-1]_$gMonth.htm"	if ($md > 0);
+			$leftstr = "MD=$abbr2MD{$MD[$md-1]}"	if ($md > 0);
+			$rightfile = "md_$MD[$md+1]_$gMonth.htm"	if ($md < $#MD);
+			$rightstr = "MD=$abbr2MD{$MD[$md+1]}"	if ($md < $#MD);
+			$arrowsMD = &makeArrows($tWidth,$leftfile,$leftstr,"MD",$abbr2MD{$gMd},$rightfile,$rightstr);
+
+			$leftfile = $leftstr = $rightfile = $rightstr = '';
+			$leftfile = "md_$gMd\_$MONTH[$month-1].htm"	if ($month > 0);
+			$leftstr = "month=$MONTH[$month-1]"	if ($month > 0);
+			$rightfile = "md_$gMd\_$MONTH[$month+1].htm"	if ($month < $#MONTH);
+			$rightstr = "month=$MONTH[$month+1]"	if ($month < $#MONTH);			
+			$arrowsMonth = &makeArrows($tWidth,$leftfile,$leftstr,"month",$MONTH[$gMonth],$rightfile,$rightstr);
 			
-			print OUT qq|<TD><FONT FACE='Arial'><B>|;
+			print OUT $arrowsMD;
+			print OUT $arrowsMonth;
 			
-			if ($p{'bugs'} == 0) {
-				print OUT '&nbsp;';
-			}
+			print OUT qq|<$TABLE BORDER='1' $tWidth>\n|;
+			print OUT qq|	<TR><$TD>Month</TD><$TD>MRN</TD><$TD>Floor</TD><$TD>Room</TD><$TD>Bed</TD><$TD><B>Bug:</B> Sensitivity Profile<BR><FONT color='#00dd00'><B>Green</B></FONT>=Sensitive, <FONT color='#aa0000'><B>Red</B></FONT>=Resistant</TD></TR>|;
 			
-			for (my $i=1;$i<=$p{'bugs'};++$i) {
-				my %b = %{ $profs{$i} };
+			foreach (@patients) {
+				my %p = %{ $_ };
 				
-				if ($i > 1) {
-					print OUT '<BR>';
-				}
-				$msg = uc($b{'bug'});
-				print OUT qq|$msg:&nbsp;|;
+				next unless ($p{'md'} eq $gMd || $gMd eq 'all');
+				next unless ($p{'month'} eq $gMonth || $gMonth eq 'all');
 				
-				foreach (@DRUG) {
-					next if ($_ eq 'all');
-					$sens = $b{$_};
-					if ($sens eq '0') {
-						print OUT qq|&nbsp;<FONT COLOR='#aa0000'>$_</FONT>|;
-					}
-					elsif ($sens eq '1') {
-#						$msg = uc($_);
-						$msg = $_;
-						print OUT qq|&nbsp;<FONT COLOR='#00dd00'>$msg</FONT>|;
-					}
-					else {
-						print OUT qq|&nbsp;<FONT COLOR='#dddddd'>$_</FONT>|;
-					}
-				}
-			}
-			print OUT qq|</B></FONT></TD></TR>\n|;
-		}
-		print OUT qq|</TABLE>\n|;
-		print OUT $arrows;
+				print OUT qq|	<TR><$TD><A HREF='loc_$gMd\_all_$p{'month'}.htm'>$p{'month'}</A></TD><$TD><A HREF='pt$p{'mrn'}.htm'>$p{'mrn'}</A></TD><$TD>$p{'floor'}</TD><$TD>$p{'room'}</TD><$TD>$p{'bed'}</TD>|;
 	
-		&epilogue;		
-		close (OUT);	
+				my %profs = %{ $p{'profiles'} };
+				
+				print OUT qq|<TD><FONT FACE='Arial'><B>|;
+				
+				if ($p{'bugs'} == 0) {
+					print OUT '&nbsp;';
+				}
+				
+				for (my $i=1;$i<=$p{'bugs'};++$i) {
+					my %b = %{ $profs{$i} };
+					
+					if ($i > 1) {
+						print OUT '<BR>';
+					}
+					$msg = uc($b{'bug'});
+					print OUT qq|$msg:&nbsp;|;
+					
+					foreach my $drug (@DRUG) {
+						next if ($drug eq 'all');
+						$sens = $b{$drug};
+						if ($sens eq '0') {
+							print OUT qq|&nbsp;<FONT COLOR='#aa0000'>$drug</FONT>|;
+						}
+						elsif ($sens eq '1') {
+							$msg = $drug;
+							print OUT qq|&nbsp;<FONT COLOR='#00dd00'>$msg</FONT>|;
+						}
+						else {
+							print OUT qq|&nbsp;<FONT COLOR='#dddddd'>$drug</FONT>|;
+						}
+					}
+				}
+				print OUT qq|</B></FONT></TD></TR>\n|;
+			}
+			print OUT qq|</TABLE>\n|;
+			print OUT $arrowsMD;
+			print OUT $arrowsMonth;	
+				
+			&epilogue;		
+			close (OUT);
+		}
 	}
 }
 
+sub printByBug {
+	my $tWidth = "WIDTH='550'";
+	my $msg;
+	
+	for (my $cMd=0;$cMd<=$#MD;++$cMd) {
+		$gMd = $MD[$cMd];
+		for (my $cFloor=0;$cFloor<=$#FLOOR;++$cFloor) {
+			$gFloor = $FLOOR[$cFloor];
+			for (my $cMonth=0;$cMonth<=$#MONTH;++$cMonth) {
+				$gMonth = $MONTH[$cMonth];
 
+				$filename = "../bugs/sens_$gMd\_$gFloor\_$gMonth.htm";
+				open (OUT, ">$filename") or die "unable to open $filename";
+				
+				&preamble;
+				
+				$msg = "<B>Antibiotic Sensitivity of Bugs</B><BR>";
+				
+				print OUT qq|<$TABLE BORDER='0' $tWidth><TR><TD align='center'>$msg</TD></TR></TABLE>\n|;
+							
+				
+				my ($leftfile,$leftstr,$rightfile,$rightstr);
+				
+				$leftfile = $leftstr = $rightfile = $rightstr = '';
+				$leftfile = "sens_$MD[$cMd-1]_$gFloor\_$gMonth.htm"	if ($cMd > 0);
+				$leftstr = "MD=$abbr2MD{$MD[$cMd-1]}"	if ($cMd > 0);
+				$rightfile = "sens_$MD[$cMd+1]_$gFloor\_$gMonth.htm"	if ($cMd < $#MD);
+				$rightstr = "MD=$abbr2MD{$MD[$cMd+1]}"	if ($cMd < $#MD);				
+				print OUT &makeArrows($tWidth,$leftfile,$leftstr,"MD",$abbr2MD{$gMd},$rightfile,$rightstr);
+				
+				$leftfile = $leftstr = $rightfile = $rightstr = '';
+				$leftfile = "sens_$gMd\_$gFloor\_$MONTH[$cMonth-1].htm"	if ($cMonth > 0);
+				$leftstr = "month=$MONTH[$cMonth-1]"	if ($cMonth > 0);
+				$rightfile = "sens_$gMd\_$gFloor\_$MONTH[$cMonth+1].htm"	if ($cMonth < $#MONTH);
+				$rightstr = "month=$MONTH[$cMonth+1]"	if ($cMonth < $#MONTH);				
+				print OUT &makeArrows($tWidth,$leftfile,$leftstr,"month",$gMonth,$rightfile,$rightstr);
+				
+				$leftfile = $leftstr = $rightfile = $rightstr = '';
+				$leftfile = "sens_$gMd\_$FLOOR[$cFloor-1]_$gMonth.htm"	if ($cFloor > 0);
+				$leftstr = "floor=$FLOOR[$cFloor-1]"	if ($cFloor > 0);
+				$rightfile = "sens_$gMd\_$FLOOR[$cFloor+1]_$gMonth.htm"	if ($cFloor < $#FLOOR);
+				$rightstr = "floor=$FLOOR[$cFloor+1]"	if ($cFloor < $#FLOOR);				
+				print OUT &makeArrows($tWidth,$leftfile,$leftstr,"floor",$gFloor,$rightfile,$rightstr);						
+				
+				&calcByBug;
+				
+				print OUT qq|<$TABLE BORDER='1'>\n|;
+				
+				&printByBugTableBody;
+				
+				print OUT qq|</TABLE>\n|;
+				
+				#Legend
+				print OUT qq|<P><$TABLE BORDER='1' $tWidth>\n|;
+				print OUT qq|<TR><TD align='center' COLSPAN='2'><B>Legend</B></TD></TR>\n|;
+				print OUT qq|<TR><TD>%Sensitivity</TD><TD>The top number of each cell.  Higher sensitivities are brighter green</TD></TR>\n|;
+				print OUT qq|<TR><TD>#Samples Tested</TD><TD>The bottom number of each cell</TD></TR>\n|;
+				print OUT qq|</TABLE>\n|;						
+				
+				&epilogue;				
+				
+				close (OUT);
+			}
+		}
+	}
+}
 
-sub calcSingle {
+sub calcByLoc {
+	my $allFallR = "FallRallBall";
+
+	%Mrn = ();
+	%tBug = ();
+	%Bugs = ();
+	%minSens = %MIN_SENS;	# reset to maximal value
+	%tPt = ();
+	
 	foreach (@patients) {
 		my %p = %{ $_ };
-		my (%b,$loc,$drugs);
+		my (%b,$loc);
 		next unless ($gMonth eq 'all' || $p{'month'} eq $gMonth);
 		next unless ($gMd eq 'all' || $p{'md'} eq $gMd);
 		
 		$loc = "F$p{'floor'}R$p{'room'}B$p{'bed'}";
-		
-		$Mrn{$loc} = ($p{'mrn'} + 1);	# so that can check for nulls (same as 0, which is valid mrn)
+		$Mrn{$loc} = $p{'mrn'};
 		
 		my %profs = %{ $p{'profiles'} };
-#		my %rx = ();
+		
+		my $min = $minSens{$loc};
+		my $total=0;
+		my $denom=0;
 		my $bugs = '';
+		
+		
+		my $allF = "FallR$p{'room'}Ball";
+		my $allR = "F$p{'floor'}RallBall";
 		
 		for (my $i=1;$i<=$p{'bugs'};++$i) {
 			%b = %{ $profs{$i} };
@@ -464,44 +548,115 @@ sub calcSingle {
 			next unless ($gBug eq 'all' || $b{'bug'} eq $gBug);
 			
 			$bugs .= ($bugs ? ',' : '') . $b{'bug'};
-		}
-		
-		$Bugs{$loc} = $bugs;
-#		$Drug{$loc} = $drugs;
-	}		
-}
-
-
-sub calcMultiple {
-	foreach (@patients) {
-		my %p = %{ $_ };
-		my (%b,$loc);
-#		print BYDRUG "$p{'mrn'},$p{'month'},$p{'floor'},$p{'room'},$p{'bed'},$p{'md'},$p{'bugs'}";
-		next unless ($gMonth eq 'all' || $p{'month'} eq $gMonth);
-		next unless ($gMd eq 'all' || $p{'md'} eq $gMd);
-		
-		$loc = "F$p{'floor'}R$p{'room'}B$p{'bed'}";
-		
-		my %profs = %{ $p{'profiles'} };
-		
-		my $min = $minSens{$loc};
-		
-		for (my $i=1;$i<=$p{'bugs'};++$i) {
-			%b = %{ $profs{$i} };
-			
-			next unless ($gBug eq 'all' || $b{'bug'} eq $gBug);
 			
 			++$tBug{$loc};
+			++$tBug{$allF};
+			++$tBug{$allR};
+			++$tBug{$allFallR};
+			
 			$min = $b{'numer'}	if ($b{'numer'} < $min);
+			$total += $b{'numer'};
+			$denom += $b{'denom'};
 		}
-		$minSens{$loc} = $min;
+		
+		if ($denom > 0 || $gBug eq 'all') {
+			$Bugs{$loc} = $bugs;
+			
+			#only increase patient count if there are infections, or all bugs
+			++$tPt{$loc};
+			++$tPt{$allF};
+			++$tPt{$allR};
+			++$tPt{$allFallR};
+
+			$minSens{$loc} = $min;
+		}
 	}	
 }
 
+sub calcByBug {
+	my $BDall = "BallDall";
+	
+	%tSens = ();
+	%denomSens = ();
+	
+	foreach (@patients) {
+		my %p = %{ $_ };
+		
+		next unless ($gMonth eq 'all' || $p{'month'} eq $gMonth);
+		next unless ($gMd eq 'all' || $p{'md'} eq $gMd);
+		next unless ($gFloor eq 'all' || $p{'floor'} eq $gFloor);
+		
+		my %profs = %{ $p{'profiles'} };
+		
+		for (my $i=1;$i<=$p{'bugs'};++$i) {
+			my %b = %{ $profs{$i} };
+			
+			my $Ball = "B$b{'bug'}Dall";
+			
+			foreach my $drug (@DRUG) {
+				my $loc = "B$b{'bug'}D$drug";
+				my $Dall = "BallD$drug";
+				
+				if ($b{$drug} ne '') {	# then was tested
+					++$denomSens{$loc};
+					++$denomSens{$Ball};
+					++$denomSens{$BDall};	
+					++$denomSens{$Dall};
+									
+					if ($b{$drug} eq '1') {	# then was sensitive to this drug
+						++$tSens{$loc};
+						++$tSens{$Ball};
+						++$tSens{$BDall};
+						++$tSens{$Dall};
+					}
+				}
+			}
+		}
+	}
+}
+
+sub printByBugTableBody {
+	my $TD = "TD width='40' height='40' align='center' valign='top'";
+	my ($msg,$loc,$numer,$denom,$ratio,$BG);
+	
+	print OUT qq|<TR><$TD>&nbsp;</TD>\n|;
+	
+	foreach my $bug (@BUG) {
+		print OUT qq|	<$TD><B>$abbr2BUG{$bug}</B></TD>\n|;
+	}
+	
+	print OUT qq|</TR>\n|;
+	
+	foreach my $drug (@DRUG) {
+		print OUT qq|<TR><$TD><B>$abbr2DRUG{$drug}</B></TD>\n|;
+		
+		foreach my $bug (@BUG) {
+			$loc = "B$bug\D$drug";
+			
+			$numer = $tSens{$loc};
+			$denom = $denomSens{$loc};
+			
+			if ($denom) {
+				$ratio = $numer / $denom;
+				$BG = "BGCOLOR='" . &rgb(0,$ratio,0) . "'";
+				$msg = "<FONT COLOR='white'><B>" . sprintf("%3.0f%", 100 * $ratio) . "<BR>$denom</B></FONT>";
+			}
+			else {
+				$msg = '&nbsp;';
+				$BG = '';
+			}
+			
+			print OUT qq|	<$TD $BG>$msg</TD>\n|;
+		}
+		
+		print OUT qq|</TR>\n|;
+	}
+}
 
 
-sub locTableBody {
-	my $TD = "TD width='35' height='35' align='center' valign='top'";
+sub printByLocTableBody {
+	my $TD = "TD width='30' height='30' align='center' valign='top'";
+	my $msg;
 	
 	for ($floor=10;$floor>=1;--$floor) {
 		print OUT qq|	<TR>\n|;
@@ -515,44 +670,56 @@ sub locTableBody {
 		for ($room=1;$room<=10;++$room) {
 			for ($bed=1;$bed<=2;++$bed) {
 				my $loc = "F$floor\R$room\B$bed";
-				my $msg;
-				my ($BG,$COL);
-				my ($ratio,$ratioStr,$ratioCol,$bug,$min,$total);
+				my ($BG,$ratio,$ratioStr,$ratioCol,$bug,$min,$tPt,$tBug);
 				
 				#color code based upon sensitivity
 				#the lower the value for $minSens, the more resistant - worst bug of bunch
 				$min = $minSens{$loc};
-				$total = $tBug{$loc};
-				$mrn = $Mrn{$loc} - 1;
+				$tPt = $tPt{$loc};
+				$tBug = $tBug{$loc};
+				$mrn = $Mrn{$loc};
 				
-				if ($total) {
+				$msg = '';
+
+				if ($tBug) {
 					$ratioCol = $SENSITIVITY_COLS[$min];
 					$msg .= "<BR>$min";
 					$BG = "BGCOLOR='$ratioCol'"	if ($ratioCol);
 				}
-				
-				if ($single) {
-					$msg = "<A href='pt$mrn.htm'>$mrn</A>"	if ($Mrn{$loc});
+								
+				if ($gMonth ne 'all') {
+					$msg = "<A href='pt$mrn.htm'>$mrn</A>"	if ($tPt);
 
-					if ($total) {
+					if ($tBug) {
 						$msg .= "<BR>$Bugs{$loc}";
 					}
 				}
 				else {
-					if ($total) {
-						$msg = "<FONT SIZE='4' COLOR='$ratioCol'><B>$total</B></FONT>";
-						$ratioCol = &rgb($total/12,$total/12,$total/12);
-						$BG = "BGCOLOR='$ratioCol'";
+					if ($tPt) {
+						$msg = "$tPt<BR>$tBug";
 					}
 				}
 				
 				$msg = '&nbsp;'	unless $msg;
-				print OUT qq|		<$TD $BG><FONT $COL>$msg</FONT></TD>\n|;
+				print OUT qq|		<$TD $BG>$msg</TD>\n|;
 				
 			}
 		}
+		# print row summary
+		$msg = qq|$tPt{"F$floor\RallBall"}<BR>$tBug{"F$floor\RallBall"}|;
+		$msg = '&nbsp;'	unless $msg;
+		print OUT qq|		<$TD BGCOLOR='lightblue'>$msg</TD>\n|;
 		print OUT qq|	</TR>\n|;
 	}
+	print OUT qq|	<TR><$TD COLSPAN='2' BGCOLOR='lightblue'><B>Pts<BR>Bugs</B></TD>\n|;
+	for ($room=1;$room<=10;++$room) {
+		$msg = qq|$tPt{"FallR$room\Ball"}<BR>$tBug{"FallR$room\Ball"}|;
+		$msg = '&nbsp;'	unless $msg;		
+		print OUT qq|	<$TD COLSPAN='2' BGCOLOR='lightblue'>$msg</TD>\n|;
+	}
+	$msg = qq|$tPt{'FallRallBall'}<BR>$tBug{'FallRallBall'}|;
+	$msg = '&nbsp;'	unless $msg;	
+	print OUT qq|	<$TD BGCOLOR='lightblue'>$msg</TD>\n</TR>\n|;
 }
 
 sub rgb {
@@ -562,7 +729,7 @@ sub rgb {
 	$g = shift;
 	$b = shift;
 	
-	$ans = sprintf '#%02x%02x%02x', (($r * 255) % 256), (($g * 255) % 256), (($b * 255) % 256);
+	$ans = sprintf('#%02x%02x%02x', (($r * 255) % 256), (($g * 255) % 256), (($b * 255) % 256));
 	
 	return $ans;
 }
@@ -579,12 +746,11 @@ sub preamble {
 }
 
 sub epilogue {
-	print OUT qq|</TABLE>\n|;
 	print OUT qq|</BODY>\n|;
 	print OUT qq|</HTML>\n|;
 }
 
-sub locTableEnd {
+sub printByLocTableEnd {
 	print OUT qq|	<TR>\n|;
 	print OUT qq|		<TD ROWSPAN='3' COLSPAN='2'>&nbsp;</TD>\n|;
 	
@@ -594,6 +760,7 @@ sub locTableEnd {
 			print OUT qq|		<TD ALIGN='center'><B>$val</B></TD>\n|;
 		}
 	}
+	print OUT qq|	<TD ROWSPAN='3' BGCOLOR='lightblue' ALIGN='center'><B>Pts<BR>Bugs</B></TD>\n|;
 	print OUT qq|	</TR>\n|;
 	for ($room=1;$room<=10;++$room) {
 		print OUT qq|		<TD COLSPAN='2' ALIGN='center'><B>$room</B></TD>\n|;
