@@ -62,7 +62,7 @@ my $TABLE = "TABLE CELLPADDING='0' CELLSPACING='0'";
 
 my ($numer,$denom,$ratio);
 my ($mrn,$month,$floor,$room,$bed,$md,@rest);
-my ($bug,$profile,$prefix,$sens,$resis,@micro,@args,@prof,$bugs);
+my ($bug,$profile,$prefix,$sens,$resis,@micro,@args,@prof,$bugs,$profStr);
 my ($drug,$sens0);
 my (@profiles,@patients);
 my ($ts,$tim,$pitz,$cax,$gm,$ak,$cp,$aug,$e,$clin);
@@ -79,16 +79,22 @@ for (my $floor=1;$floor<=10;++$floor) {
 my @SENSITIVITY_COLS = ('red','orange','yellow','white','white','white','white','white','white','white','white');
 
 &parseSource;
-#&test;
-&printByLoc;
-&printByPt;
-&printByMD;
-&printByBug;
+&test;
+#&printByLoc;
+#&printByPt;
+#&printByMD;
+#&printByBug;
 
+sub title {
+	my $arg = shift;
+	my $bold = shift;
+	
+	return "<FONT SIZE='4'>$arg</FONT>"	if ($bold eq '0');
+	return "<FONT SIZE=4><B>$arg</B></FONT>";
+}
 
 sub parseSource {
 	open (SRC,"bugs.src") or die "unable to open bugs.src";
-	open (BYDRUG, ">bydrug.txt") or die "unable to open bydrug.txt";
 	
 	#print BYDRUG "mrn,month,floor,room,bed,md,bug,drug,sens,resis\n";
 	while (<SRC>) {
@@ -112,6 +118,7 @@ sub parseSource {
 				
 				if ($profile) {
 					@args = split(/[: ]/,$profile);
+					$profStr = "$bug:";
 					while(@args) {
 						$drug = shift(@args);
 						$drug = 'ts' if ($drug eq 't/s');
@@ -122,13 +129,14 @@ sub parseSource {
 						$resis = ($sens0 eq '-') ? '' : (($sens0 eq 's') ? 0 : 1);
 #						push @micro, ",$bug,$drug,$sens,$resis,";
 						push @prof, ($drug, $sens);
+						$profStr .= $sens0;
 					}
 #					$ratio = $numer / $denom;
 #					foreach (@micro) {
 #						print BYDRUG $prefix, $_, $numer, "\n";
 #					}
 					
-					push @profiles, ( $bugs, { ('bug',$bug,'numer',$numer,'denom',$denom,@prof) } );
+					push @profiles, ( $bugs, { ('bug',$bug,'numer',$numer,'denom',$denom,'profStr',$profStr,@prof) } );
 				}
 				else {
 #					print BYDRUG $prefix, $empty;
@@ -143,12 +151,11 @@ sub parseSource {
 	}
 	
 	close SRC;
-	close BYDRUG;	
 }
 
 sub test {
 	open (BYDRUG, ">bydrug.txt") or die "unable to open bydrug.txt";
-	print BYDRUG "mrn,month,floor,room,bed,md,bugs,bug,sens,denom,ts,tim,pitz,cax,gm,ak,cp,e,clin,aug\n";
+	print BYDRUG "mrn,month,floor,room,bed,md,bugs,bug,sens,denom,ts,tim,pitz,cax,gm,ak,cp,e,clin,aug,profile\n";
 	
 	my %b;
 	
@@ -158,11 +165,11 @@ sub test {
 		for (my $i=1;$i<=$p{'bugs'};++$i) {
 			%b = %{ $profs{$i} };
 			print BYDRUG "$p{'mrn'},$p{'month'},$p{'floor'},$p{'room'},$p{'bed'},$p{'md'},$p{'bugs'}";
-			print BYDRUG ",$b{'bug'},$b{'numer'},$b{'denom'},$b{'ts'},$b{'tim'},$b{'pitz'},$b{'cax'},$b{'gm'},$b{'ak'},$b{'cp'},$b{'e'},$b{'clin'},$b{'aug'}\n";
+			print BYDRUG ",$b{'bug'},$b{'numer'},$b{'denom'},$b{'ts'},$b{'tim'},$b{'pitz'},$b{'cax'},$b{'gm'},$b{'ak'},$b{'cp'},$b{'e'},$b{'clin'},$b{'aug'},$b{'profStr'}\n";
 		}
 		if ($p{'bugs'} == 0) {
 			print BYDRUG "$p{'mrn'},$p{'month'},$p{'floor'},$p{'room'},$p{'bed'},$p{'md'},$p{'bugs'}";
-			print BYDRUG ",,,,,,,,,,,,,\n";
+			print BYDRUG ",,,,,,,,,,,,,,\n";
 		}
 	}
 	
@@ -199,13 +206,13 @@ sub printByLoc {
 				&preamble;
 				
 				if ($gMonth eq 'all') {
-					$msg = "<B>Number and Severity of Infections by Location</B>";
+					$msg = "Number and Severity of Infections by Location";
 				}
 				else {
-					$msg = "<B>Patient MRN, Bugs, and Severity by Location</B>";
+					$msg = "Patient MRN, Bugs, and Severity by Location";
 				}
 				
-				print OUT qq|<$TABLE BORDER='0' $tWidth><TR><TD align='center'>$msg</TD></TR></TABLE>\n|;
+				print OUT qq|<$TABLE BORDER='0' $tWidth><TR><TD align='center'>| . &title($msg) . qq|</TD></TR></TABLE>\n|;
 							
 				
 				my ($leftfile,$leftstr,$rightfile,$rightstr);
@@ -282,23 +289,25 @@ sub printByPt {
 		&preamble;
 		
 		my ($leftfile,$leftstr,$rightfile,$rightstr);
-		$leftstr = $count-1	if ($count > 0);
-		$leftfile = "pt$leftstr.htm"	if ($count > 0);
-		$rightstr = $count+1	if ($count < $#patients);
-		$rightfile = "pt$rightstr.htm"	if ($count < $#patients);
+		my $leftnum = $count-1;
+		my $rightnum = $count+1;
+		$leftstr = "MRN=$leftnum"	if ($count > 0);
+		$leftfile = "pt$leftnum.htm"	if ($count > 0);
+		$rightstr = "MRN=$rightnum"	if ($count < $#patients);
+		$rightfile = "pt$rightnum.htm"	if ($count < $#patients);
 				
 		my $arrows = &makeArrows($tWidth,$leftfile,$leftstr,"Patient MRN",$p{'mrn'},$rightfile,$rightstr);
 
 		print OUT $arrows;
 		
 		print OUT qq|<$TABLE BORDER='1' $tWidth>\n|;
-		print OUT qq|	<TR><TD WIDTH='50'>MD</TD><TD><B><A HREF='md_$p{'md'}_$p{'month'}.htm'>$abbr2MD{$p{'md'}}</A></B></TD></TR>\n|;
-		print OUT qq|	<TR><TD WIDTH='50'>Where</TD><TD><B>Floor $p{'floor'}, Room $p{'room'}, Bed $p{'bed'}</B></TD></TR>\n|;
-		print OUT qq|	<TR><TD WIDTH='50'>Month</TD><TD><B><A HREF='loc_$p{'md'}_all_$p{'month'}.htm'>$p{'month'}</A></B></TD></TR>\n|;
+		print OUT qq|	<TR><TD WIDTH='50'>MD</TD><TD><B>$abbr2MD{$p{'md'}}</B> (<A HREF='md_$p{'md'}_$p{'month'}.htm'>MD's view</A>)</TD></TR>\n|;
+		print OUT qq|	<TR><TD WIDTH='50'>Where</TD><TD><B>Floor $p{'floor'}, Room $p{'room'}, Bed $p{'bed'}</B> (<A HREF='loc_$p{'md'}_all_$p{'month'}.htm'>Floor-plan view</A>)</TD></TR>\n|;
+		print OUT qq|	<TR><TD WIDTH='50'>Month</TD><TD><B>$p{'month'}</B></TD></TR>\n|;
 		print OUT qq|</TABLE>\n|;
 			
 		print OUT qq|<$TABLE BORDER='1' $tWidth>\n|;
-		print OUT qq|<TR><TD $TD>Bug</TD>|;
+		print OUT qq|<TR><TD $TD>Bug\\Drug</TD>|;
 		
 		foreach my $drug (@DRUG) {
 			next	if ($drug eq 'all');
@@ -333,8 +342,13 @@ sub printByPt {
 			}
 			print OUT qq|</TR>\n|;
 		}
-				
-		print OUT qq|</TABLE>\n|;
+		
+		print OUT qq|<TR>\n|;
+		print OUT qq|	<TD BGCOLOR='lightblue' ALIGN='center'><B>Cost</B></TD>\n|;
+		print OUT qq|	<TD BGCOLOR='lightblue' COLSPAN='3' ALIGN='center'><B>low</B></TD>\n|;
+		print OUT qq|	<TD BGCOLOR='lightblue' COLSPAN='4' ALIGN='center'><B>mid</B></TD>\n|;
+		print OUT qq|	<TD BGCOLOR='lightblue' COLSPAN='3' ALIGN='center'><B>high</B></TD>\n|;
+		print OUT qq|</TR></TABLE>\n|;
 		
 		&epilogue;		
 		
@@ -348,8 +362,8 @@ sub makeArrows {
 	
 	$msg = qq|<$TABLE BORDER='0' $width><TR>|	.
 			qq|<TD width='25%' align='left'><A HREF='$prefile'>$prestr</A></TD>| .
-			qq|<TD width='25%' align='right'>$midtopic = </TD>| .
-			qq|<TD width='25%' align='left'><B>$midstr</B></TD>| .
+			qq|<TD width='25%' align='right'>| . &title("$midtopic = ",0) . qq|</TD>| .
+			qq|<TD width='25%' align='left'>| . &title($midstr) . qq|</TD>| .
 			qq|<TD width='25%' align='right'><A HREF='$postfile'>$poststr</A></TD></TR></TABLE>\n|;
 	return $msg;
 }
@@ -372,7 +386,7 @@ sub printByMD {
 			
 			&preamble;
 			
-			print OUT qq|<$TABLE BORDER='0' $tWidth><TR><TD align='center'><B>Patient List</B></TD></TR></TABLE>\n|;
+			print OUT qq|<$TABLE BORDER='0' $tWidth><TR><TD align='center'>| . &title('Patient List') . qq|</TD></TR></TABLE>\n|;
 
 			$leftfile = $leftstr = $rightfile = $rightstr = '';
 			$leftfile = "md_$MD[$md-1]_$gMonth.htm"	if ($md > 0);
@@ -394,13 +408,23 @@ sub printByMD {
 			print OUT qq|<$TABLE BORDER='1' $tWidth>\n|;
 			print OUT qq|	<TR><$TD>Month</TD><$TD>MRN</TD><$TD>Floor</TD><$TD>Room</TD><$TD>Bed</TD><$TD><B>Bug:</B> Sensitivity Profile<BR><FONT color='#00dd00'><B>Green</B></FONT>=Sensitive, <FONT color='#aa0000'><B>Red</B></FONT>=Resistant</TD></TR>|;
 			
+			if ($gMd eq 'all') {
+				print OUT qq|<TR><$TD COLSPAN='6'>The list of all patients for <B>all</B> MDs is too long - please select a single MD</TD></TR>\n|;
+				print OUT qq|</TABLE>\n|;
+				&epilogue;
+				close(OUT);
+				next;
+			}
+			
 			foreach (@patients) {
 				my %p = %{ $_ };
 				
 				next unless ($p{'md'} eq $gMd || $gMd eq 'all');
 				next unless ($p{'month'} eq $gMonth || $gMonth eq 'all');
 				
-				print OUT qq|	<TR><$TD><A HREF='loc_$gMd\_all_$p{'month'}.htm'>$p{'month'}</A></TD><$TD><A HREF='pt$p{'mrn'}.htm'>$p{'mrn'}</A></TD><$TD>$p{'floor'}</TD><$TD>$p{'room'}</TD><$TD>$p{'bed'}</TD>|;
+				print OUT qq|<TR><$TD>$p{'month'}</TD>\n|;
+				print OUT qq|	<$TD><A HREF='pt$p{'mrn'}.htm'>$p{'mrn'}</A></TD>\n|;
+				print OUT qq|	<$TD><A HREF='loc_$gMd\_all_$p{'month'}.htm'>$p{'floor'}</A></TD><$TD>$p{'room'}</TD><$TD>$p{'bed'}</TD>|;
 	
 				my %profs = %{ $p{'profiles'} };
 				
@@ -462,9 +486,9 @@ sub printByBug {
 				
 				&preamble;
 				
-				$msg = "<B>Antibiotic Sensitivity of Bugs</B><BR>";
+				$msg = "Antibiotic Sensitivity of Bugs<BR>";
 				
-				print OUT qq|<$TABLE BORDER='0' $tWidth><TR><TD align='center'>$msg</TD></TR></TABLE>\n|;
+				print OUT qq|<$TABLE BORDER='0' $tWidth><TR><TD align='center'>| . &title($msg) . qq|</TD></TR></TABLE>\n|;
 							
 				
 				my ($leftfile,$leftstr,$rightfile,$rightstr);
