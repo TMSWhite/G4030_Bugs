@@ -2,6 +2,13 @@
 <BODY>
 	
 <% 
+if (!isset($user)) { $user = 'cleaning'; }
+
+
+if ($user == 'cleaning' || $user == 'admin') {
+	$error = "Sorry, you are not authorized to access this information.";
+}
+
 if (isset($mrn)) { 
 	$sql = "SELECT * FROM patients WHERE mrn=$mrn";
 	
@@ -28,7 +35,7 @@ if (isset($mrn)) {
 	}
 }
 else {
-	$error = "Incorrect Syntax.  Use the following convention (e.g. for patient #15)<BR>patientView.php3?mrn=15";
+	$error = "Incorrect Syntax.  Use the following convention (e.g. for patient #15)<BR>patientView.php3?mrn=15&user=md";
 }
 
 if ($error) {
@@ -46,11 +53,11 @@ include("externs.inc");
 
 $leftfile = $leftstr = $rightfile = $rightstr = '';
 if ($mrn > 0) { 
-	$leftfile = "patientView.php3?mrn=" . ($mrn - 1);
+	$leftfile = "patientView.php3?user=$user&mrn=" . ($mrn - 1);
 	$leftstr = "Patient#" .  ($mrn - 1);
 }
 if ($mrn < 1000) {
-	$rightfile = "patientView.php3?mrn=" . ($mrn + 1);
+	$rightfile = "patientView.php3?user=$user&mrn=" . ($mrn + 1);
 	$rightstr = "Patient#" .  ($mrn + 1);
 }
 $arrowsMRN = makeArrows($tWidth,$leftfile,$leftstr,"Patient#",$mrn,$rightfile,$rightstr);
@@ -67,15 +74,33 @@ $floor = $row['floor'];
 </HEAD>
 <BODY>
 
-<%=$arrowsMRN;%>
+<% 
+	if ($user == 'md') {
+		echo $arrowsMRN;
+	}
+%>
 
 <TABLE CELLPADDING='0' CELLSPACING='0' BORDER='1'  WIDTH='450'>
 	<TR><TD WIDTH='50'>MD</TD><TD><B><%=$abbr2MD[$md];%></B>
-	<% echo " (<A HREF='mdView.php3?md=" . $md . "&month=" . $month . "&floor=" . $floor. "'>MD's Patient List</A>)";%>
-	<% echo " (<A HREF='sensView.php3?md=$md&floor=$floor&month=$month'>Antibiogram</A>)";%>
+	<% 
+		if ($user == 'md' || $user == 'nurse') {
+			echo " (<A HREF='mdView.php3?md=$md&month=$month&floor$floor&user=$user'>MD's Patient List</A>)";
+		}
+		if ($user == 'md') {
+			echo " (<A HREF='sensView.php3?md=$md&floor=$floor&month=$month&user=$user'>Antibiogram</A>)";
+		}
+	%>
 	</TD></TR>
 	<TR><TD WIDTH='50'>Where</TD><TD><B>Floor <%=$floor;%>, Room <%=$row['room'];%>, Bed <%=$row['bed'];%></B>
-	<% echo " (<A HREF='floorView.php3?md=" . $md . "&month=" . $month . "'>Floor-plan view</A>)";%>
+	<%
+		if ($user == 'md' || $user == 'nurse') {
+			echo " (<A HREF='floorView.php3?md=$md&month=$month&user=$user'>Floor-plan view</A>)";
+		}
+		elseif ($user == 'pt') {
+			# only let patient see their own room geographically
+			echo " (<A HREF='floorView.php3?mrn=$mrn&user=$user'>Floor-plan view</A>)";
+		}
+	%>
 	</TD></TR>
 	<TR><TD WIDTH='50'>Month</TD><TD><B><%=$month;%></B></TD></TR>
 </TABLE>

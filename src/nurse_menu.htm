@@ -18,19 +18,19 @@ var numRegExp = new RegExp("^[0-9]{1,3}$");
 
 function loadTarget() {
 	if (view == "pt") {
-		targetFile = "patientView.php3?mrn=" + mrn ;
+		targetFile = "patientView.php3?user=nurse&mrn=" + mrn ;
 	}
 	else if (view == "md") {
-		targetFile = "mdView.php3?md=" + md + "&month=" + month + "&floor=" + floor;
+		targetFile = "mdView.php3?user=nurse&md=" + md + "&month=" + month + "&floor=" + floor;
 	}
 	else if (view == "loc") {
-		targetFile = "floorView.php3?md=" + md + "&month=" + month + "&bug=" + bug + "&floor=" + floor;
+		targetFile = "floorView.php3?user=nurse&md=" + md + "&month=" + month + "&bug=" + bug + "&floor=" + floor;
 	}
 	else if (view == "time") {
 		targetFile = "time_" + md + "_" + floor + "_all.gif";
 	}
 	else if (view == "sens") {
-		targetFile = "sensView.php3?md=" + md + "&month=" + month + "&floor=" + floor;
+		targetFile = "sensView.php3?user=nurse&md=" + md + "&month=" + month + "&floor=" + floor;
 	}
 	else {
 		alert("unknown values:" + " view=" + view + " pt=" + mrn + " md=" + md + " floor=" + floor + " bug=" + bug + " month=" + month);
@@ -45,7 +45,7 @@ function setDefaults() {
 	mrn=0;
 	document.myForm.mrn.value = 0;
 	md="all";
-	month="all";
+	month="1";
 	bug="all";
 	floor="all";
 	view="loc";
@@ -132,7 +132,9 @@ ONRESET="setDefaults()">
 		</TD>
 	</TR>
 </TABLE>
-<B>Select a View</B> 
+<B><FONT SIZE="4">Nurses's Login Screen<BR>
+<BR>
+</FONT>Select a View</B> 
 <TABLE BORDER="1" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
 	<TR>
 		<TD WIDTH="32%" VALIGN="TOP">
@@ -169,29 +171,14 @@ ONRESET="setDefaults()">
 			<A HREF="javascript:document.myForm.floor.focus()">floor</A></TD>
 		<TD WIDTH="51%" VALIGN="TOP">Floor vs. Room: (#patients or MRN), (#bugs or bug-list), isolation status</TD>
 	</TR>
-	<TR>
-		<TD WIDTH="32%" VALIGN="TOP"><A HREF="help.htm#Temporal_view" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM"
-			BORDER="0"></A>Temporal Trends</TD>
-		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="time" ONCLICK="setView()"> <A HREF="javascript:document.myForm.md.focus()">MD</A>,
-			<A HREF="javascript:document.myForm.floor.focus()">floor</A></TD>
-		<TD WIDTH="51%" VALIGN="TOP"># and severity of bugs over time</TD>
-	</TR>
-	<TR>
-		<TD WIDTH="32%" VALIGN="TOP"><A HREF="help.htm#Antibiogram_view" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM"
-			BORDER="0"></A>Antibiogram</TD>
-		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="sens" ONCLICK="setView()"><A HREF="javascript:document.myForm.md.focus()">MD</A>,
-			<A HREF="javascript:document.myForm.md.focus()">month</A>, <A HREF="javascript:document.myForm.floor.focus()">floor</A></TD>
-		<TD WIDTH="51%" VALIGN="TOP">Bug vs. Drug - avg. sensitivity</TD>
-	</TR>
 </TABLE>
 </P>
 
-<P><B>Fine-Tune Your Question:</B>
+<P><B>Fine-Tune Your Question:</B> 
 <TABLE BORDER="1" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
 	<TR>
 		<TD WIDTH="19%"><A HREF="help.htm#MRN_abbr" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>&nbsp;MRN</TD>
-		<TD WIDTH="81%"><INPUT TYPE="TEXT" NAME="mrn" SIZE="4" ONFOCUS="document.myForm.mrn.select()" ONBLUR="setMRN()">(0-999)<INPUT TYPE="SUBMIT"
-			NAME="Submit2" VALUE="Submit"></TD>
+		<TD WIDTH="81%"><INPUT TYPE="TEXT" NAME="mrn" SIZE="4" ONFOCUS="document.myForm.mrn.select()" ONBLUR="setMRN()">(0-999) [Press TAB to use]</TD>
 	</TR>
 	<TR>
 		<TD WIDTH="19%"><A HREF="help.htm#MD_abbr" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>&nbsp;MD</TD>
@@ -210,8 +197,8 @@ ONRESET="setDefaults()">
 		<TD WIDTH="19%"><A HREF="help.htm#Month_abbr" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>&nbsp;Month</TD>
 		<TD WIDTH="81%">
 			<SELECT NAME="month" ONCHANGE="setMonth()">
-			<OPTION value="all" SELECTED>(All)</OPTION>
-			<OPTION value="1">1</OPTION>
+			<OPTION value="all" >(All)</OPTION>
+			<OPTION value="1" SELECTED>1</OPTION>
 			<OPTION value="2">2</OPTION>
 			<OPTION value="3">3</OPTION>
 			<OPTION value="4">4</OPTION>

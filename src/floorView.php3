@@ -8,18 +8,18 @@ if (isset($md) && $md != 'all') { $where .= (($where) ? ' AND ' : '') . "patient
 if (isset($month) && $month != 'all') { $where .= (($where) ? ' AND ' : '') . "patients.month=$month"; }
 if (isset($bug) && $bug != 'all') { $where .= (($where) ? ' AND ' : '') . "bugs.bug='$bug'"; }
 if (isset($floor) && $floor != 'all') { $where .= (($where) ? ' AND ' : '') . "patients.floor=$floor"; }
+if (isset($mrn) && $mrn != 'all') { $where .= (($where) ? ' AND ' : '') . "patients.mrn=$mrn"; }
 
 
 if (!isset($md)) { $md = 'all'; }
 if (!isset($month)) { $month = 'all'; }
 if (!isset($bug)) { $bug = 'all'; }
 if (!isset($floor)) { $floor = 'all'; }
+if (!isset($user)) { $user = 'cleaning'; }
 
-$title = "Floor View of MRNs, Bugs, and Severity for" . $abbr2MD[$md] . ", month=$month, bug=$bug";
 $error = '';
 
 if ($where) {
-	#$error = "Incorrect Syntax.  Use the following convention (e.g. for md=J Starren (js), Month=1, Floor=3)<BR>floorView.php3?md=js&month=1&bug=3";
 	$where = "WHERE $where";
 }
 #else {
@@ -29,12 +29,12 @@ if ($where) {
 	$db = mysql_connect("localhost", "root");
 	
 	if (!$db) {
-		$error = "Unable to con!=ct to database server";
+		$error = "Unable to connect to database server";
 	}
 	else {
 		$dbname = "test2";
 		if (!mysql_select_db($dbname,$db)) {
-			$error = "Unable to con!=ct to database<BR>dbname=$dbname";
+			$error = "Unable to connect to database<BR>dbname=$dbname";
 		}
 		
 		else {
@@ -53,7 +53,6 @@ if ($where) {
 
 <HTML>
 <HEAD>
-	<TITLE><%=$title;%></TITLE>
 </HEAD>
 <BODY>
 
@@ -74,58 +73,74 @@ else {
 	
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($md_i > 0) { 
-		$leftfile = "floorView.php3?md=" . $MD[$md_i-1] . "&bug=$bug&month=$month&floor=$floor";
+		$leftfile = "floorView.php3?user=$user&md=" . $MD[$md_i-1] . "&bug=$bug&month=$month&floor=$floor";
 		$leftstr = "MD=" . $abbr2MD[$MD[$md_i-1]];
 	}
 	if ($md_i < count($MD)-1) {
-		$rightfile = "floorView.php3?md=" . $MD[$md_i+1] . "&bug=$bug&month=$month&floor=$floor";
+		$rightfile = "floorView.php3?user=$user&md=" . $MD[$md_i+1] . "&bug=$bug&month=$month&floor=$floor";
 		$rightstr = "MD=" . $abbr2MD[$MD[$md_i+1]];
 	}
 	$arrowsMD = makeArrows($tWidth,$leftfile,$leftstr,"MD",$abbr2MD[$md],$rightfile,$rightstr);
 
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($month > 1) { 
-		$leftfile = "floorView.php3?md=$md&bug=$bug&floor=$floor&month=" . ($month-1);
+		$leftfile = "floorView.php3?user=$user&md=$md&bug=$bug&floor=$floor&month=" . ($month-1);
 		$leftstr = "month=" . ($month-1);
 	}
 	if ($month < 5) {
-		$rightfile = "floorView.php3?md=$md&bug=$bug&floor=$floor&month=" . ($month+1);
+		$rightfile = "floorView.php3?user=$user&md=$md&bug=$bug&floor=$floor&month=" . ($month+1);
 		$rightstr = "month=" . ($month+1);
 	}	
 	$arrowsMonth = makeArrows($tWidth,$leftfile,$leftstr,"month",$month,$rightfile,$rightstr);	
 	
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($bug_i > 0) { 
-		$leftfile = "floorView.php3?md=$md&bug=" . $BUG[$bug_i-1] . "&month=$month&floor=$floor";
+		$leftfile = "floorView.php3?user=$user&md=$md&bug=" . $BUG[$bug_i-1] . "&month=$month&floor=$floor";
 		$leftstr = "bug=" . $BUG[$bug_i-1];
 	}
 	if ($bug_i < count($BUG)-1) {
-		$rightfile = "floorView.php3?md=$md&bug=" . $BUG[$bug_i+1]  . "&month=$month&floor=$floor";
+		$rightfile = "floorView.php3?user=$user&md=$md&bug=" . $BUG[$bug_i+1]  . "&month=$month&floor=$floor";
 		$rightstr = "bug=" . $BUG[$bug_i+1];
 	}	
 	$arrowsBug = makeArrows($tWidth,$leftfile,$leftstr,"bug",$bug,$rightfile,$rightstr);	
 	
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($floor > 0) { 
-		$leftfile = "floorView.php3?md=$md&bug=$bug&month=$month&floor=" . ($floor-1);
+		$leftfile = "floorView.php3?user=$user&md=$md&bug=$bug&month=$month&floor=" . ($floor-1);
 		$leftstr = "floor=" . ($floor-1);
 	}
 	if ($floor < 10) {
-		$rightfile = "floorView.php3?md=$md&bug=$bug&month=$month&floor=" . ($floor+1);
+		$rightfile = "floorView.php3?user=$user&md=$md&bug=$bug&month=$month&floor=" . ($floor+1);
 		$rightstr = "floor=" . ($floor+1);
 	}	
-	$arrowsFloor = makeArrows($tWidth,$leftfile,$leftstr,"floor",$floor,$rightfile,$rightstr);			
+	$arrowsFloor = makeArrows($tWidth,$leftfile,$leftstr,"floor",$floor,$rightfile,$rightstr);	
 	
-	$title = "Hospital-Wide View of Patients, Bugs, and Severity";
+	if ($user == 'md') {
+		$title = "Hospital-Wide View of Patients, Bugs, and Severity";
+	}
+	elseif ($user == 'nurse' || $user == 'admin') {
+		$title = "Hospital-Wide View of the Severity of Patient's Infections";
+	}
+	elseif ($user == 'pt') {
+		$title = "Here is where your Room is Located";
+	}
+	elseif ($user == 'cleaning') {
+		$title = "Please use Special Cleaning Techniques for all Rooms shaded Purple and Orange";
+	}
 %>
 	
 <TABLE CELLPADDING='0' CELLSPACING='0' BORDER='0'  <%=$tWidth;%>><TR><TD align='center'><FONT SIZE=5><B><%=$title;%></B><BR></TD></TR></TABLE>
-<%=$arrowsMD;%>
-<%=$arrowsMonth;%>
-<%=$arrowsBug;%>
-<%=$arrowsFloor;%>
 
 <%
+	if ($user == 'md' || $user == 'admin' || $user == 'nurse') {
+		echo $arrowsMD;
+		echo $arrowsBug;
+	}
+	if ($user != 'pt') {
+		echo $arrowsMonth;
+		echo $arrowsFloor;
+	}
+	
 	/* Calc # patients, # floors, and sensitivity */
 	reset($FLOOR);
 	while (list($key,$floor) = each($FLOOR)) {
@@ -232,7 +247,6 @@ else {
 
 				if (isset($tPt[$loc])) {
 					$ratioCol = $SENS[$min];
-					$msg .= "<BR>$min";
 					if ($ratioCol) {
 						$BG = "BGCOLOR='$ratioCol'";
 					}
@@ -242,17 +256,23 @@ else {
 					$buglist = $bugList[$loc];
 					$mrn = $Mrn[$loc];
 					if (isset($Mrn[$loc])) {
-						$msg = "<A HREF='patientView.php3?mrn=$mrn.'>$mrn</A>";
+						if ($user == 'md' || $user == 'nurse') {
+							$msg = "<A HREF='patientView.php3?user=$user&mrn=$mrn.'>$mrn</A>";
+						}
 					}
 
 					if ($buglist) {
-						$msg .= "<BR>$buglist";
+						if ($user == 'md') {
+							$msg .= "<BR>$buglist";
+						}
 					}
 				}
 				else {
 					$tbugs = $tBug[$loc];	
 					if (isset($tPt[$loc])) {
-						$msg = "$tpts<BR>$tbugs";
+						if ($user != 'cleaning') {
+							$msg = "$tpts<BR>$tbugs";
+						}
 					}
 				}
 				
@@ -264,7 +284,13 @@ else {
 			}
 		}
 		# print row summary
-		$msg = $tPt["F$floor" .'RallBall'] . '<BR>' . $tBug["F$floor" . 'RallBall'];
+		$msg = '';
+		if ($user != 'cleaning') {
+			$msg = $tPt["F$floor" .'RallBall'];
+		}
+		if ($user == 'md' || $user == 'admin') {
+			$msg .= '<BR>' . $tBug["F$floor" .'RallBall'];
+		}		
 		if (!$msg) { $msg = '&nbsp;'; }
 		echo "		<$TD BGCOLOR='lightblue'>$msg</TD>\n";
 		echo "	</TR>\n";
@@ -273,11 +299,23 @@ else {
 	
 	echo "	<TR><TD ALIGN='center' COLSPAN='2' BGCOLOR='lightblue'><B>Totals</B><BR><I>Pts/Bugs</I></TD>\n";
 	for ($room=1;$room<=10;++$room) {
-		$msg = $tPt["FallR$room" . 'Ball'] . '<BR>' . $tBug["FallR$room" . 'Ball'];
+		$msg = '';
+		if ($user != 'cleaning') {
+			$msg = $tPt["FallR$room" . 'Ball'];
+		}
+		if ($user == 'md' || $user == 'admin') {
+			$msg .= '<BR>' . $tBug["FallR$room" . 'Ball'];
+		}
 		if (!$msg) { $msg = '&nbsp;'; }
 		echo "<TD ALIGN='center' COLSPAN='2' BGCOLOR='lightblue'>$msg</TD>\n";
 	}
-	$msg = $tPt['FallRallBall'] . '<BR>' . $tBug['FallRallBall'];
+	$msg = '';
+	if ($user != 'cleaning') {
+		$msg = $tPt['FallRallBall'];
+	}
+	if ($user == 'md' || $user == 'admin') {
+		$msg .= '<BR>' . $tBug['FallRallBall'];
+	}
 	if (!$msg) { $msg = '&nbsp;'; }
 	echo "	<$TD BGCOLOR='lightblue'>$msg</TD>\n</TR>\n";	
 	echo "</TABLE>\n";		
@@ -294,17 +332,22 @@ if (isset($db)) { mysql_close($db); }
 <P><TABLE CELLPADDING='0' CELLSPACING='0' BORDER='1' <%=$tWidth;%>>
 <TR><TD align='center' COLSPAN='5'><B>Legend</B></TD></TR>
 
-<% if ($month == 'all') { %>
-
-<TR><TD># Patients</TD><TD COLSPAN='4'>The top number of each cell</TD></TR>
-<TR><TD># Bugs</TD><TD COLSPAN='4'>The bottom number of each cell</TD></TR>
-
-<% } else { %>
-
-<TR><TD>MRN</TD><TD COLSPAN='4'>The hyperlinked number at the top of each cell</TD></TR>
-<TR><TD>Bugs</TD><TD  COLSPAN='4'>The comma separated list of abbreviations at the bottom of each cell</TD></TR>
-
-<% } %>
+<% if ($month == 'all') {
+		if ($user != 'cleaning') {
+			echo "<TR><TD># Patients</TD><TD COLSPAN='4'>The top number of each cell</TD></TR>";
+		}
+		if ($user == 'md' || $user == 'admin') {
+			echo "<TR><TD># Bugs</TD><TD COLSPAN='4'>The bottom number of each cell</TD></TR>";
+		}
+	} else {
+		if ($user == 'md' || $user == 'nurse') {
+			echo "<TR><TD>MRN</TD><TD COLSPAN='4'>The hyperlinked number at the top of each cell</TD></TR>";
+		}
+		if ($user == 'md') {
+			echo "<TR><TD>Bugs</TD><TD  COLSPAN='4'>The comma separated list of abbreviations at the bottom of each cell</TD></TR>";
+		}
+	} 
+%>
 
 <TR><TD ROWSPAN='2'>Severity</TD><TD  COLSPAN='4'>The cell's color shows how many antibiotics (AB)s can treat the worst bug</TD></TR>
 <TR><TD BGCOLOR='<%=$SENS[0];%>'>Resistant to all ABs</TD><TD BGCOLOR='<%=$SENS[1];%>'>Sensitive to 1 AB</TD><TD BGCOLOR='<%=$SENS[2];%>'>Sensitive to 2 ABs</TD><TD BGCOLOR='white'>Sensitive to >2 ABs</TD></TR>

@@ -12,12 +12,17 @@ if (isset($floor) && $floor != 'all') { $where .= (($where) ? ' AND ' : '') . "p
 if (!isset($md)) { $md = '(all)'; }
 if (!isset($month)) { $month = '(all)'; }
 if (!isset($floor)) { $floor = '(all)'; }
+if (!isset($user)) { $user = 'cleaning'; }
 
 $title = "Antibiogram for" . $abbr2MD[$md] . ", month=$month, floor=$floor";
 $error = '';
 
+if ($user == 'pt' || $user == 'nurse' || $user == 'cleaning') {
+	$error = "Sorry, you are not authorized to access this information.";
+}
+
 if ($where) {
-	#$error = "Incorrect Syntax.  Use the following convention (e.g. for md=J Starren (js), Month=1, Floor=3)<BR>sensView.php3?md=js&month=1&floor=3";
+	#$error = "Incorrect Syntax.  Use the following convention (e.g. for md=J Starren (js), Month=1, Floor=3)<BR>sensView.php3?user=$user&md=js&month=1&floor=3";
 	$where = "WHERE $where";
 }
 #else {
@@ -64,33 +69,33 @@ else {
 	
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($md_i > 0) { 
-		$leftfile = "sensView.php3?md=" . $MD[$md_i-1] . "&floor=$floor&month=$month";
+		$leftfile = "sensView.php3?user=$user&md=" . $MD[$md_i-1] . "&floor=$floor&month=$month";
 		$leftstr = "MD=" . $abbr2MD[$MD[$md_i-1]];
 	}
 	if ($md_i < count($MD)-1) {
-		$rightfile = "sensView.php3?md=" . $MD[$md_i+1] . "&floor=$floor&month=$month";
+		$rightfile = "sensView.php3?user=$user&md=" . $MD[$md_i+1] . "&floor=$floor&month=$month";
 		$rightstr = "MD=" . $abbr2MD[$MD[$md_i+1]];
 	}
 	$arrowsMD = makeArrows($tWidth,$leftfile,$leftstr,"MD",$abbr2MD[$md],$rightfile,$rightstr);
 
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($month > 1) { 
-		$leftfile = "sensView.php3?md=$md&floor=$floor&month=" . ($month-1);
+		$leftfile = "sensView.php3?user=$user&md=$md&floor=$floor&month=" . ($month-1);
 		$leftstr = "month=" . ($month-1);
 	}
 	if ($month < 5) {
-		$rightfile = "sensView.php3?md=$md&floor=$floor&month=" . ($month+1);
+		$rightfile = "sensView.php3?user=$user&md=$md&floor=$floor&month=" . ($month+1);
 		$rightstr = "month=" . ($month+1);
 	}	
 	$arrowsMonth = makeArrows($tWidth,$leftfile,$leftstr,"month",$month,$rightfile,$rightstr);	
 	
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($floor > 1) { 
-		$leftfile = "sensView.php3?md=$md&floor=" . ($floor-1) . "&month=$month";
+		$leftfile = "sensView.php3?user=$user&md=$md&floor=" . ($floor-1) . "&month=$month";
 		$leftstr = "floor=" . ($floor-1);
 	}
 	if ($floor < 10) {
-		$rightfile = "sensView.php3?md=$md&floor=" . ($floor+1) . "&month=$month";
+		$rightfile = "sensView.php3?user=$user&md=$md&floor=" . ($floor+1) . "&month=$month";
 		$rightstr = "floor=" . ($floor+1);
 	}	
 	$arrowsFloor = makeArrows($tWidth,$leftfile,$leftstr,"floor",$floor,$rightfile,$rightstr);		
