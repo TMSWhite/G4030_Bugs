@@ -17,6 +17,11 @@ var view;
 var numRegExp = new RegExp("^[0-9]{1,3}$");
 
 function loadTarget() {
+	var doc = parent.Frame2.document;
+	doc.writeln("Loading data.  Please wait...");
+	doc.close();
+	
+
 	if (view == "loc") {
 		targetFile = "floorView.php3?user=admin&md=" + md + "&month=" + month + "&bug=" + bug + "&floor=" + floor;
 	}

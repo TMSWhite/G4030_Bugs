@@ -9,9 +9,9 @@ if (isset($month) && $month != 'all') { $where .= (($where) ? ' AND ' : '') . "m
 if (isset($floor) && $floor != 'all') { $where .= (($where) ? ' AND ' : '') . "floor=$floor"; }
 
 
-if (!isset($md)) { $md = '(all)'; }
-if (!isset($month)) { $month = '(all)'; }
-if (!isset($floor)) { $floor = '(all)'; }
+if (!isset($md)) { $md = 'all'; }
+if (!isset($month)) { $month = 'all'; }
+if (!isset($floor)) { $floor = 'all'; }
 if (!isset($user)) { $user = 'cleaning'; }
 
 $title = "Patient List for MD=" . $abbr2MD[$md] . ", month=$month, floor=$floor";
