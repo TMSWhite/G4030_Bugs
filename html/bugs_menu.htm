@@ -1,0 +1,543 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<HTML>
+
+
+
+<HEAD>
+
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=iso-8859-1">
+
+<SCRIPT>
+
+
+
+var  patientView = "pt0.htm";
+
+
+
+function patientView_name() {
+
+	var mrn = document.myForm.patient_mrn.value;
+
+		
+
+	if (mrn == "" || mrn < 0 || mrn > 999) {
+
+		alert("Please enter a Patient MRN between 0 and 999");
+
+		return;
+
+	}
+
+	mrn = mrn - 0;	// convert to number (remove leading zeros)
+
+	
+
+	patientView = "pt" + mrn + ".htm";
+
+	document.myForm.action = patientView;
+
+	document.myForm.target="Frame2";
+
+	return patientView;
+
+}
+
+
+
+var  mdView = "md_rb.htm";
+
+
+
+function mdView_name() {
+
+	var md = document.myForm.md_md.options;
+
+	var month = document.myForm.md_month.options;
+
+	
+
+	mdView = "md_" + md[md.selectedIndex].value + "_" +
+
+		month[month.selectedIndex].value + ".htm";
+
+	document.myForm.action = mdView;
+
+	document.myForm.target="Frame2";
+
+	return mdView;
+
+}
+
+
+
+var  temporalView = "time_all_all_all.gif";
+
+
+
+function temporalView_name() {
+
+	var md = document.myForm.temporal_md.options;
+
+	var flr = document.myForm.temporal_floor.options;
+
+	
+
+	temporalView = "time_" + md[md.selectedIndex].value + "_" +
+
+		flr[flr.selectedIndex].value + "_all.gif";
+
+	document.myForm.action = temporalView;
+
+	document.myForm.target="Frame2";
+
+	return temporalView;
+
+}
+
+
+
+var  geographicView = "loc_all_all_all.htm";
+
+
+
+function geographicView_name() {
+
+	var md = document.myForm.geographic_md.options;
+
+	var bug = document.myForm.geographic_bug.options;
+
+	var month = document.myForm.geographic_month.options;
+
+	
+
+	geographicView = "loc_" + md[md.selectedIndex].value + "_" +
+
+		bug[bug.selectedIndex].value + "_" +
+
+		month[month.selectedIndex].value + ".htm";
+
+	document.myForm.action = geographicView;
+
+	document.myForm.target="Frame2";
+
+	return geographicView;
+
+}
+
+
+
+var  sensitivityView = "sens_all_all_all.htm";
+
+
+
+function sensitivityView_name() {
+
+	var md = document.myForm.sensitivity_md.options;
+
+	var flr = document.myForm.sensitivity_floor.options;
+
+	var month = document.myForm.sensitivity_month.options;
+
+	
+
+	sensitivityView = "sens_" + md[md.selectedIndex].value + "_" +
+
+		flr[flr.selectedIndex].value + "_" +
+
+		month[month.selectedIndex].value + ".htm";
+
+	document.myForm.action = sensitivityView;
+
+	document.myForm.target="Frame2";
+
+	return sensitivityView;
+
+}
+
+</SCRIPT>
+
+
+
+	<TITLE>Bugs Project - Tom White</TITLE>
+
+</HEAD>
+
+
+
+<BODY>
+
+
+
+<FORM ACTION="javascript:temporalView_name()" NAME="myForm" TARGET="Frame2">
+
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+
+<TR>
+
+	<TD WIDTH="50%" ALIGN="LEFT"><A HREF="mailto:thw7001@flux.cpmc.columbia.edu">Email author</A></TD>
+
+	<TD WIDTH="50%" ALIGN="RIGHT"><A HREF="help.htm" target="Frame2">Help</A></TD>
+
+</TR>
+
+</TABLE>
+
+<BR>
+
+<DIV ALIGN="CENTER"><B>Find Patient</B></DIV>
+
+<TABLE BORDER="1" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+
+	<TR>
+
+		<TD>MRN&nbsp;(0-999)</TD>
+
+		<TD><INPUT TYPE="TEXT" NAME="patient_mrn" SIZE="4"></TD>
+
+	</TR>	
+
+</TABLE>
+
+<DIV ALIGN="CENTER"><INPUT TYPE="RESET" NAME="Reset" VALUE="Reset"><INPUT TYPE="SUBMIT" NAME="Submit" VALUE="Submit" ONCLICK="patientView_name()"></DIV>
+
+<HR>
+
+
+
+<DIV ALIGN="CENTER"><B>Doctor's List</B></DIV>
+
+<TABLE BORDER="1" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+
+	<TR>
+
+		<TD WIDTH="20%">MD</TD>
+
+		<TD WIDTH="80%">
+
+			<SELECT NAME="md_md">
+
+			<OPTION value="all">(All)</OPTION>
+
+			<OPTION value="rb" SELECTED>R Barrows</OPTION>
+
+			<OPTION value="jc">J Cimino</OPTION>
+
+			<OPTION value="gh">G Hripcsak</OPTION>
+
+			<OPTION value="rj">R Jenders</OPTION>
+
+			<OPTION value="js">J Starren</OPTION>
+
+			</SELECT>
+
+		</TD>
+
+	</TR>
+
+	<TR>
+
+		<TD WIDTH="20%">Month</TD>
+
+		<TD WIDTH="80%">
+
+			<SELECT NAME="md_month">
+
+			<OPTION value="all">(All)</OPTION>
+
+			<OPTION value="1" SELECTED>1</OPTION>
+
+			<OPTION value="2">2</OPTION>
+
+			<OPTION value="3">3</OPTION>
+
+			<OPTION value="4">4</OPTION>
+
+			<OPTION value="5">5</OPTION>
+
+			</SELECT>
+
+		</TD>
+
+	</TR>	
+
+</TABLE>
+
+<DIV ALIGN="CENTER"><INPUT TYPE="RESET" NAME="Reset" VALUE="Reset"><INPUT TYPE="SUBMIT" NAME="Submit" VALUE="Submit" ONCLICK="mdView_name()"></DIV>
+
+<HR>
+
+
+
+<DIV ALIGN="CENTER"><B>Floor-Plan View of Patients, Bugs, and Severity</B></DIV>
+
+<TABLE BORDER="1" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+
+	<TR>
+
+		<TD WIDTH="20%">MD</TD>
+
+		<TD WIDTH="80%">
+
+			<SELECT NAME="geographic_md">
+
+			<OPTION value="all" SELECTED>(All)</OPTION>
+
+			<OPTION value="rb">R Barrows</OPTION>
+
+			<OPTION value="jc">J Cimino</OPTION>
+
+			<OPTION value="gh">G Hripcsak</OPTION>
+
+			<OPTION value="rj">R Jenders</OPTION>
+
+			<OPTION value="js">J Starren</OPTION>
+
+			</SELECT>
+
+		</TD>
+
+	</TR>
+
+	<TR>
+
+		<TD WIDTH="20%">Month</TD>
+
+		<TD WIDTH="80%">
+
+			<SELECT NAME="geographic_month">
+
+			<OPTION value="all" SELECTED>(All)</OPTION>
+
+			<OPTION value="1">1</OPTION>
+
+			<OPTION value="2">2</OPTION>
+
+			<OPTION value="3">3</OPTION>
+
+			<OPTION value="4">4</OPTION>
+
+			<OPTION value="5">5</OPTION>
+
+			</SELECT>
+
+		</TD>
+
+	</TR>
+
+	<TR>
+
+		<TD WIDTH="20%">Bug</TD>
+
+		<TD WIDTH="80%">
+
+			<SELECT NAME="geographic_bug">
+
+			<OPTION value="all" SELECTED>(All)</OPTION>
+
+			<OPTION value="ab">Acinetobacter B. (ab)</OPTION>
+
+			<OPTION value="pa">Pseudomonas A. (pa)</OPTION>
+
+			<OPTION value="sa">Staph Aureus (sa)</OPTION>
+
+			<OPTION value="sm">Serratia Marc. (sm)</OPTION>
+
+			</SELECT>
+
+		</TD>
+
+	</TR>
+
+</TABLE>
+
+<DIV ALIGN="CENTER"><INPUT TYPE="RESET" NAME="Reset" VALUE="Reset"><INPUT TYPE="SUBMIT" NAME="Submit" VALUE="Submit" ONCLICK="geographicView_name()"></DIV>
+
+<HR>
+
+
+
+
+
+<DIV ALIGN="CENTER"><B>Temporal Trends of Bug Prevalence and Virulence</B></DIV>
+
+<TABLE BORDER="1" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+
+	<TR>
+
+		<TD WIDTH="20%">MD</TD>
+
+		<TD WIDTH="80%">
+
+			<SELECT NAME="temporal_md">
+
+			<OPTION value="all" SELECTED>(All)</OPTION>
+
+			<OPTION value="rb">R Barrows</OPTION>
+
+			<OPTION value="jc">J Cimino</OPTION>
+
+			<OPTION value="gh">G Hripcsak</OPTION>
+
+			<OPTION value="rj">R Jenders</OPTION>
+
+			<OPTION value="js">J Starren</OPTION>
+
+			</SELECT>
+
+		</TD>
+
+	</TR>
+
+	<TR>
+
+		<TD WIDTH="20%">Floor</TD>
+
+		<TD WIDTH="80%">
+
+			<SELECT NAME="temporal_floor">
+
+			<OPTION value="all" SELECTED>(All)</OPTION>
+
+			<OPTION value="1">1</OPTION>
+
+			<OPTION value="2">2</OPTION>
+
+			<OPTION value="3">3</OPTION>
+
+			<OPTION value="4">4</OPTION>
+
+			<OPTION value="5">5</OPTION>
+
+			<OPTION value="6">6</OPTION>
+
+			<OPTION value="7">7</OPTION>
+
+			<OPTION value="8">8</OPTION>
+
+			<OPTION value="9">9</OPTION>
+
+			<OPTION value="10">10</OPTION>
+
+			</SELECT>
+
+		</TD>
+
+	</TR>
+
+</TABLE>
+
+<DIV ALIGN="CENTER"><INPUT TYPE="RESET" NAME="Reset" VALUE="Reset"><INPUT TYPE="SUBMIT" NAME="Submit" VALUE="Submit" ONCLICK="temporalView_name()"></DIV>
+
+<HR>
+
+
+
+
+
+<DIV ALIGN="CENTER"><B>Sensitivity Profile of Bugs</B></DIV>
+
+<TABLE BORDER="1" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+
+	<TR>
+
+		<TD WIDTH="20%">MD</TD>
+
+		<TD WIDTH="80%">
+
+			<SELECT NAME="sensitivity_md">
+
+			<OPTION value="all" SELECTED>(All)</OPTION>
+
+			<OPTION value="rb">R Barrows</OPTION>
+
+			<OPTION value="jc">J Cimino</OPTION>
+
+			<OPTION value="gh">G Hripcsak</OPTION>
+
+			<OPTION value="rj">R Jenders</OPTION>
+
+			<OPTION value="js">J Starren</OPTION>
+
+			</SELECT>
+
+		</TD>
+
+	</TR>
+
+	<TR>
+
+		<TD WIDTH="20%">Month</TD>
+
+		<TD WIDTH="80%">
+
+			<SELECT NAME="sensitivity_month">
+
+			<OPTION value="all" SELECTED>(All)</OPTION>
+
+			<OPTION value="1">1</OPTION>
+
+			<OPTION value="2">2</OPTION>
+
+			<OPTION value="3">3</OPTION>
+
+			<OPTION value="4">4</OPTION>
+
+			<OPTION value="5">5</OPTION>
+
+			</SELECT>
+
+		</TD>
+
+	</TR>
+
+	<TR>
+
+		<TD WIDTH="20%">Floor</TD>
+
+		<TD WIDTH="80%">
+
+			<SELECT NAME="sensitivity_floor">
+
+			<OPTION value="all" SELECTED>(All)</OPTION>
+
+			<OPTION value="1">1</OPTION>
+
+			<OPTION value="2">2</OPTION>
+
+			<OPTION value="3">3</OPTION>
+
+			<OPTION value="4">4</OPTION>
+
+			<OPTION value="5">5</OPTION>
+
+			<OPTION value="6">6</OPTION>
+
+			<OPTION value="7">7</OPTION>
+
+			<OPTION value="8">8</OPTION>
+
+			<OPTION value="9">9</OPTION>
+
+			<OPTION value="10">10</OPTION>
+
+			</SELECT>
+
+		</TD>
+
+	</TR>	
+
+</TABLE>
+
+<DIV ALIGN="CENTER"><INPUT TYPE="RESET" NAME="Reset" VALUE="Reset"><INPUT TYPE="SUBMIT" NAME="Submit" VALUE="Submit" ONCLICK="sensitivityView_name()"></DIV>
+
+</FORM>
+
+
+
+</BODY>
+
+
+
+</HTML>
