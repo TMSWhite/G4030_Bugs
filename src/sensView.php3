@@ -28,13 +28,12 @@ if ($where) {
 #else {
 	$sql = "SELECT bugs.* FROM bugs,patients $where";
 	
-	$db = mysql_connect("localhost", "root");
+	$db = mysql_connect($dbhost,$dbuser,$dbpass);
 	
 	if (!$db) {
 		$error = "Unable to connect to database server";
 	}
 	else {
-		$dbname = "test2";
 		if (!mysql_select_db($dbname,$db)) {
 			$error = "Unable to connect to database<BR>dbname=$dbname";
 		}

@@ -1,3 +1,4 @@
+use test2;
 CREATE TABLE patients (
 	id int DEFAULT '0' NOT NULL auto_increment,
 	mrn int, month tinyint, floor tinyint, room tinyint, bed tinyint,

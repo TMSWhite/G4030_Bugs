@@ -1,4 +1,8 @@
 <%
+$dbuser='bugs';
+$dbhost='localhost';
+$dbpass='mysqlpasswd';
+$dbname='test2';
 
 $SENS = array('#FF66FF','#FF9900','yellow','white','white','white','white','white','white','white','white');
 

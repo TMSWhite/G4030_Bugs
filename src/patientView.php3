@@ -3,7 +3,7 @@
 	
 <% 
 if (!isset($user)) { $user = 'cleaning'; }
-
+include("externs.inc");
 
 if ($user == 'cleaning' || $user == 'admin') {
 	$error = "Sorry, you are not authorized to access this information.";
@@ -12,13 +12,12 @@ if ($user == 'cleaning' || $user == 'admin') {
 if (isset($mrn)) { 
 	$sql = "SELECT * FROM patients WHERE mrn=$mrn";
 	
-	$db = mysql_connect("localhost", "root");
+	$db = mysql_connect($dbhost,$dbuser,$dbpass);
 	
 	if (!$db) {
 		$error = "Unable to connect to database server";
 	}
 	else {
-		$dbname = "test2";
 		if (!mysql_select_db($dbname,$db)) {
 			$error = "Unable to connect to database<BR>dbname=$dbname";
 		}
@@ -48,8 +47,6 @@ $title = "Patient #$mrn";
 $tWidth = " WIDTH='450'";
 
 $td = "width='50' align='center'";
-
-include("externs.inc");
 
 $leftfile = $leftstr = $rightfile = $rightstr = '';
 if ($mrn > 0) { 

@@ -26,13 +26,12 @@ if ($where) {
 	$bug_sql = "SELECT DISTINCT bugs.numer, bugs.bug, patients.* FROM patients LEFT JOIN bugs ON patients.mrn=bugs.mrn $where";
 	$pt_sql = "SELECT DISTINCT patients.mrn, patients.floor, patients.room, patients.bed FROM patients LEFT JOIN bugs ON patients.mrn=bugs.mrn $where";
 
-	$db = mysql_connect("localhost", "root");
+	$db = mysql_connect($dbhost,$dbuser,$dbpass);
 	
 	if (!$db) {
 		$error = "Unable to connect to database server";
 	}
 	else {
-		$dbname = "test2";
 		if (!mysql_select_db($dbname,$db)) {
 			$error = "Unable to connect to database<BR>dbname=$dbname";
 		}
