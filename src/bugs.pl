@@ -79,11 +79,12 @@ for (my $floor=1;$floor<=10;++$floor) {
 my @SENSITIVITY_COLS = ('red','orange','yellow','white','white','white','white','white','white','white','white');
 
 &parseSource;
-&test;
+#&test;
 #&printByLoc;
 #&printByPt;
 #&printByMD;
 #&printByBug;
+&patientDB;
 
 sub title {
 	my $arg = shift;
@@ -176,6 +177,71 @@ sub test {
 	close BYDRUG;
 }
 
+sub patientDB {
+	open (PTDB, ">patientDB.txt") or die "unable to open patientDB.txt";
+	open (BUGDB, ">bugDB.txt") or die "unable to open bugDB.txt";
+	
+	print PTDB "CREATE TABLE patients (\n";
+	print PTDB "	id int DEFAULT '0' NOT NULL auto_increment,\n";
+	print PTDB "	mrn int, month tinyint, floor tinyint, room tinyint, bed tinyint,\n";
+	print PTDB "	md varchar(2), bugs tinyint,\n";
+	print PTDB "	PRIMARY KEY (id),\n";
+	print PTDB "	UNIQUE id (id));\n";
+	
+	print BUGDB "CREATE TABLE bugs (\n";
+	print BUGDB "	id int DEFAULT '0' NOT NULL auto_increment, mrn int,\n";
+	
+	print BUGDB "	ak tinyint,\n";
+	print BUGDB "	aug tinyint,\n";
+	print BUGDB "	bug varchar(2),\n";
+	print BUGDB "	cax tinyint,\n";
+	print BUGDB "	clin tinyint,\n";
+	print BUGDB "	cp tinyint,\n";
+	print BUGDB "	denom int,\n";
+	print BUGDB "	e tinyint,\n";
+	print BUGDB "	gm tinyint,\n";
+	print BUGDB "	numer int,\n";
+	print BUGDB "	pitz tinyint,\n";
+	print BUGDB "	profStr varchar(15),\n";
+	print BUGDB "	tim tinyint,\n";
+	print BUGDB "	ts tinyint,\n";
+	
+	print BUGDB "	PRIMARY KEY (id),\n";
+	print BUGDB "	UNIQUE id (id));\n";
+
+	my %b;
+	my $bugcount=0;
+	my $ptcount=0;
+	
+	foreach (@patients) {
+		my %p = %{ $_ };
+		my %profs = %{ $p{'profiles'} };
+		++$ptcount;
+		print PTDB "INSERT INTO patients VALUES('$ptcount','$p{'mrn'}','$p{'month'}','$p{'floor'}','$p{'room'}','$p{'bed'}','$p{'md'}','$p{'bugs'}');\n";
+		
+		for (my $i=1;$i<=$p{'bugs'};++$i) {
+			%b = %{ $profs{$i} };
+			
+			++$bugcount;
+			print BUGDB "INSERT INTO bugs VALUES('$bugcount','$p{'mrn'}'";
+			
+			foreach my $key (sort(keys(%b))) {
+				my $val = $b{$key};
+				if ($val eq '0' || $val) {
+					print BUGDB ",'$val'";
+				}
+				else {
+					print BUGDB ",NULL";
+				}
+			}
+			print BUGDB ");\n";
+		}
+	}
+	
+	close PTDB;
+	close BUGDB;
+}
+
 sub parsePatient {
 	return {
 		mrn => $mrn,
@@ -200,7 +266,7 @@ sub printByLoc {
 			for (my $cMonth=0;$cMonth<=$#MONTH;++$cMonth) {
 				$gMonth = $MONTH[$cMonth];
 
-				$filename = "../bugs/loc_$gMd\_$gBug\_$gMonth.htm";
+				$filename = "../html/loc_$gMd\_$gBug\_$gMonth.htm";
 				open (OUT, ">$filename") or die "unable to open $filename";
 				
 				&preamble;
@@ -283,7 +349,7 @@ sub printByPt {
 		my %p = %{ $patients[$count] };
 		my (%b,$loc);
 
-		$filename = "../bugs/pt$p{'mrn'}.htm";
+		$filename = "../html/pt$p{'mrn'}.htm";
 		open (OUT, ">$filename") or die "unable to open $filename";
 		
 		&preamble;
@@ -381,7 +447,7 @@ sub printByMD {
 		for (my $month=0;$month<=$#MONTH;++$month) {
 			$gMonth = $MONTH[$month];	
 		
-			$filename = "../bugs/md_$gMd\_$gMonth.htm";
+			$filename = "../html/md_$gMd\_$gMonth.htm";
 			open (OUT, ">$filename") or die "unable to open $filename";
 			
 			&preamble;
@@ -416,50 +482,58 @@ sub printByMD {
 				next;
 			}
 			
+			my $count = 0;
+			
 			foreach (@patients) {
 				my %p = %{ $_ };
 				
 				next unless ($p{'md'} eq $gMd || $gMd eq 'all');
 				next unless ($p{'month'} eq $gMonth || $gMonth eq 'all');
 				
-				print OUT qq|<TR><$TD>$p{'month'}</TD>\n|;
-				print OUT qq|	<$TD><A HREF='pt$p{'mrn'}.htm'>$p{'mrn'}</A></TD>\n|;
-				print OUT qq|	<$TD><A HREF='loc_$gMd\_all_$p{'month'}.htm'>$p{'floor'}</A></TD><$TD>$p{'room'}</TD><$TD>$p{'bed'}</TD>|;
-	
+				$msg = '';
+				++$count;
 				my %profs = %{ $p{'profiles'} };
-				
-				print OUT qq|<TD><FONT FACE='Arial'><B>|;
-				
+			
 				if ($p{'bugs'} == 0) {
-					print OUT '&nbsp;';
+					$msg = '&nbsp;';
 				}
+				
+				my $min = 10;
 				
 				for (my $i=1;$i<=$p{'bugs'};++$i) {
 					my %b = %{ $profs{$i} };
 					
 					if ($i > 1) {
-						print OUT '<BR>';
+						$msg .= '<BR>';
 					}
-					$msg = uc($b{'bug'});
-					print OUT qq|$msg:&nbsp;|;
+					$msg .= uc($b{'bug'}) . qq|:&nbsp;|;
 					
 					foreach my $drug (@DRUG) {
 						next if ($drug eq 'all');
 						$sens = $b{$drug};
 						if ($sens eq '0') {
-							print OUT qq|&nbsp;<FONT COLOR='#aa0000'>$drug</FONT>|;
+							$msg .= qq|&nbsp;<FONT COLOR='#aa0000'>$drug</FONT>|;
 						}
 						elsif ($sens eq '1') {
-							$msg = $drug;
-							print OUT qq|&nbsp;<FONT COLOR='#00dd00'>$msg</FONT>|;
+							$msg .= qq|&nbsp;<FONT COLOR='#00dd00'>$drug</FONT>|;
 						}
 						else {
-							print OUT qq|&nbsp;<FONT COLOR='#dddddd'>$drug</FONT>|;
+							$msg .= qq|&nbsp;<FONT COLOR='white'>$drug</FONT>|;
 						}
 					}
+					$min = $b{'numer'}	if ($b{'numer'} < $min);
 				}
+				
+				print OUT qq|<TR><$TD>$p{'month'}</TD>\n|;
+				print OUT qq|	<$TD BGCOLOR='| . $SENSITIVITY_COLS[$min] . qq|'><A HREF='pt$p{'mrn'}.htm'>$p{'mrn'}</A></TD>\n|;
+				print OUT qq|	<$TD><A HREF='loc_$gMd\_all_$p{'month'}.htm'>$p{'floor'}</A></TD><$TD>$p{'room'}</TD><$TD>$p{'bed'}</TD>|;
+				print OUT qq|<TD><FONT FACE='Arial'><B>|;
+				
+				print OUT $msg;
+								
 				print OUT qq|</B></FONT></TD></TR>\n|;
 			}
+			print OUT qq|<TR><$TD COLSPAN='6' BGCOLOR='lightblue'>Total Patients = <B>$count</B></TD></TR>\n|;
 			print OUT qq|</TABLE>\n|;
 			print OUT $arrowsMD;
 			print OUT $arrowsMonth;	
@@ -481,7 +555,7 @@ sub printByBug {
 			for (my $cMonth=0;$cMonth<=$#MONTH;++$cMonth) {
 				$gMonth = $MONTH[$cMonth];
 
-				$filename = "../bugs/sens_$gMd\_$gFloor\_$gMonth.htm";
+				$filename = "../html/sens_$gMd\_$gFloor\_$gMonth.htm";
 				open (OUT, ">$filename") or die "unable to open $filename";
 				
 				&preamble;
@@ -646,15 +720,20 @@ sub printByBugTableBody {
 	print OUT qq|<TR><$TD>&nbsp;</TD>\n|;
 	
 	foreach my $bug (@BUG) {
+		next if ($bug eq 'all');
+		
 		print OUT qq|	<$TD><B>$abbr2BUG{$bug}</B></TD>\n|;
 	}
 	
 	print OUT qq|</TR>\n|;
 	
 	foreach my $drug (@DRUG) {
+		next if ($drug eq 'all');
+		
 		print OUT qq|<TR><$TD><B>$abbr2DRUG{$drug}</B></TD>\n|;
 		
 		foreach my $bug (@BUG) {
+			next if ($bug eq 'all');
 			$loc = "B$bug\D$drug";
 			
 			$numer = $tSens{$loc};
@@ -663,7 +742,14 @@ sub printByBugTableBody {
 			if ($denom) {
 				$ratio = $numer / $denom;
 				$BG = "BGCOLOR='" . &rgb(0,$ratio,0) . "'";
-				$msg = "<FONT COLOR='white'><B>" . sprintf("%3.0f%", 100 * $ratio) . "<BR>$denom</B></FONT>";
+				if ($ratio <= .7) {
+					$msg = "<FONT COLOR='white'><B>";	# this may be reversed
+				}
+				else {
+					$msg = "<FONT COLOR='black'><B>";
+				}
+				
+				$msg .= sprintf("%3.0f%", 100 * $ratio) . "<BR>$denom</B></FONT>";
 			}
 			else {
 				$msg = '&nbsp;';
