@@ -37,8 +37,6 @@ function loadTarget() {
 		return;	// don't change targetFile;
 	}
 	parent.Frame2.location.href=targetFile;
-	
-	document.myForm.action = targetFile;
 }
 
 function setDefaults() {
@@ -117,7 +115,7 @@ function setView() {
 
 <BODY ONLOAD="setDefaults()">
 
-<FORM ACTION="help.htm" METHOD="POST" ENCTYPE="application/x-www-form-urlencoded" NAME="myForm" TARGET="Frame2"
+<FORM ACTION="javascript:loadTarget()" METHOD="POST" ENCTYPE="application/x-www-form-urlencoded" NAME="myForm" TARGET="Frame2"
 ONRESET="setDefaults()">
 <CENTER>
 <P>
@@ -260,7 +258,7 @@ ONRESET="setDefaults()">
 </TABLE>
 
 </CENTER>
-<P>
+<A HREF="login.htm" target="Frame1">Exit/Logoff</A>
 </FORM>
 
 </BODY>
