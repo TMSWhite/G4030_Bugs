@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+
+<HEAD>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=iso-8859-1">
+<SCRIPT LANGUAGE="JAVASCRIPT">
+<!--
+
+
+var targetFile;
+var mrn;
+var md;
+var month;
+var bug;
+var floor;
+var view;
+var numRegExp = new RegExp("^[0-9]{1,3}$");
+
+function loadTarget() {
+	if (view == "pt") {
+		targetFile = "patientView.php3?mrn=" + mrn ;
+	}
+	else if (view == "md") {
+		targetFile = "mdView.php3?md=" + md + "&month=" + month + "&floor=" + floor;
+	}
+	else if (view == "loc") {
+		targetFile = "floorView.php3?md=" + md + "&month=" + month + "&bug=" + bug + "&floor=" + floor;
+	}
+	else if (view == "time") {
+		targetFile = "time_" + md + "_" + floor + "_all.gif";
+	}
+	else if (view == "sens") {
+		targetFile = "sensView.php3?md=" + md + "&month=" + month + "&floor=" + floor;
+	}
+	else {
+		alert("unknown values:" + " view=" + view + " pt=" + mrn + " md=" + md + " floor=" + floor + " bug=" + bug + " month=" + month);
+		return;	// don't change targetFile;
+	}
+	parent.Frame2.location.href=targetFile;
+	
+	document.myForm.action = targetFile;
+}
+
+function setDefaults() {
+	mrn=0;
+	document.myForm.mrn.value = 0;
+	md="all";
+	month="all";
+	bug="all";
+	floor="all";
+	view="loc";
+}
+
+	
+	
+function setMRN() {
+	mrn = document.myForm.mrn.value;
+		
+	if (mrn == "" || !numRegExp.test(mrn)) {
+		document.myForm.mrn.value = 0;
+		alert("Please enter a Patient MRN between 0 and 999");
+		document.myForm.mrn.focus();
+		return false;
+	}
+	
+	mrn = (mrn - 1) + 1;	// convert to number (remove leading zeros)
+	document.myForm.mrn.value = mrn;
+	
+	loadTarget();
+	
+	return targetFile;
+}
+
+function setMD() {
+	var lmd = document.myForm.md.options;
+	md = lmd[lmd.selectedIndex].value;
+	loadTarget();
+}
+
+function setMonth() {
+	var lmonth = document.myForm.month.options;
+	month = lmonth[lmonth.selectedIndex].value;
+	loadTarget();
+}
+
+function setBug() {
+	var lbug = document.myForm.bug.options;
+	bug = lbug[lbug.selectedIndex].value;
+	loadTarget();
+}
+	
+function setFloor() {
+	var lfloor = document.myForm.floor.options;
+	floor = lfloor[lfloor.selectedIndex].value;
+	loadTarget();
+}
+
+function setView() {
+	var lview = document.myForm.view_type;
+	
+	for (var i=0;i<lview.length;++i) {
+		if (lview[i].checked) {
+			view = lview[i].value;
+			loadTarget();
+		}
+	}
+}
+
+
+//-->
+
+</SCRIPT>
+
+	<META NAME="GENERATOR" Content="Visual Page 2.0 for Windows">
+	<TITLE>Bugs Project - Tom White</TITLE>
+</HEAD>
+
+<BODY ONLOAD="setDefaults()">
+
+<FORM ACTION="help.htm" METHOD="POST" ENCTYPE="application/x-www-form-urlencoded" NAME="myForm" TARGET="Frame2"
+ONRESET="setDefaults()">
+<CENTER>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+	<TR>
+		<TD WIDTH="50%" ALIGN="LEFT">
+			<P><A HREF="mailto:thw7001@flux.cpmc.columbia.edu">Email author</A>
+		</TD>
+		<TD WIDTH="50%" ALIGN="RIGHT">
+			<P ALIGN="RIGHT"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM"
+			BORDER="0"></A> <A HREF="help.htm" target="Frame2"><B>Help/Tutorial</B></A>
+		</TD>
+	</TR>
+</TABLE>
+<B>Select a View</B>
+<TABLE BORDER="1" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+	<TR>
+		<TD WIDTH="32%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>View</B>
+		</TD>
+		<TD WIDTH="17%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Filters</B>
+		</TD>
+		<TD WIDTH="51%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Shows</B>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="32%" VALIGN="TOP">Single Patient</TD>
+		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="pt" ONCLICK="setView()"><A HREF="javascript:document.myForm.mrn.focus()">MRN</A></TD>
+		<TD WIDTH="51%" VALIGN="TOP"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>
+			location, MD, bugs, sensitivity</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="32%" VALIGN="TOP">List Patients for Doctor</TD>
+		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="md" ONCLICK="setView()"> <A HREF="javascript:document.myForm.md.focus()">MD</A>,
+			<A HREF="javascript:document.myForm.month.focus()">month</A>, <A HREF="javascript:document.myForm.floor.focus()">floor</A></TD>
+		<TD WIDTH="51%" VALIGN="TOP"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>
+			MRN, month, location, bugs, sensitivities</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="32%" VALIGN="TOP">Floor-Plan</TD>
+		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="loc"  CHECKED ONCLICK="setView()"> <A HREF="javascript:document.myForm.md.focus()">MD</A>,
+			<A HREF="javascript:document.myForm.month.focus()">month</A>, <A HREF="javascript:document.myForm.bug.focus()">bug</A>,
+			<A HREF="javascript:document.myForm.floor.focus()">floor</A></TD>
+		<TD WIDTH="51%" VALIGN="TOP"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>
+			Floor vs. Room: (#patients or MRN), (#bugs or bug-list), isolation status</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="32%" VALIGN="TOP">Temporal Trends</TD>
+		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="time" ONCLICK="setView()"> <A HREF="javascript:document.myForm.md.focus()">MD</A>,
+			<A HREF="javascript:document.myForm.floor.focus()">floor</A></TD>
+		<TD WIDTH="51%" VALIGN="TOP"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>
+			# and severity of bugs over time</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="32%" VALIGN="TOP">Antibiogram</TD>
+		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="sens" ONCLICK="setView()"><A HREF="javascript:document.myForm.md.focus()">MD</A>,
+			<A HREF="javascript:document.myForm.md.focus()">month</A>, <A HREF="javascript:document.myForm.floor.focus()">floor</A></TD>
+		<TD WIDTH="51%" VALIGN="TOP"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>
+			Bug vs. Drug - avg. sensitivity</TD>
+	</TR>
+</TABLE>
+</P>
+
+<P><B>Filters for Restricting View</B> 
+<TABLE BORDER="1" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+	<TR>
+		<TD WIDTH="19%"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>&nbsp;MRN</TD>
+		<TD WIDTH="81%"><INPUT TYPE="TEXT" NAME="mrn" SIZE="4" ONFOCUS="document.myForm.mrn.select()" ONBLUR="setMRN()">(0-999)[TAB to
+			submit]</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="19%"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>&nbsp;MD</TD>
+		<TD WIDTH="81%">
+			<SELECT NAME="md" ONCHANGE="setMD()">
+			<OPTION value="all" SELECTED>(All)</OPTION>
+			<OPTION value="rb">R Barrows</OPTION>
+			<OPTION value="jc">J Cimino</OPTION>
+			<OPTION value="gh">G Hripcsak</OPTION>
+			<OPTION value="rj">R Jenders</OPTION>
+			<OPTION value="js">J Starren</OPTION>
+			</SELECT>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="19%"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>&nbsp;Month</TD>
+		<TD WIDTH="81%">
+			<SELECT NAME="month" ONCHANGE="setMonth()">
+			<OPTION value="all" SELECTED>(All)</OPTION>
+			<OPTION value="1">1</OPTION>
+			<OPTION value="2">2</OPTION>
+			<OPTION value="3">3</OPTION>
+			<OPTION value="4">4</OPTION>
+			<OPTION value="5">5</OPTION>
+			</SELECT>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="19%"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>&nbsp;Bug</TD>
+		<TD WIDTH="81%">
+			<SELECT NAME="bug" ONCHANGE="setBug()">
+			<OPTION value="all" SELECTED>(All)</OPTION>
+			<OPTION value="ab">Acinetobacter B. (ab)</OPTION>
+			<OPTION value="pa">Pseudomonas A. (pa)</OPTION>
+			<OPTION value="sa">Staph Aureus (sa)</OPTION>
+			<OPTION value="sm">Serratia Marc. (sm)</OPTION>
+			</SELECT>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="19%"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>&nbsp;Floor</TD>
+		<TD WIDTH="81%">
+			<SELECT NAME="floor" ONCHANGE="setFloor()">
+			<OPTION value="all" SELECTED>(All)</OPTION>
+			<OPTION value="1">1</OPTION>
+			<OPTION value="2">2</OPTION>
+			<OPTION value="3">3</OPTION>
+			<OPTION value="4">4</OPTION>
+			<OPTION value="5">5</OPTION>
+			<OPTION value="6">6</OPTION>
+			<OPTION value="7">7</OPTION>
+			<OPTION value="8">8</OPTION>
+			<OPTION value="9">9</OPTION>
+			<OPTION value="10">10</OPTION>
+			</SELECT>
+		</TD>
+	</TR>
+	<TR>
+		<TD ALIGN="CENTER" COLSPAN="2">
+			<CENTER>
+			<P><INPUT TYPE="RESET" NAME="RESET" VALUE="Reset">
+</CENTER>
+		</TD>
+	</TR>
+</TABLE>
+
+</CENTER>
+<P>
+</FORM>
+
+</BODY>
+
+</HTML>

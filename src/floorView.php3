@@ -10,9 +10,10 @@ if (isset($bug) && $bug != 'all') { $where .= (($where) ? ' AND ' : '') . "bugs.
 if (isset($floor) && $floor != 'all') { $where .= (($where) ? ' AND ' : '') . "patients.floor=$floor"; }
 
 
-if (!isset($md)) { $md = '(all)'; }
-if (!isset($month)) { $month = '(all)'; }
-if (!isset($bug)) { $bug = '(all)'; }
+if (!isset($md)) { $md = 'all'; }
+if (!isset($month)) { $month = 'all'; }
+if (!isset($bug)) { $bug = 'all'; }
+if (!isset($floor)) { $floor = 'all'; }
 
 $title = "Floor View of MRNs, Bugs, and Severity for" . $abbr2MD[$md] . ", month=$month, bug=$bug";
 $error = '';
@@ -73,33 +74,33 @@ else {
 	
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($md_i > 0) { 
-		$leftfile = "floorView.php3?md=" . $MD[$md_i-1] . "&bug=$bug&month=$month";
+		$leftfile = "floorView.php3?md=" . $MD[$md_i-1] . "&bug=$bug&month=$month&floor=$floor";
 		$leftstr = "MD=" . $abbr2MD[$MD[$md_i-1]];
 	}
 	if ($md_i < count($MD)-1) {
-		$rightfile = "floorView.php3?md=" . $MD[$md_i+1] . "&bug=$bug&month=$month";
+		$rightfile = "floorView.php3?md=" . $MD[$md_i+1] . "&bug=$bug&month=$month&floor=$floor";
 		$rightstr = "MD=" . $abbr2MD[$MD[$md_i+1]];
 	}
 	$arrowsMD = makeArrows($tWidth,$leftfile,$leftstr,"MD",$abbr2MD[$md],$rightfile,$rightstr);
 
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($month > 1) { 
-		$leftfile = "floorView.php3?md=$md&bug=$bug&month=" . ($month-1);
+		$leftfile = "floorView.php3?md=$md&bug=$bug&floor=$floor&month=" . ($month-1);
 		$leftstr = "month=" . ($month-1);
 	}
 	if ($month < 5) {
-		$rightfile = "floorView.php3?md=$md&bug=$bug&month=" . ($month+1);
+		$rightfile = "floorView.php3?md=$md&bug=$bug&floor=$floor&month=" . ($month+1);
 		$rightstr = "month=" . ($month+1);
 	}	
 	$arrowsMonth = makeArrows($tWidth,$leftfile,$leftstr,"month",$month,$rightfile,$rightstr);	
 	
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($bug_i > 0) { 
-		$leftfile = "floorView.php3?md=$md&bug=" . $BUG[$bug_i-1] . "&month=$month";
+		$leftfile = "floorView.php3?md=$md&bug=" . $BUG[$bug_i-1] . "&month=$month&floor=$floor";
 		$leftstr = "bug=" . $BUG[$bug_i-1];
 	}
 	if ($bug_i < count($BUG)-1) {
-		$rightfile = "floorView.php3?md=$md&bug=" . $BUG[$bug_i+1]  . "&month=$month";
+		$rightfile = "floorView.php3?md=$md&bug=" . $BUG[$bug_i+1]  . "&month=$month&floor=$floor";
 		$rightstr = "bug=" . $BUG[$bug_i+1];
 	}	
 	$arrowsBug = makeArrows($tWidth,$leftfile,$leftstr,"bug",$bug,$rightfile,$rightstr);	
@@ -190,11 +191,29 @@ else {
 	
 	echo "<TABLE CELLPADDING='0' CELLSPACING='0' BORDER='1'>\n";
 	
+	/** START Room descriptors **/
+	echo "<TR><TD COLSPAN='2' ALIGN='center'><B>ROOM</B></TD>\n";
+	for ($room=1;$room<=10;++$room) {
+		echo "	<TD COLSPAN='2' ALIGN='center'><B>$room</B></TD>\n";
+	}
+	echo "<TD ROWSPAN='2' ALIGN='center' BGCOLOR='lightblue'><B>Totals</B><BR><I>Pts<BR>Bugs</I></TD></TR>\n";
+	
+	echo "<TR><TD COLSPAN='2' ALIGN='center'><B>BED</B></TD>\n";
+	for ($room=1;$room<=10;++$room) {
+		for ($bed=1;$bed<=2;++$bed) {
+			$val = ($bed==1) ? 'a' : 'b';
+			echo "	<TD ALIGN='center'><B>$val</B></TD>\n";
+		}
+	}
+	echo "</TR>\n";
+
+	/** END Room descriptors **/
+	
 	for ($floor=10;$floor>=1;--$floor) {
 		echo "	<TR>\n";
 		
 		if ($floor == 10) {
-			echo "		<TD ROWSPAN='10'><B>F<BR>L<BR>O<BR>O<BR>R</B></TD>\n";
+			echo "		<TD ROWSPAN='10' ALIGN='center'><B>F<BR>L<BR>O<BR>O<BR>R</B></TD>\n";
 		}
 		
 		echo "		<TD ALIGN='center'><B>$floor</B></TD>\n";
@@ -250,7 +269,9 @@ else {
 		echo "		<$TD BGCOLOR='lightblue'>$msg</TD>\n";
 		echo "	</TR>\n";
 	}
-	echo "	<TR><TD ALIGN='center' COLSPAN='2' BGCOLOR='lightblue'><B>Pts<BR>Bugs</B></TD>\n";
+	
+	
+	echo "	<TR><TD ALIGN='center' COLSPAN='2' BGCOLOR='lightblue'><B>Totals</B><BR><I>Pts/Bugs</I></TD>\n";
 	for ($room=1;$room<=10;++$room) {
 		$msg = $tPt["FallR$room" . 'Ball'] . '<BR>' . $tBug["FallR$room" . 'Ball'];
 		if (!$msg) { $msg = '&nbsp;'; }
@@ -258,28 +279,9 @@ else {
 	}
 	$msg = $tPt['FallRallBall'] . '<BR>' . $tBug['FallRallBall'];
 	if (!$msg) { $msg = '&nbsp;'; }
-	echo "	<$TD BGCOLOR='lightblue'>$msg</TD>\n</TR>\n";
-	
-	/** Finish off table **/
-	echo "	<TR>\n";
-	echo "		<TD ROWSPAN='3' COLSPAN='2'>&nbsp;</TD>\n";
-	
-	for ($room=1;$room<=10;++$room) {
-		for ($bed=1;$bed<=2;++$bed) {
-			$val = ($bed==1) ? 'a' : 'b';
-			echo "		<TD ALIGN='center'><B>$val</B></TD>\n";
-		}
-	}
-	echo "	<TD ROWSPAN='3' BGCOLOR='lightblue' ALIGN='center'><B>Pts<BR>Bugs</B></TD>\n";
-	echo "	</TR>\n";
-	for ($room=1;$room<=10;++$room) {
-		echo "		<TD COLSPAN='2' ALIGN='center'><B>$room</B></TD>\n";
-	}
-	echo "	</TR>\n";
-	echo "	<TR>\n";
-	echo "		<TD COLSPAN='20' ALIGN='center'><B>ROOM/BED</B></TD>\n";
-	echo "	</TR>\n";
-	echo "</TABLE>\n";
+	echo "	<$TD BGCOLOR='lightblue'>$msg</TD>\n</TR>\n";	
+	echo "</TABLE>\n";		
+
 	
 
 if (isset($bug_result)) { mysql_free_result($bug_result); }
