@@ -24,7 +24,7 @@ function loadTarget() {
 		targetFile = "mdView.php3?md=" + md + "&month=" + month + "&floor=" + floor;
 	}
 	else if (view == "loc") {
-		targetFile = "floorView.php3?md=" + md + "&month=" + month + "&bug=" + bug;
+		targetFile = "floorView.php3?md=" + md + "&month=" + month + "&bug=" + bug + "&floor=" + floor;
 	}
 	else if (view == "time") {
 		targetFile = "time_" + md + "_" + floor + "_all.gif";
@@ -184,7 +184,8 @@ ONRESET="setDefaults()">
 		<TD WIDTH="17%" VALIGN="TOP"><INPUT TYPE="RADIO" NAME="view_type" VALUE="loc"  CHECKED ONCLICK="setView()">
 			<A HREF="javascript:document.myForm.md.focus()">MD</A>,
 			<A HREF="javascript:document.myForm.month.focus()">month</A>, 
-			<A HREF="javascript:document.myForm.bug.focus()">bug</A></TD>
+			<A HREF="javascript:document.myForm.bug.focus()">bug</A>,
+			<A HREF="javascript:document.myForm.floor.focus()">floor</A></TD>
 		<TD WIDTH="51%" VALIGN="TOP"><A HREF="help.htm" target="Frame2"><IMG SRC="ques_gry.gif" WIDTH="17" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"></A>
 			Floor vs. Room: (#patients or MRN), (#bugs or bug-list), isolation status</TD>
 	</TR>

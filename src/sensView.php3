@@ -60,7 +60,7 @@ else {
 
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	
-	$md_i=$abbr2index[$md];
+	$md_i=$abbr2MDindex[$md];
 	
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($md_i > 0) { 
@@ -103,46 +103,20 @@ else {
 
 <%
 	/* Calc sensitivity */
-#	$numerSens = array();
-#	$denomSens = array();
-	
-
-	reset($BUG);
-	while (list($key,$bug) = each($BUG)) {
-		if ($bug == 'all')
-			continue;
-			
-		$denomSens[$bug] = 0;
-		
-		reset($DRUG);
-		while (list($key,$drug) = each($DRUG)) {
-			if ($drug == 'all')
-				continue;
-			$loc = "B$bug" . "D$drug";
-			$numerSens[$loc] = 0;
-			$denomSens[$loc] = 0;
-		}
-	}
 	
 	while($row = mysql_fetch_array($result)) {
 		reset($DRUG);
 		++$denomSens[$row['bug']];
-#		echo $row['bug'] . ':';
 		while (list($key,$drug) = each($DRUG)) {
 			$loc = "B" . $row['bug'] . "D$drug";
 			if ($row[$drug] == '1') { 
-#				echo "$drug=1,";
 				++$denomSens[$loc];
 				++$numerSens[$loc];
-#				echo $denomSens[$loc] . '|';
 			}
 			elseif ($row[$drug] == '0') {
-#				echo "$drug=0,";
 				++$denomSens[$loc];
-#				echo $numerSens[$loc] . '|';
 			}
 		}
-#		echo "\n";
 	}
 	/* End of CalcByBug */
 	
@@ -158,7 +132,7 @@ else {
 	while (list($key,$bug) = each($BUG)) {
 		if ($bug == 'all')
 			continue;
-		echo "	<TD width='100' align='center' valign='top' BGCOLOR='lightblue'><B>" . $denomSens[$bug] . "</B></TD>\n";
+		echo "	<TD width='100' align='center' valign='top' BGCOLOR='lightblue'><B>" . (($denomSens[$bug]) ? $denomSens[$bug] : '0') . "</B></TD>\n";
 	}
 	echo "</TR>\n";		
 	
@@ -177,7 +151,6 @@ else {
 			
 			$numer = $numerSens[$loc];
 			$denom = $denomSens[$loc];
-#			echo "$loc:$numer/$denom,";
 			
 			if ($denom) {
 				$ratio = $numer / $denom;

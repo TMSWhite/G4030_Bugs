@@ -60,7 +60,7 @@ else {
 
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	
-	$md_i=$abbr2index[$md];
+	$md_i=$abbr2MDindex[$md];
 	
 	$leftfile = $leftstr = $rightfile = $rightstr = '';
 	if ($md_i > 0) { 

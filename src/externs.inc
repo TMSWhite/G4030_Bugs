@@ -19,7 +19,7 @@ $abbr2MD = array(
 	'all' => 'all'
 );
 
-$abbr2index = array(
+$abbr2MDindex = array(
 	'rb' => '0', 
 	'jc' => '1',
 	'gh' => '2',
@@ -28,12 +28,20 @@ $abbr2index = array(
 	'all' => '5'
 );
 
+$abbr2BUGindex = array(
+	'ab' => '0', 
+	'pa' => '1',
+	'sa' => '2',
+	'sm' => '3',
+	'all' => '4'
+);
+
 $abbr2BUG = array(
 	'ab' => 'Acinetobacter&nbsp;B.<BR>(ab)',
 	'pa' => 'Pseudomonas&nbsp;A.<BR>(pa)',
 	'sa' => 'Staph&nbsp;Aureus<BR>(sa)',
 	'sm' => 'Serratia&nbsp;Marc.<BR>(sm)',
-	'all' => 'Average'
+	'all' => 'all'
 );
 
 $abbr2DRUG = array(
@@ -56,6 +64,7 @@ $BUG = array('ab','pa','sa','sm','all');
 $MONTH = array('all','1','2','3','4','5');
 $FLOOR = array('all','1','2','3','4','5','6','7','8','9','10');
 $ROOM = array('all','1','2','3','4','5','6','7','8','9','10');
+$BED = array('1','2');
 
 
 function makeArrows ($width,$prefile,$prestr,$midtopic,$midstr,$postfile,$poststr) {
