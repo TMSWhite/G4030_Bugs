@@ -16,11 +16,12 @@ if (!isset($floor)) { $floor = '(all)'; }
 $title = "Patient List for MD=" . $abbr2MD[$md] . ", month=$month, floor=$floor";
 $error = '';
 
-if (!$where) {
-	$error = "Incorrect Syntax.  Use the following convention (e.g. for md=J Starren (js), Month=1, Floor=3)<BR>mdView.php3?md=js&month=1&floor=3";
+if ($where) {
+	#$error = "Incorrect Syntax.  Use the following convention (e.g. for md=J Starren (js), Month=1, Floor=3)<BR>mdView.php3?md=js&month=1&floor=3";
+	$where = "WHERE $where";
 }
-else {
-	$sql = "SELECT * FROM patients WHERE $where ORDER BY month ASC, md ASC, floor ASC";
+#else {
+	$sql = "SELECT * FROM patients $where ORDER BY month ASC, md ASC, floor ASC";
 	
 	$db = mysql_connect("localhost", "root");
 	
@@ -38,12 +39,9 @@ else {
 			if (!$result) {
 				$error = "Unable to execute SQL query:<BR>$sql";
 			}
-			else if (mysql_num_rows($result) == 0) {
-				$error = "Query produced no results:<BR>$sql";
-			}
 		}
 	}
-}
+#}
 %>
 
 <HTML>
@@ -57,14 +55,51 @@ if ($error) {
 	echo "<B>$error</B>"; 
 } 
 else { 
+	/* create arrows */
+	$tWidth = " WIDTH='400'";
+
+	$leftfile = $leftstr = $rightfile = $rightstr = '';
+	
+	$md_i=$abbr2index[$md];
+	
+	$leftfile = $leftstr = $rightfile = $rightstr = '';
+	if ($md_i > 0) { 
+		$leftfile = "mdView.php3?md=" . $MD[$md_i-1] . "&floor=$floor&month=$month";
+		$leftstr = "MD=" . $abbr2MD[$MD[$md_i-1]];
+	}
+	if ($md_i < count($MD)-1) {
+		$rightfile = "mdView.php3?md=" . $MD[$md_i+1] . "&floor=$floor&month=$month";
+		$rightstr = "MD=" . $abbr2MD[$MD[$md_i+1]];
+	}
+	$arrowsMD = makeArrows($tWidth,$leftfile,$leftstr,"MD",$abbr2MD[$md],$rightfile,$rightstr);
+
+	$leftfile = $leftstr = $rightfile = $rightstr = '';
+	if ($month > 1) { 
+		$leftfile = "mdView.php3?md=$md&floor=$floor&month=" . ($month-1);
+		$leftstr = "month=" . ($month-1);
+	}
+	if ($month < 5) {
+		$rightfile = "mdView.php3?md=$md&floor=$floor&month=" . ($month+1);
+		$rightstr = "month=" . ($month+1);
+	}	
+	$arrowsMonth = makeArrows($tWidth,$leftfile,$leftstr,"month",$month,$rightfile,$rightstr);	
+	
+	$leftfile = $leftstr = $rightfile = $rightstr = '';
+	if ($floor > 1) { 
+		$leftfile = "mdView.php3?md=$md&floor=" . ($floor-1) . "&month=$month";
+		$leftstr = "floor=" . ($floor-1);
+	}
+	if ($floor < 10) {
+		$rightfile = "mdView.php3?md=$md&floor=" . ($floor+1) . "&month=$month";
+		$rightstr = "floor=" . ($floor+1);
+	}	
+	$arrowsFloor = makeArrows($tWidth,$leftfile,$leftstr,"floor",$floor,$rightfile,$rightstr);		
 %>
 	
-<TABLE CELLPADDING='0' CELLSPACING='0' BORDER='0'  WIDTH='400'><TR><TD align='center'><FONT SIZE=4>
-	<B>Patient List</B><BR>
-	MD = <B><%=$abbr2MD[$md];%></B><BR>
-	Month = <B><%=$month%></B><BR>
-	Floor = <B><%=$floor%></B>
-</FONT></TD></TR></TABLE>
+<TABLE CELLPADDING='0' CELLSPACING='0' BORDER='0'  WIDTH='400'><TR><TD align='center'><FONT SIZE=4><B>Doctor's List of Patients</B><BR></TD></TR></TABLE>
+<%=$arrowsMD;%>
+<%=$arrowsMonth;%>
+<%=$arrowsFloor;%>
 				
 <TABLE CELLPADDING='0' CELLSPACING='0' BORDER='1'  WIDTH='400'>
 	<TR>
@@ -91,8 +126,10 @@ else {
 		else {
 			while ($prof = mysql_fetch_array($r_profile)) {
 				$profile .= ($profile ? '<BR>' : '') . "<FONT COLOR='black'><B>" . strtoupper($prof['bug']) . "<B>:&nbsp;";
-				reset($drugs);
-				while (list($key, $val) = each($drugs)) {
+				reset($DRUG);
+				while (list($key, $val) = each($DRUG)) {
+					if ($val == 'all')
+						continue;
 					if ($prof[$val] == '1') { 
 						$profile .= "&nbsp;<FONT COLOR='#00dd00'>$val</FONT>";
 					}
@@ -115,9 +152,21 @@ else {
 		echo "<TD $td>" . $row['bed'] . "</TD>\n";
 		echo "<TD>$profile</TD></TR>";
 	}
+	echo "<TR><TD $td COLSPAN='6' BGCOLOR='lightblue'>Total Patients = <B>" . mysql_num_rows($result) . "</B></TD></TR>\n";
+
 %>
 
 </TABLE>
+<%=$arrowsMD;%>
+<%=$arrowsMonth;%>
+<%=$arrowsFloor;%>
+
+<P><TABLE CELLPADDING='0' CELLSPACING='0' BORDER='1'  WIDTH='400'>
+<TR><TD align='center' COLSPAN='5'><B>Legend</B></TD></TR>
+<TR><TD ROWSPAN='2'>Severity</TD><TD  COLSPAN='4'>The cell's color shows how many antibiotics (AB)s can treat the worst bug</TD></TR>
+<TR><TD BGCOLOR='red'>Resistant to all ABs</TD><TD BGCOLOR='orange'>Sensitive to 1 AB</TD><TD BGCOLOR='yellow'>Sensitive to 2 ABs</TD><TD BGCOLOR='white'>Sensitive to >2 ABs</TD></TR>
+</TABLE>
+
 
 <%	
 } // end else

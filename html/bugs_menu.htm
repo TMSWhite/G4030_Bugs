@@ -18,10 +18,10 @@ var numRegExp = new RegExp("^[0-9]{1,3}$");
 
 function loadTarget() {
 	if (view == "pt") {
-		targetFile = "pt" + mrn + ".htm";
+		targetFile = "patientView.php3?mrn=" + mrn ;
 	}
 	else if (view == "md") {
-		targetFile = "md_" + md + "_" + month + ".htm";
+		targetFile = "mdView.php3?md=" + md + "&month=" + month + "&floor=" + floor;
 	}
 	else if (view == "loc") {
 		targetFile = "loc_" + md + "_" + bug + "_" + month + ".htm";
@@ -49,8 +49,6 @@ function setDefaults() {
 	bug="all";
 	floor="all";
 	view="loc";
-	
-	configControls();
 }
 
 	
@@ -104,46 +102,7 @@ function setView() {
 		if (lview[i].checked) {
 			view = lview[i].value;
 			loadTarget();
-			configControls();
 		}
-	}
-}
-
-function configControls() {
-	if (view == "pt") {
-		document.myForm.mrn.enabled = true;
-		document.myForm.md.enabled = false;
-		document.myForm.month.enabled = false;
-		document.myForm.bug.enabled = false;
-		document.myForm.floor.enabled= false;
-	}
-	else if (view == "md") {
-		document.myForm.mrn.enabled = false;
-		document.myForm.md.enabled = true;
-		document.myForm.month.enabled = true;
-		document.myForm.bug.enabled = false;
-		document.myForm.floor.enabled= false;
-	}
-	else if (view == "loc") {
-		document.myForm.mrn.enabled = false;
-		document.myForm.md.enabled = true;
-		document.myForm.month.enabled = true;
-		document.myForm.bug.enabled = true;
-		document.myForm.floor.enabled= false;	
-	}
-	else if (view == "time") {
-		document.myForm.mrn.enabled = false;
-		document.myForm.md.enabled = true;
-		document.myForm.month.enabled = false;
-		document.myForm.bug.enabled = false;
-		document.myForm.floor.enabled= true;	
-	}
-	else if (view == "sens") {
-		document.myForm.mrn.enabled = false;
-		document.myForm.md.enabled = true;
-		document.myForm.month.enabled = true;
-		document.myForm.bug.enabled = false;
-		document.myForm.floor.enabled= true;	
 	}
 }
 
@@ -255,11 +214,11 @@ ONRESET="setDefaults()">
 		<TD WIDTH="81%">
 			<SELECT NAME="md" ONCHANGE="setMD()">
 			<OPTION value="all" SELECTED>(All)</OPTION>
-			<OPTION value="rb">R Barrows</OPTION>
-			<OPTION value="jc">J Cimino</OPTION>
-			<OPTION value="gh">G Hripcsak</OPTION>
-			<OPTION value="rj">R Jenders</OPTION>
-			<OPTION value="js">J Starren</OPTION>
+			<OPTION value="1">R Barrows</OPTION>
+			<OPTION value="2">J Cimino</OPTION>
+			<OPTION value="3">G Hripcsak</OPTION>
+			<OPTION value="4">R Jenders</OPTION>
+			<OPTION value="5">J Starren</OPTION>
 			</SELECT>
 		</TD>
 	</TR>
@@ -281,10 +240,10 @@ ONRESET="setDefaults()">
 		<TD WIDTH="81%">
 			<SELECT NAME="bug" ONCHANGE="setBug()">
 			<OPTION value="all" SELECTED>(All)</OPTION>
-			<OPTION value="ab">Acinetobacter B. (ab)</OPTION>
-			<OPTION value="pa">Pseudomonas A. (pa)</OPTION>
-			<OPTION value="sa">Staph Aureus (sa)</OPTION>
-			<OPTION value="sm">Serratia Marc. (sm)</OPTION>
+			<OPTION value="1">Acinetobacter B. (ab)</OPTION>
+			<OPTION value="2">Pseudomonas A. (pa)</OPTION>
+			<OPTION value="3">Staph Aureus (sa)</OPTION>
+			<OPTION value="4">Serratia Marc. (sm)</OPTION>
 			</SELECT>
 		</TD>
 	</TR>

@@ -38,10 +38,22 @@ if ($error) {
 $row = mysql_fetch_array($result);
 
 $title = "Patient #$mrn";
+$tWidth = " WIDTH='450'";
 
 $td = "width='50' align='center'";
 
 include("externs.inc");
+
+$leftfile = $leftstr = $rightfile = $rightstr = '';
+if ($mrn > 0) { 
+	$leftfile = "patientView.php3?mrn=" . ($mrn - 1);
+	$leftstr = "MRN=" .  ($mrn - 1);
+}
+if ($mrn < 1000) {
+	$rightfile = "patientView.php3?mrn=" . ($mrn + 1);
+	$rightstr = "MRN=" .  ($mrn + 1);
+}
+$arrowsMRN = makeArrows($tWidth,$leftfile,$leftstr,"MRN",$mrn,$rightfile,$rightstr);
 
 %>
 
@@ -51,8 +63,10 @@ include("externs.inc");
 </HEAD>
 <BODY>
 
+<%=$arrowsMRN;%>
+
 <TABLE CELLPADDING='0' CELLSPACING='0' BORDER='1'  WIDTH='450'>
-	<TR><TD WIDTH='50'>MRN</TD><TD><B><%=$row['mrn'];%></B></TR>
+	<TR><TD WIDTH='50'>Patient Name</TD><TD><B>XXXXX YYYYY</B></TR>
 	<TR><TD WIDTH='50'>MD</TD><TD><B><%=$abbr2MD[$row['md']];%></B>
 	<% echo " (<A HREF='mdView.php3?md=" . $row['md'] . "&month=" . $row['month'] . "&floor=" . $row['floor']. "'>MD's view</A>)</TD></TR>\n";%>
 	<TR><TD WIDTH='50'>Where</TD><TD><B>Floor <%=$row['floor'];%>, Room <%=$row['room'];%>, Bed <%=$row['bed'];%></B>
@@ -65,7 +79,9 @@ include("externs.inc");
 <% 
 	mysql_free_result($result);
 	echo "<TD $td>Bug\Drug</TD>\n";
-	while (list($key, $val) = each($drugs)) {
+	while (list($key, $val) = each($DRUG)) {
+		if ($val == 'all')
+			continue;
 		echo "<TD $td>$val</TD>";
 	}
 %>
@@ -75,8 +91,10 @@ include("externs.inc");
 	$result = mysql_query("SELECT * FROM bugs WHERE mrn=$mrn");
 	while ($row = mysql_fetch_array($result)) {
 		echo "<TR><TD $td><B>" . strtoupper($row['bug']) . "</B></TD>\n";
-		reset($drugs);	// to allow each to work again
-		while (list($key, $val) = each($drugs)) {
+		reset($DRUG);	// to allow each to work again
+		while (list($key, $val) = each($DRUG)) {
+			if ($val == 'all')
+				continue;
 			echo "<TD $td";
 			if ($row[$val] == '1') { 
 				echo " BGCOLOR='lightgreen'><B>S</B></TD>\n"; 
