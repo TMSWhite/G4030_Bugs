@@ -1,0 +1,786 @@
+id	mrn	ak	aug	bug	cax	clin	cp	denom	e	gm	numer	pitz	profStr	tim	ts
+1	0	1		pa	1		1	6		0	5	1	pa:-sssrss---	1	
+2	0	1		ab			0	6		1	4	1	ab:srs-ssr---	0	1
+3	1			sa		0	0	4	0		1		sa:s-----r-rr		1
+4	3			sa		1	1	4	0		3		sa:s-----s-rs		1
+5	3	1		ab			0	6		0	2	1	ab:rrs-rsr---	0	0
+6	5	1		sm	1		1	7		1	6	0	sm:ssrssss---	1	1
+7	6	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+8	11			sa		0	0	4	1		1		sa:r-----r-sr		0
+9	12	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+10	12	1		sm	1		1	7		1	6	1	sm:srsssss---	0	1
+11	13			sa		1	1	4	1		3		sa:r-----s-ss		0
+12	13	0		pa	0		1	6		0	2	0	pa:-srrrrs---	1	
+13	14	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+14	15	1		pa	0		1	6		1	4	1	pa:-rsrsss---	0	
+15	16	1		sm	1		0	7		1	5	0	sm:ssrsssr---	1	1
+16	18	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+17	19	1		ab			0	6		1	3	0	ab:rsr-ssr---	1	0
+18	20	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+19	20	1		sm	1		1	7		1	6	1	sm:srsssss---	0	1
+20	25	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+21	27	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+22	31	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+23	31	1		sm	0		0	7		1	4	1	sm:srsrssr---	0	1
+24	32	1		sm	0		0	7		1	5	1	sm:sssrssr---	1	1
+25	34	1		sm	1		0	7		1	4	0	sm:srrsssr---	0	1
+26	35	1		ab			0	6		0	4	1	ab:sss-rsr---	1	1
+27	36	1		sm	0		1	7		1	6	1	sm:sssrsss---	1	1
+28	40	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+29	42	1		sm	1		1	7		1	5	0	sm:srrssss---	0	1
+30	44	1		sm	1		0	7		1	6	1	sm:ssssssr---	1	1
+31	45			sa		1	0	4	0		1		sa:r-----r-rs		0
+32	47	1		sm	0		0	7		1	3	0	sm:srrrssr---	0	1
+33	51	1		sm	1		0	7		1	4	0	sm:srrsssr---	0	1
+34	52	0		pa	1		0	6		0	2	0	pa:-srsrrr---	1	
+35	53			sa		1	1	4	0		3		sa:s-----s-rs		1
+36	53	0		pa	1		1	6		0	3	0	pa:-srsrrs---	1	
+37	53	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+38	53	1		sm	0		0	7		1	4	0	sm:ssrrssr---	1	1
+39	55	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+40	56			sa		1	1	4	0		2		sa:r-----s-rs		0
+41	59	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+42	61	0		ab			0	6		1	3	0	ab:ssr-srr---	1	1
+43	63	1		sm	1		1	7		1	5	0	sm:srrssss---	0	1
+44	65			sa		1	1	4	1		4		sa:s-----s-ss		1
+45	65	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+46	68			sa		0	0	4	0		1		sa:s-----r-rr		1
+47	69	1		pa	1		1	6		0	5	1	pa:-sssrss---	1	
+48	72	0		ab			0	6		0	0	0	ab:rrr-rrr---	0	0
+49	73	1		pa	1		1	6		1	6	1	pa:-ssssss---	1	
+50	74	0		ab			0	6		0	0	0	ab:rrr-rrr---	0	0
+51	77	1		pa	1		1	6		1	6	1	pa:-ssssss---	1	
+52	78	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+53	79			sa		0	0	4	0		1		sa:s-----r-rr		1
+54	80	1		pa	1		1	6		0	3	0	pa:-rrsrss---	0	
+55	81	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+56	81	0		sm	0		1	7		1	5	1	sm:sssrsrs---	1	1
+57	82	1		pa	1		1	6		1	6	1	pa:-ssssss---	1	
+58	83	1		ab			0	6		0	2	0	ab:rsr-rsr---	1	0
+59	83	0		sm	1		0	7		1	5	1	sm:sssssrr---	1	1
+60	84	1		ab			1	6		1	6	1	ab:sss-sss---	1	1
+61	88			sa		0	0	4	1		1		sa:r-----r-sr		0
+62	90			sa		0	0	4	0		1		sa:s-----r-rr		1
+63	92			sa		1	0	4	0		2		sa:s-----r-rs		1
+64	93	1		ab			1	6		0	4	0	ab:ssr-rss---	1	1
+65	94	1		pa	1		1	6		1	5	1	pa:-rsssss---	0	
+66	94	1		ab			1	6		1	4	0	ab:srr-sss---	0	1
+67	95	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+68	96			sa		0	1	4	1		2		sa:r-----s-sr		0
+69	96	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+70	97	0		ab			0	6		1	3	0	ab:ssr-srr---	1	1
+71	98			sa		0	0	4	1		2		sa:s-----r-sr		1
+72	98	0		ab			0	6		0	0	0	ab:rrr-rrr---	0	0
+73	101			sa		1	1	4	0		2		sa:r-----s-rs		0
+74	106	0		sm	0		1	7		0	3	1	sm:srsrrrs---	0	1
+75	108	1		sm	0		1	7		1	6	1	sm:sssrsss---	1	1
+76	114			sa		1	1	4	0		3		sa:s-----s-rs		1
+77	116	0		ab			0	6		1	1	0	ab:rrr-srr---	0	0
+78	117	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+79	118	1		ab			0	6		0	2	1	ab:rrs-rsr---	0	0
+80	120	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+81	121			sa		1	1	4	1		4		sa:s-----s-ss		1
+82	123	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+83	127			sa		1	0	4	0		2		sa:s-----r-rs		1
+84	128	1		ab			0	6		1	2	0	ab:rrr-ssr---	0	0
+85	129			sa		1	1	4	1		4		sa:s-----s-ss		1
+86	135	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+87	135	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+88	136	1		sm	0		1	7		1	6	1	sm:sssrsss---	1	1
+89	143	0		sm	1		1	7		0	5	1	sm:ssssrrs---	1	1
+90	144			sa		0	1	4	0		2		sa:s-----s-rr		1
+91	145	0		ab			1	6		0	4	1	ab:sss-rrs---	1	1
+92	146	0		ab			0	6		1	3	0	ab:ssr-srr---	1	1
+93	148			sa		1	0	4	1		3		sa:s-----r-ss		1
+94	150	1		pa	1		1	6		0	5	1	pa:-sssrss---	1	
+95	151			sa		0	0	4	1		1		sa:r-----r-sr		0
+96	152			sa		0	0	4	0		1		sa:s-----r-rr		1
+97	152	1		sm	1		0	7		1	4	0	sm:srrsssr---	0	1
+98	157			sa		1	0	4	0		2		sa:s-----r-rs		1
+99	158	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+100	161	1		ab			1	6		0	3	1	ab:rrs-rss---	0	0
+101	161	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+102	163	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+103	163	1		sm	1		0	7		1	4	1	sm:rrssssr---	0	0
+104	164			sa		1	1	4	1		4		sa:s-----s-ss		1
+105	165	1		pa	1		1	6		1	6	1	pa:-ssssss---	1	
+106	166	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+107	166	1		ab			0	6		1	3	1	ab:rrs-ssr---	0	0
+108	167	0		pa	0		1	6		1	3	1	pa:-rsrsrs---	0	
+109	167	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+110	169	1		ab			1	6		1	4	0	ab:srr-sss---	0	1
+111	172	1		sm	1		0	7		1	5	1	sm:srssssr---	0	1
+112	174	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+113	175	0		sm	1		0	7		1	3	0	sm:srrssrr---	0	1
+114	176	1		ab			1	6		1	3	0	ab:rrr-sss---	0	0
+115	177	0		pa	0		1	6		1	4	1	pa:-ssrsrs---	1	
+116	178			sa		1	1	4	1		3		sa:r-----s-ss		0
+117	178	0		pa	0		1	6		1	4	1	pa:-ssrsrs---	1	
+118	179			sa		0	1	4	1		3		sa:s-----s-sr		1
+119	179	1		sm	1		0	7		1	6	1	sm:ssssssr---	1	1
+120	182	0		ab			1	6		1	4	0	ab:ssr-srs---	1	1
+121	184	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+122	185	1		pa	1		1	6		1	6	1	pa:-ssssss---	1	
+123	185	0		ab			0	6		0	0	0	ab:rrr-rrr---	0	0
+124	187	1		ab			0	6		0	2	0	ab:rsr-rsr---	1	0
+125	188			sa		1	1	4	1		4		sa:s-----s-ss		1
+126	190	1		sm	0		1	7		1	6	1	sm:sssrsss---	1	1
+127	192	1		ab			0	6		0	2	1	ab:rrs-rsr---	0	0
+128	192	1		sm	1		1	7		1	6	1	sm:srsssss---	0	1
+129	193	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+130	196	1		ab			0	6		1	4	1	ab:rss-ssr---	1	0
+131	198	0		sm	1		1	7		1	6	1	sm:sssssrs---	1	1
+132	199	0		sm	1		0	7		1	5	1	sm:sssssrr---	1	1
+133	200	0		pa	0		1	6		1	4	1	pa:-ssrsrs---	1	
+134	200	0		sm	0		0	7		1	2	0	sm:srrrsrr---	0	1
+135	201			sa		0	0	4	0		1		sa:s-----r-rr		1
+136	203	1		pa	0		1	6		0	3	1	pa:-rsrrss---	0	
+137	210	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+138	211	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+139	212	1		sm	0		1	7		1	5	1	sm:srsrsss---	0	1
+140	214	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+141	214	1		sm	0		0	7		0	4	1	sm:sssrrsr---	1	1
+142	216	0		sm	1		1	7		1	5	1	sm:srsssrs---	0	1
+143	217	1		sm	1		1	7		1	6	1	sm:rssssss---	1	0
+144	218	0		ab			1	6		1	3	0	ab:srr-srs---	0	1
+145	220			sa		1	0	4	0		2		sa:s-----r-rs		1
+146	221	0		pa	0		1	6		1	4	1	pa:-ssrsrs---	1	
+147	222			sa		1	1	4	1		4		sa:s-----s-ss		1
+148	224	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+149	226	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+150	228	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+151	229	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+152	231	1		sm	0		1	7		1	5	0	sm:ssrrsss---	1	1
+153	232	1		sm	0		0	7		1	4	0	sm:ssrrssr---	1	1
+154	233	1		sm	1		0	7		1	5	1	sm:srssssr---	0	1
+155	235	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+156	235	1		sm	0		1	7		1	5	0	sm:ssrrsss---	1	1
+157	236			sa		0	0	4	0		1		sa:s-----r-rr		1
+158	236	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+159	236	1		sm	1		0	7		1	5	0	sm:ssrsssr---	1	1
+160	237	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+161	238			sa		1	1	4	0		3		sa:s-----s-rs		1
+162	238	1		pa	0		0	6		0	2	1	pa:-rsrrsr---	0	
+163	238	1		sm	0		1	7		1	4	0	sm:srrrsss---	0	1
+164	239	0		ab			0	6		0	1	0	ab:rsr-rrr---	1	0
+165	245	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+166	246	0		pa	0		0	6		1	2	1	pa:-rsrsrr---	0	
+167	246	1		sm	0		1	7		1	6	1	sm:sssrsss---	1	1
+168	247	0		ab			1	6		0	2	0	ab:srr-rrs---	0	1
+169	249	1		sm	1		0	7		1	6	1	sm:ssssssr---	1	1
+170	250	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+171	253			sa		0	0	4	0		1		sa:s-----r-rr		1
+172	253	0		ab			0	6		0	2	1	ab:srs-rrr---	0	1
+173	254	1		pa	0		1	6		0	2	0	pa:-rrrrss---	0	
+174	254	1		sm	1		0	7		1	4	0	sm:srrsssr---	0	1
+175	256	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+176	256	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+177	257	0		pa	1		1	6		1	5	1	pa:-ssssrs---	1	
+178	262	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+179	263	1		ab			0	6		0	2	0	ab:rsr-rsr---	1	0
+180	263	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+181	264			sa		1	1	4	1		4		sa:s-----s-ss		1
+182	264	1		pa	0		1	6		0	3	0	pa:-srrrss---	1	
+183	266			sa		1	1	4	0		3		sa:s-----s-rs		1
+184	270			sa		0	1	4	0		2		sa:s-----s-rr		1
+185	270	0		ab			0	6		0	2	0	ab:ssr-rrr---	1	1
+186	273	1		pa	1		0	6		0	3	1	pa:-rssrsr---	0	
+187	275	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+188	276			sa		1	1	4	0		3		sa:s-----s-rs		1
+189	276	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+190	277	1		pa	1		0	6		1	3	0	pa:-rrsssr---	0	
+191	278	1		ab			1	6		1	4	0	ab:srr-sss---	0	1
+192	279			sa		1	1	4	1		4		sa:s-----s-ss		1
+193	279	0		pa	0		1	6		1	3	1	pa:-rsrsrs---	0	
+194	279	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+195	282	1		pa	0		1	6		1	4	0	pa:-srrsss---	1	
+196	282	1		ab			0	6		1	2	0	ab:rrr-ssr---	0	0
+197	286			sa		1	0	4	1		3		sa:s-----r-ss		1
+198	289	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+199	290	1		pa	0		0	6		0	2	0	pa:-srrrsr---	1	
+200	291	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+201	296	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+202	299	1		pa	0		1	6		0	3	1	pa:-rsrrss---	0	
+203	303	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+204	305	1		ab			0	6		1	3	0	ab:rsr-ssr---	1	0
+205	305	1		sm	1		1	7		1	6	1	sm:srsssss---	0	1
+206	306	0		pa	1		1	6		1	4	1	pa:-rsssrs---	0	
+207	306	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+208	307	1		pa	0		1	6		0	3	1	pa:-rsrrss---	0	
+209	308	0		ab			0	6		0	2	0	ab:ssr-rrr---	1	1
+210	309	1		pa	1		1	6		0	4	1	pa:-rssrss---	0	
+211	310	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+212	310	1		ab			0	6		1	5	1	ab:sss-ssr---	1	1
+213	311	1		ab			0	6		1	2	0	ab:rrr-ssr---	0	0
+214	311	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+215	312	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+216	312	1		sm	1		1	7		1	6	1	sm:srsssss---	0	1
+217	313	1		sm	1		1	7		0	6	1	sm:ssssrss---	1	1
+218	315	0		pa	0		1	6		0	3	1	pa:-ssrrrs---	1	
+219	316	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+220	318	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+221	319	1		ab			1	6		1	3	0	ab:rrr-sss---	0	0
+222	321			sa		0	0	4	0		1		sa:s-----r-rr		1
+223	321	1		pa	0		1	6		0	3	1	pa:-rsrrss---	0	
+224	323	1		ab			1	6		1	4	0	ab:srr-sss---	0	1
+225	323	0		sm	1		1	7		1	5	1	sm:srsssrs---	0	1
+226	324			sa		1	0	4	0		2		sa:s-----r-rs		1
+227	324	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+228	325	1		pa	1		1	6		0	5	1	pa:-sssrss---	1	
+229	326	0		ab			0	6		1	2	0	ab:srr-srr---	0	1
+230	327	1		sm	1		0	7		0	5	1	sm:ssssrsr---	1	1
+231	330			sa		0	0	4	0		1		sa:s-----r-rr		1
+232	330	0		sm	1		1	7		1	6	1	sm:sssssrs---	1	1
+233	331	0		sm	1		1	7		0	5	1	sm:ssssrrs---	1	1
+234	334	1		ab			0	6		0	2	0	ab:rsr-rsr---	1	0
+235	335	1		pa	1		0	6		0	4	1	pa:-sssrsr---	1	
+236	335	1		sm	1		0	7		1	6	1	sm:ssssssr---	1	1
+237	336	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+238	340	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+239	341	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+240	346	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+241	348			sa		1	0	4	1		3		sa:s-----r-ss		1
+242	348	1		ab			1	6		0	3	0	ab:rsr-rss---	1	0
+243	350	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+244	351			sa		1	0	4	1		3		sa:s-----r-ss		1
+245	353	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+246	353	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+247	355	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+248	356	1		ab			1	6		1	6	1	ab:sss-sss---	1	1
+249	360	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+250	360	0		sm	1		1	7		1	6	1	sm:sssssrs---	1	1
+251	363	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+252	364			sa		1	1	4	1		4		sa:s-----s-ss		1
+253	366			sa		1	0	4	0		2		sa:s-----r-rs		1
+254	367			sa		1	1	4	1		3		sa:r-----s-ss		0
+255	368	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+256	369	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+257	371	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+258	372			sa		0	0	4	0		1		sa:s-----r-rr		1
+259	373	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+260	374			sa		1	0	4	1		3		sa:s-----r-ss		1
+261	375			sa		1	1	4	1		4		sa:s-----s-ss		1
+262	375	1		pa	1		1	6		0	5	1	pa:-sssrss---	1	
+263	375	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+264	375	1		sm	1		1	7		1	6	0	sm:ssrssss---	1	1
+265	376			sa		1	0	4	1		3		sa:s-----r-ss		1
+266	376	1		sm	0		1	7		1	5	0	sm:ssrrsss---	1	1
+267	377	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+268	377	1		sm	1		1	7		0	6	1	sm:ssssrss---	1	1
+269	378	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+270	379	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+271	380	1		ab			0	6		1	2	0	ab:rrr-ssr---	0	0
+272	384	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+273	386	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+274	386	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+275	387	1		ab			1	6		1	3	0	ab:rrr-sss---	0	0
+276	389	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+277	389	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+278	394			sa		0	1	4	0		2		sa:s-----s-rr		1
+279	395	1		pa	0		1	6		1	4	1	pa:-rsrsss---	0	
+280	396	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+281	397	1		ab			1	6		1	4	0	ab:srr-sss---	0	1
+282	398			sa		1	1	4	0		3		sa:s-----s-rs		1
+283	398	1		sm	0		1	7		1	5	1	sm:srsrsss---	0	1
+284	401	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+285	402	0		pa	1		1	6		1	4	1	pa:-rsssrs---	0	
+286	403			sa		0	1	4	1		3		sa:s-----s-sr		1
+287	404	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+288	405	1		sm	1		0	7		1	5	1	sm:srssssr---	0	1
+289	407			sa		1	0	4	1		3		sa:s-----r-ss		1
+290	407	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+291	409	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+292	411			sa		1	0	4	1		3		sa:s-----r-ss		1
+293	413			sa		0	1	4	1		3		sa:s-----s-sr		1
+294	414			sa		1	1	4	0		2		sa:r-----s-rs		0
+295	415	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+296	416			sa		0	1	4	0		1		sa:r-----s-rr		0
+297	416	1		ab			0	6		0	2	1	ab:rrs-rsr---	0	0
+298	418	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+299	420	1		sm	1		0	7		1	4	0	sm:srrsssr---	0	1
+300	422	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+301	423	0		ab			1	6		0	1	0	ab:rrr-rrs---	0	0
+302	424			sa		1	1	4	0		3		sa:s-----s-rs		1
+303	424	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+304	424	1		sm	1		1	7		1	5	0	sm:srrssss---	0	1
+305	425	1		sm	1		1	7		1	5	0	sm:srrssss---	0	1
+306	426	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+307	426	1		sm	1		0	7		1	5	1	sm:srssssr---	0	1
+308	429	1		sm	0		0	7		1	4	1	sm:srsrssr---	0	1
+309	430	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+310	431	1		sm	1		0	7		1	4	0	sm:srrsssr---	0	1
+311	434			sa		1	0	4	0		2		sa:s-----r-rs		1
+312	435			sa		0	0	4	0		1		sa:s-----r-rr		1
+313	435	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+314	435	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+315	438	0		ab			0	6		0	2	0	ab:ssr-rrr---	1	1
+316	439			sa		0	0	4	0		0		sa:r-----r-rr		0
+317	439	1		sm	0		0	7		1	3	0	sm:srrrssr---	0	1
+318	440	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+319	441	1		sm	1		1	7		1	6	1	sm:srsssss---	0	1
+320	446	1		sm	0		0	7		1	3	0	sm:srrrssr---	0	1
+321	450	0		ab			0	6		0	1	1	ab:rrs-rrr---	0	0
+322	451	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+323	453	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+324	453	1		sm	0		1	7		1	6	1	sm:sssrsss---	1	1
+325	455	1		pa	1		0	6		1	5	1	pa:-sssssr---	1	
+326	455	1		sm	1		0	7		1	5	1	sm:srssssr---	0	1
+327	457	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+328	459			sa		0	0	4	0		0		sa:r-----r-rr		0
+329	459	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+330	461	1		pa	1		1	6		0	5	1	pa:-sssrss---	1	
+331	462			sa		0	1	4	1		3		sa:s-----s-sr		1
+332	462	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+333	463			sa		1	0	4	0		2		sa:s-----r-rs		1
+334	464			sa		0	1	4	0		2		sa:s-----s-rr		1
+335	465	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+336	467	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+337	468	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+338	471			sa		1	1	4	1		3		sa:r-----s-ss		0
+339	472			sa		1	1	4	1		4		sa:s-----s-ss		1
+340	473			sa		1	0	4	0		2		sa:s-----r-rs		1
+341	473	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+342	475	0		pa	0		0	6		1	3	1	pa:-ssrsrr---	1	
+343	476			sa		1	0	4	1		3		sa:s-----r-ss		1
+344	477	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+345	480	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+346	482	1		ab			0	6		1	2	0	ab:rrr-ssr---	0	0
+347	484	1		ab			1	6		1	4	1	ab:rrs-sss---	0	0
+348	485	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+349	486	1		pa	0		0	6		0	2	0	pa:-srrrsr---	1	
+350	487			sa		0	1	4	1		3		sa:s-----s-sr		1
+351	488	1		pa	1		1	6		1	5	0	pa:-srssss---	1	
+352	489			sa		0	0	4	0		1		sa:s-----r-rr		1
+353	491	0		sm	1		0	7		1	4	1	sm:srsssrr---	0	1
+354	493			sa		0	1	4	0		2		sa:s-----s-rr		1
+355	494	0		ab			1	6		1	4	1	ab:rss-srs---	1	0
+356	500	1		sm	1		1	7		1	6	0	sm:ssrssss---	1	1
+357	501	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+358	502	0		ab			1	6		0	2	0	ab:rsr-rrs---	1	0
+359	503			sa		1	0	4	1		3		sa:s-----r-ss		1
+360	503	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+361	503	1		sm	1		1	7		0	5	1	sm:srssrss---	0	1
+362	506	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+363	508	1		pa	0		1	6		0	3	1	pa:-rsrrss---	0	
+364	508	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+365	512	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+366	512	0		sm	1		0	7		1	4	1	sm:srsssrr---	0	1
+367	513	0		ab			0	6		0	3	1	ab:sss-rrr---	1	1
+368	514	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+369	516	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+370	517			sa		1	1	4	1		4		sa:s-----s-ss		1
+371	517	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+372	517	1		ab			0	6		1	4	1	ab:rss-ssr---	1	0
+373	521			sa		0	0	4	0		1		sa:s-----r-rr		1
+374	522	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+375	523			sa		1	0	4	0		2		sa:s-----r-rs		1
+376	523	0		pa	1		1	6		1	4	1	pa:-rsssrs---	0	
+377	523	1		ab			1	6		1	3	0	ab:rrr-sss---	0	0
+378	524			sa		1	1	4	1		4		sa:s-----s-ss		1
+379	524	1		sm	1		0	7		0	4	1	sm:srssrsr---	0	1
+380	527	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+381	528			sa		1	1	4	0		3		sa:s-----s-rs		1
+382	529			sa		1	0	4	1		3		sa:s-----r-ss		1
+383	529	1		sm	1		1	7		1	6	0	sm:ssrssss---	1	1
+384	531	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+385	532			sa		0	1	4	0		2		sa:s-----s-rr		1
+386	533	1		pa	1		1	6		1	6	1	pa:-ssssss---	1	
+387	533	1		sm	1		1	7		1	6	1	sm:srsssss---	0	1
+388	535	1		pa	1		1	6		0	5	1	pa:-sssrss---	1	
+389	535	1		ab			1	6		1	4	0	ab:srr-sss---	0	1
+390	536	1		ab			1	6		1	3	0	ab:rrr-sss---	0	0
+391	539	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+392	540	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+393	540	1		sm	1		0	7		0	4	1	sm:srssrsr---	0	1
+394	541	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+395	542	1		pa	0		1	6		0	3	0	pa:-srrrss---	1	
+396	542	1		ab			0	6		1	2	0	ab:rrr-ssr---	0	0
+397	543	1		sm	0		0	7		1	4	0	sm:ssrrssr---	1	1
+398	544	0		pa	0		1	6		1	3	1	pa:-rsrsrs---	0	
+399	545	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+400	546			sa		0	0	4	1		2		sa:s-----r-sr		1
+401	547	1		sm	1		0	7		1	3	0	sm:rrrsssr---	0	0
+402	548	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+403	549			sa		1	0	4	0		2		sa:s-----r-rs		1
+404	552	1		sm	1		0	7		1	6	1	sm:ssssssr---	1	1
+405	554	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+406	555	1		pa	0		0	6		1	3	1	pa:-rsrssr---	0	
+407	556	0		pa	0		1	6		1	4	1	pa:-ssrsrs---	1	
+408	556	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+409	557			sa		1	0	4	1		3		sa:s-----r-ss		1
+410	557	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+411	560			sa		0	1	4	0		2		sa:s-----s-rr		1
+412	560	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+413	561	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+414	562			sa		0	0	4	0		1		sa:s-----r-rr		1
+415	563	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+416	563	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+417	566	0		ab			0	6		0	2	1	ab:srs-rrr---	0	1
+418	566	1		sm	0		0	7		1	5	1	sm:sssrssr---	1	1
+419	567	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+420	568	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+421	568	0		ab			0	6		1	2	0	ab:rsr-srr---	1	0
+422	569			sa		0	1	4	1		3		sa:s-----s-sr		1
+423	569	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+424	570			sa		0	1	4	0		2		sa:s-----s-rr		1
+425	570	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+426	571	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+427	572	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+428	575	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+429	577	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+430	579	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+431	579	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+432	580	0		sm	1		1	7		1	5	1	sm:srsssrs---	0	1
+433	581	1		pa	0		1	6		1	3	0	pa:-rrrsss---	0	
+434	583			sa		0	0	4	0		1		sa:s-----r-rr		1
+435	583	1		pa	1		1	6		1	6	1	pa:-ssssss---	1	
+436	584			sa		1	1	4	0		3		sa:s-----s-rs		1
+437	584	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+438	589	1		pa	0		1	6		1	4	0	pa:-srrsss---	1	
+439	590	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+440	591	1		ab			1	6		1	3	0	ab:rrr-sss---	0	0
+441	598	1		ab			0	6		1	2	0	ab:rrr-ssr---	0	0
+442	599	1		pa	1		1	6		0	5	1	pa:-sssrss---	1	
+443	600	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+444	601	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+445	602	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+446	602	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+447	603	1		pa	0		1	6		1	4	1	pa:-rsrsss---	0	
+448	604	1		ab			0	6		0	2	0	ab:rsr-rsr---	1	0
+449	605	1		pa	0		1	6		0	3	1	pa:-rsrrss---	0	
+450	606	1		ab			1	6		1	3	0	ab:rrr-sss---	0	0
+451	609	1		pa	1		1	6		1	5	1	pa:-rsssss---	0	
+452	609	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+453	611	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+454	612			sa		1	1	4	1		4		sa:s-----s-ss		1
+455	612	1		pa	0		1	6		0	3	1	pa:-rsrrss---	0	
+456	614	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+457	616	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+458	617	1		ab			1	6		0	4	0	ab:ssr-rss---	1	1
+459	619			sa		1	0	4	0		1		sa:r-----r-rs		0
+460	619	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+461	620			sa		1	1	4	1		4		sa:s-----s-ss		1
+462	620	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+463	620	1		sm	1		1	7		1	6	1	sm:srsssss---	0	1
+464	621			sa		1	0	4	1		3		sa:s-----r-ss		1
+465	621	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+466	623	1		pa	0		1	6		0	3	1	pa:-rsrrss---	0	
+467	624	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+468	625			sa		1	0	4	0		2		sa:s-----r-rs		1
+469	626			sa		1	1	4	0		3		sa:s-----s-rs		1
+470	626	1		sm	0		1	7		1	5	1	sm:srsrsss---	0	1
+471	627			sa		0	0	4	0		1		sa:s-----r-rr		1
+472	628			sa		0	0	4	0		1		sa:s-----r-rr		1
+473	628	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+474	628	0		ab			1	6		0	2	0	ab:srr-rrs---	0	1
+475	629	1		sm	0		1	7		1	5	1	sm:srsrsss---	0	1
+476	630			sa		1	0	4	0		2		sa:s-----r-rs		1
+477	631			sa		1	0	4	0		2		sa:s-----r-rs		1
+478	631	0		ab			0	6		0	2	0	ab:ssr-rrr---	1	1
+479	632	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+480	634			sa		0	1	4	0		2		sa:s-----s-rr		1
+481	634	1		sm	1		0	7		1	5	1	sm:srssssr---	0	1
+482	637			sa		0	0	4	1		2		sa:s-----r-sr		1
+483	637	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+484	638	1		ab			0	6		0	3	1	ab:rss-rsr---	1	0
+485	639			sa		1	0	4	1		3		sa:s-----r-ss		1
+486	639	1		ab			0	6		0	2	0	ab:rsr-rsr---	1	0
+487	640			sa		1	1	4	0		3		sa:s-----s-rs		1
+488	641	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+489	641	0		ab			0	6		0	2	0	ab:ssr-rrr---	1	1
+490	642	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+491	646	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+492	648	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+493	648	1		sm	0		1	7		1	6	1	sm:sssrsss---	1	1
+494	649			sa		1	0	4	0		1		sa:r-----r-rs		0
+495	651	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+496	651	1		sm	0		0	7		1	5	1	sm:sssrssr---	1	1
+497	652			sa		0	0	4	1		2		sa:s-----r-sr		1
+498	652	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+499	652	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+500	653	0		ab			1	6		0	2	0	ab:srr-rrs---	0	1
+501	654	0		pa	0		1	6		1	4	1	pa:-ssrsrs---	1	
+502	655			sa		1	0	4	0		2		sa:s-----r-rs		1
+503	657	1		sm	1		0	7		1	5	0	sm:ssrsssr---	1	1
+504	658			sa		0	1	4	0		2		sa:s-----s-rr		1
+505	662	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+506	662	1		sm	0		0	7		1	3	0	sm:srrrssr---	0	1
+507	663	0		pa	0		1	6		0	3	1	pa:-ssrrrs---	1	
+508	663	1		ab			1	6		1	4	0	ab:srr-sss---	0	1
+509	664			sa		0	0	4	0		1		sa:s-----r-rr		1
+510	666	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+511	667	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+512	668	1		ab			1	6		1	3	0	ab:rrr-sss---	0	0
+513	668	1		sm	1		1	7		1	6	0	sm:ssrssss---	1	1
+514	670	1		pa	0		1	6		1	4	0	pa:-srrsss---	1	
+515	670	1		ab			1	6		1	5	0	ab:ssr-sss---	1	1
+516	671			sa		0	1	4	0		1		sa:r-----s-rr		0
+517	672	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+518	672	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+519	674	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+520	675	0		ab			0	6		0	1	0	ab:rsr-rrr---	1	0
+521	676			sa		1	1	4	0		2		sa:r-----s-rs		0
+522	676	1		sm	0		0	7		1	4	1	sm:srsrssr---	0	1
+523	677	0		ab			1	6		1	3	0	ab:srr-srs---	0	1
+524	678			sa		1	1	4	0		3		sa:s-----s-rs		1
+525	679			sa		0	1	4	1		3		sa:s-----s-sr		1
+526	679	1		pa	0		0	6		0	2	1	pa:-rsrrsr---	0	
+527	679	1		ab			0	6		0	3	1	ab:srs-rsr---	0	1
+528	683	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+529	685			sa		1	1	4	0		3		sa:s-----s-rs		1
+530	686			sa		0	1	4	0		2		sa:s-----s-rr		1
+531	686	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+532	688			sa		0	1	4	0		2		sa:s-----s-rr		1
+533	688	1		sm	1		1	7		1	6	0	sm:ssrssss---	1	1
+534	689			sa		1	0	4	1		3		sa:s-----r-ss		1
+535	689	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+536	689	0		ab			0	6		0	2	0	ab:ssr-rrr---	1	1
+537	691	1		sm	1		1	7		0	4	1	sm:rrssrss---	0	0
+538	692			sa		0	1	4	1		3		sa:s-----s-sr		1
+539	692	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+540	694	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+541	694	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+542	695			sa		1	1	4	0		3		sa:s-----s-rs		1
+543	696			sa		1	1	4	1		4		sa:s-----s-ss		1
+544	696	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+545	699	1		ab			0	6		1	3	0	ab:rsr-ssr---	1	0
+546	703			sa		1	0	4	0		1		sa:r-----r-rs		0
+547	703	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+548	704			sa		1	1	4	1		4		sa:s-----s-ss		1
+549	704	1		pa	0		1	6		1	4	0	pa:-srrsss---	1	
+550	705			sa		0	1	4	1		2		sa:r-----s-sr		0
+551	706	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+552	707	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+553	708			sa		1	0	4	0		2		sa:s-----r-rs		1
+554	710			sa		0	1	4	1		3		sa:s-----s-sr		1
+555	710	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+556	712	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+557	713	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+558	714			sa		0	0	4	0		1		sa:s-----r-rr		1
+559	714	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+560	714	1		sm	1		0	7		1	6	1	sm:ssssssr---	1	1
+561	716	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+562	716	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+563	717	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+564	717	1		ab			0	6		1	4	1	ab:rss-ssr---	1	0
+565	718	1		pa	1		1	6		0	4	1	pa:-rssrss---	0	
+566	722	1		sm	1		1	7		0	6	1	sm:ssssrss---	1	1
+567	723	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+568	724	1		pa	1		0	6		1	5	1	pa:-sssssr---	1	
+569	724	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+570	725	0		pa	1		0	6		1	4	1	pa:-ssssrr---	1	
+571	726	0		pa	0		1	6		1	3	1	pa:-rsrsrs---	0	
+572	726	1		ab			0	6		0	2	0	ab:rsr-rsr---	1	0
+573	727	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+574	729			sa		0	1	4	0		2		sa:s-----s-rr		1
+575	730	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+576	731	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+577	732	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+578	737	1		pa	1		1	6		1	6	1	pa:-ssssss---	1	
+579	737	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+580	738	1		sm	1		0	7		1	6	1	sm:ssssssr---	1	1
+581	741	1		sm	1		0	7		1	5	1	sm:srssssr---	0	1
+582	743	1		ab			0	6		1	3	0	ab:rsr-ssr---	1	0
+583	746	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+584	746	1		ab			0	6		1	3	0	ab:rsr-ssr---	1	0
+585	748	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+586	749	0		ab			0	6		0	0	0	ab:rrr-rrr---	0	0
+587	750			sa		0	0	4	0		1		sa:s-----r-rr		1
+588	750	1		pa	1		0	6		0	4	1	pa:-sssrsr---	1	
+589	751			sa		0	0	4	1		2		sa:s-----r-sr		1
+590	753	1		ab			0	6		0	2	0	ab:rsr-rsr---	1	0
+591	754	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+592	756	0		ab			1	6		0	2	0	ab:srr-rrs---	0	1
+593	758	1		ab			1	6		0	4	0	ab:ssr-rss---	1	1
+594	759	1		pa	1		1	6		0	5	1	pa:-sssrss---	1	
+595	759	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+596	761			sa		0	0	4	0		1		sa:s-----r-rr		1
+597	761	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+598	764	1		sm	1		0	7		1	5	1	sm:srssssr---	0	1
+599	769			sa		0	0	4	1		2		sa:s-----r-sr		1
+600	770	1		ab			1	6		1	4	0	ab:rsr-sss---	1	0
+601	774	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+602	774	1		sm	0		0	7		1	5	1	sm:sssrssr---	1	1
+603	775			sa		1	1	4	0		3		sa:s-----s-rs		1
+604	776			sa		0	0	4	1		2		sa:s-----r-sr		1
+605	776	0		sm	0		1	7		1	5	1	sm:sssrsrs---	1	1
+606	777			sa		0	0	4	0		1		sa:s-----r-rr		1
+607	781	1		ab			1	6		1	5	0	ab:ssr-sss---	1	1
+608	786			sa		1	0	4	0		2		sa:s-----r-rs		1
+609	786	1		ab			1	6		1	4	0	ab:rsr-sss---	1	0
+610	789	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+611	790	1		ab			0	6		1	5	1	ab:sss-ssr---	1	1
+612	791	1		ab			1	6		0	4	1	ab:srs-rss---	0	1
+613	793	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+614	793	1		sm	1		0	7		1	6	1	sm:ssssssr---	1	1
+615	794			sa		0	1	4	1		3		sa:s-----s-sr		1
+616	796	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+617	797			sa		0	1	4	0		2		sa:s-----s-rr		1
+618	798	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+619	799	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+620	800	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+621	800	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+622	802	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+623	803			sa		1	0	4	1		2		sa:r-----r-ss		0
+624	804			sa		1	0	4	1		2		sa:r-----r-ss		0
+625	808	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+626	809			sa		1	1	4	1		4		sa:s-----s-ss		1
+627	809	0		pa	1		0	6		0	3	1	pa:-sssrrr---	1	
+628	811	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+629	812	1		ab			0	6		0	2	0	ab:rsr-rsr---	1	0
+630	813	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+631	814			sa		0	0	4	0		1		sa:s-----r-rr		1
+632	815	1		pa	1		0	6		1	5	1	pa:-sssssr---	1	
+633	816			sa		0	0	4	0		1		sa:s-----r-rr		1
+634	817	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+635	818	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+636	820			sa		1	0	4	0		2		sa:s-----r-rs		1
+637	821	1		pa	0		0	6		0	1	0	pa:-rrrrsr---	0	
+638	822	0		ab			1	6		0	2	0	ab:srr-rrs---	0	1
+639	823	1		sm	1		0	7		1	4	0	sm:srrsssr---	0	1
+640	824	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+641	825	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+642	825	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+643	826	0		ab			0	6		0	1	0	ab:rsr-rrr---	1	0
+644	826	1		sm	1		0	7		1	5	1	sm:srssssr---	0	1
+645	828			sa		0	0	4	1		1		sa:r-----r-sr		0
+646	828	0		ab			1	6		0	3	0	ab:ssr-rrs---	1	1
+647	829	1		sm	1		0	7		1	5	0	sm:ssrsssr---	1	1
+648	830	0		pa	0		1	6		1	4	1	pa:-ssrsrs---	1	
+649	831	0		ab			0	6		0	0	0	ab:rrr-rrr---	0	0
+650	833	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+651	833	1		sm	1		1	7		1	5	0	sm:srrssss---	0	1
+652	834	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+653	834	1		sm	1		0	7		1	5	0	sm:ssrsssr---	1	1
+654	835	0		ab			0	6		0	2	0	ab:ssr-rrr---	1	1
+655	836			sa		1	0	4	0		2		sa:s-----r-rs		1
+656	836	1		sm	1		0	7		1	5	1	sm:srssssr---	0	1
+657	837	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+658	839	0		ab			0	6		0	2	0	ab:ssr-rrr---	1	1
+659	840	0		ab			1	6		0	4	1	ab:sss-rrs---	1	1
+660	841	1		ab			1	6		0	3	0	ab:rsr-rss---	1	0
+661	842	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+662	843	0		ab			0	6		0	1	0	ab:rsr-rrr---	1	0
+663	845	1		sm	1		0	7		1	6	1	sm:ssssssr---	1	1
+664	846	0		ab			0	6		0	1	0	ab:rsr-rrr---	1	0
+665	847	0		ab			0	6		0	2	0	ab:ssr-rrr---	1	1
+666	852	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+667	853	1		pa	0		1	6		0	3	0	pa:-srrrss---	1	
+668	853	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+669	854	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+670	855			sa		1	1	4	1		4		sa:s-----s-ss		1
+671	855	0		ab			0	6		0	1	0	ab:srr-rrr---	0	1
+672	857	1		pa	1		1	6		0	4	1	pa:-rssrss---	0	
+673	857	0		ab			1	6		0	3	0	ab:ssr-rrs---	1	1
+674	857	1		sm	0		1	7		1	5	1	sm:srsrsss---	0	1
+675	858	0		ab			1	6		0	3	1	ab:srs-rrs---	0	1
+676	859	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+677	859	0		ab			0	6		0	1	0	ab:rsr-rrr---	1	0
+678	860	1		ab			1	6		1	4	0	ab:srr-sss---	0	1
+679	864			sa		0	0	4	1		2		sa:s-----r-sr		1
+680	865			sa		1	1	4	1		4		sa:s-----s-ss		1
+681	869			sa		1	1	4	0		3		sa:s-----s-rs		1
+682	869	1		ab			1	6		0	4	1	ab:srs-rss---	0	1
+683	871	1		sm	0		1	7		1	5	1	sm:srsrsss---	0	1
+684	872			sa		1	0	4	0		2		sa:s-----r-rs		1
+685	876	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+686	877	1		pa	0		1	6		1	4	1	pa:-rsrsss---	0	
+687	878	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+688	879	1		ab			1	6		0	4	0	ab:ssr-rss---	1	1
+689	880	0		pa	0		1	6		1	4	1	pa:-ssrsrs---	1	
+690	883	0		ab			0	6		0	0	0	ab:rrr-rrr---	0	0
+691	884			sa		0	1	4	1		3		sa:s-----s-sr		1
+692	885	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+693	887	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+694	888	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+695	889	0		ab			1	6		0	3	0	ab:ssr-rrs---	1	1
+696	890	1		pa	0		0	6		1	4	1	pa:-ssrssr---	1	
+697	890	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+698	892			sa		1	0	4	0		2		sa:s-----r-rs		1
+699	893	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+700	896	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+701	898	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+702	899			sa		1	0	4	0		1		sa:r-----r-rs		0
+703	899	1		pa	1		0	6		1	4	0	pa:-srsssr---	1	
+704	899	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+705	900			sa		0	1	4	1		3		sa:s-----s-sr		1
+706	902	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+707	906	1		pa	0		1	6		0	2	0	pa:-rrrrss---	0	
+708	908	1		sm	1		0	7		1	6	1	sm:ssssssr---	1	1
+709	909	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+710	910	1		pa	0		1	6		0	3	1	pa:-rsrrss---	0	
+711	910	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+712	912			sa		1	0	4	0		2		sa:s-----r-rs		1
+713	913	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+714	914	1		ab			1	6		0	3	0	ab:rsr-rss---	1	0
+715	915	1		ab			1	6		1	6	1	ab:sss-sss---	1	1
+716	916	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+717	918	0		ab			0	6		0	2	1	ab:srs-rrr---	0	1
+718	919	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+719	920	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+720	921	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+721	922	1		sm	1		0	7		0	5	1	sm:ssssrsr---	1	1
+722	923	1		ab			0	6		1	3	1	ab:rrs-ssr---	0	0
+723	924	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+724	927	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+725	929	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+726	931	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+727	934	1		ab			0	6		1	3	0	ab:rsr-ssr---	1	0
+728	935			sa		0	1	4	0		2		sa:s-----s-rr		1
+729	935	0		ab			0	6		0	0	0	ab:rrr-rrr---	0	0
+730	938	1		pa	1		1	6		1	6	1	pa:-ssssss---	1	
+731	938	1		sm	0		1	7		1	5	1	sm:srsrsss---	0	1
+732	940			sa		0	0	4	1		2		sa:s-----r-sr		1
+733	940	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+734	940	1		sm	1		0	7		1	4	0	sm:srrsssr---	0	1
+735	943			sa		0	1	4	1		3		sa:s-----s-sr		1
+736	943	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+737	946	1		ab			1	6		0	3	0	ab:rsr-rss---	1	0
+738	947	1		ab			0	6		1	2	0	ab:rrr-ssr---	0	0
+739	948			sa		0	0	4	0		1		sa:s-----r-rr		1
+740	950	1		pa	0		1	6		0	4	1	pa:-ssrrss---	1	
+741	950	0		ab			1	6		0	2	0	ab:srr-rrs---	0	1
+742	951	0		pa	0		0	6		1	2	0	pa:-srrsrr---	1	
+743	953			sa		0	1	4	0		2		sa:s-----s-rr		1
+744	955	1		pa	0		1	6		1	4	0	pa:-srrsss---	1	
+745	956	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+746	957	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+747	959	1		ab			1	6		0	4	0	ab:ssr-rss---	1	1
+748	960	1		ab			0	6		1	4	0	ab:ssr-ssr---	1	1
+749	961	1		ab			0	6		1	3	0	ab:rsr-ssr---	1	0
+750	962	1		pa	1		1	6		1	6	1	pa:-ssssss---	1	
+751	962	1		ab			0	6		1	4	1	ab:srs-ssr---	0	1
+752	963	0		ab			0	6		1	2	0	ab:srr-srr---	0	1
+753	964			sa		0	1	4	0		2		sa:s-----s-rr		1
+754	966	1		ab			0	6		1	5	1	ab:sss-ssr---	1	1
+755	967	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+756	967	1		ab			0	6		0	2	0	ab:srr-rsr---	0	1
+757	968	1		ab			0	6		1	3	1	ab:rrs-ssr---	0	0
+758	970	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+759	971			sa		1	0	4	1		3		sa:s-----r-ss		1
+760	973	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+761	974	1		ab			0	6		1	2	0	ab:rrr-ssr---	0	0
+762	975	1		pa	0		1	6		1	5	1	pa:-ssrsss---	1	
+763	976	1		ab			0	6		1	3	0	ab:srr-ssr---	0	1
+764	978			sa		1	1	4	0		3		sa:s-----s-rs		1
+765	980			sa		0	1	4	0		2		sa:s-----s-rr		1
+766	980	1		ab			1	6		1	4	0	ab:srr-sss---	0	1
+767	981			sa		1	1	4	1		4		sa:s-----s-ss		1
+768	982	1		sm	1		1	7		1	7	1	sm:sssssss---	1	1
+769	983	1		ab			1	6		1	3	0	ab:rrr-sss---	0	0
+770	986			sa		1	0	4	0		2		sa:s-----r-rs		1
+771	986	1		ab			0	6		1	2	0	ab:rrr-ssr---	0	0
+772	986	0		sm	1		0	7		1	5	1	sm:sssssrr---	1	1
+773	987	1		pa	0		0	6		0	3	1	pa:-ssrrsr---	1	
+774	988	1		ab			0	6		0	3	0	ab:ssr-rsr---	1	1
+775	988	1		sm	0		1	7		0	5	1	sm:sssrrss---	1	1
+776	989			sa		1	0	4	1		3		sa:s-----r-ss		1
+777	989	1		ab			1	6		0	2	0	ab:rrr-rss---	0	0
+778	990			sa		1	1	4	1		4		sa:s-----s-ss		1
+779	991			sa		0	0	4	0		1		sa:s-----r-rr		1
+780	991	0		pa	0		1	6		1	4	1	pa:-ssrsrs---	1	
+781	991	1		ab			1	6		0	3	0	ab:srr-rss---	0	1
+782	995	1		ab			1	6		1	5	0	ab:ssr-sss---	1	1
+783	996	1		ab			0	6		0	1	0	ab:rrr-rsr---	0	0
+784	997	1		sm	1		0	7		1	4	0	sm:srrsssr---	0	1
+785	999	1		pa	0		1	6		1	4	1	pa:-rsrsss---	0	

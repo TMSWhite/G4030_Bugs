@@ -180,6 +180,8 @@ sub test {
 sub patientDB {
 	open (PTDB, ">patientDB.txt") or die "unable to open patientDB.txt";
 	open (BUGDB, ">bugDB.txt") or die "unable to open bugDB.txt";
+	open (PTTAB, ">patientDB.tab") or die "unable to open patientDB.tab";
+	open (BUGTAB, ">bugDB.tab") or die "unable to open bugDB.tab";
 	
 	print PTDB "CREATE TABLE patients (\n";
 	print PTDB "	id int DEFAULT '0' NOT NULL auto_increment,\n";
@@ -208,6 +210,9 @@ sub patientDB {
 	
 	print BUGDB "	PRIMARY KEY (id),\n";
 	print BUGDB "	UNIQUE id (id));\n";
+	
+	print PTTAB "id	mrn	month	floor	room	bed	md	bugs\n";
+	print BUGTAB "id	mrn	ak	aug	bug	cax	clin	cp	denom	e	gm	numer	pitz	profStr	tim	ts\n";
 
 	my %b;
 	my $bugcount=0;
@@ -218,28 +223,35 @@ sub patientDB {
 		my %profs = %{ $p{'profiles'} };
 		++$ptcount;
 		print PTDB "INSERT INTO patients VALUES('$ptcount','$p{'mrn'}','$p{'month'}','$p{'floor'}','$p{'room'}','$p{'bed'}','$p{'md'}','$p{'bugs'}');\n";
+		print PTTAB "$ptcount	$p{'mrn'}	$p{'month'}	$p{'floor'}	$p{'room'}	$p{'bed'}	$p{'md'}	$p{'bugs'}\n";
 		
 		for (my $i=1;$i<=$p{'bugs'};++$i) {
 			%b = %{ $profs{$i} };
 			
 			++$bugcount;
 			print BUGDB "INSERT INTO bugs VALUES('$bugcount','$p{'mrn'}'";
+			print BUGTAB "$bugcount	$p{'mrn'}";
 			
 			foreach my $key (sort(keys(%b))) {
 				my $val = $b{$key};
 				if ($val eq '0' || $val) {
 					print BUGDB ",'$val'";
+					print BUGTAB "	$val";
 				}
 				else {
 					print BUGDB ",NULL";
+					print BUGTAB "	";
 				}
 			}
 			print BUGDB ");\n";
+			print BUGTAB "\n";
 		}
 	}
 	
 	close PTDB;
 	close BUGDB;
+	close PTTAB;
+	close BUGTAB;
 }
 
 sub parsePatient {
